@@ -32,5 +32,11 @@
   "Menu": {
     "home": "Vítejte",
     "about": "O aplikaci"
+  },
+  "Task": {
+    "add": "Přidat položku",
+    "showFinished": "Zobrazit dokončené položky",
+    "addedBy": "Přidal",
+    "finish": "Dokončit"
   }
 }

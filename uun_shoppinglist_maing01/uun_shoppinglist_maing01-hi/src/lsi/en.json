@@ -32,5 +32,11 @@
   "Menu": {
     "home": "Welcome",
     "about": "About Application"
+  },
+  "Task": {
+    "add": "Add task",
+    "showFinished": "Show finished tasks",
+    "addedBy": "Added by",
+    "finish": "Finish"
   }
 }
