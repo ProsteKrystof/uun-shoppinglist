@@ -48,18 +48,6 @@ const TasksOptions = createVisualComponent({
     const attrs = Utils.VisualComponent.getAttrs(props, Css.main());
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, TasksOptions);
 
-    function Toggle(props) {
-      const [value, setValue] = useState(props.value ?? false);
-
-      return (
-        <Uu5Elements.Toggle
-          value={value}
-          onChange={(e) => setValue(e.data.value)}
-          {...props}
-        />
-      );
-    }
-
     async function handleAddTaskSubmit(values) {
       props.addTask(values.name, "1234-1234-1");
       handleAddTaskClose();
@@ -90,10 +78,12 @@ const TasksOptions = createVisualComponent({
             colorScheme="red"
           />
 
-          <Toggle
+          <Uu5Elements.Toggle
             label={<Lsi import={importLsi} path={["Task", "showFinished"]} />}
             size="xl"
             style={{marginLeft: "auto"}}
+            value={props.showCompleted}
+            onChange={(e) => props.setShowCompleted(e.data.value)}
           />
         </div>
 
