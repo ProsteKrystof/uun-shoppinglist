@@ -1,7 +1,8 @@
 //@@viewOn:imports
 import { createVisualComponent, Utils, useState, useLsi } from "uu5g05";
-import { Form, FormText, Color, SubmitButton, CancelButton } from "uu5g05-forms";
-import { Modal, Button } from "uu5g05-elements";
+import { Form, FormText, Color, Label, SubmitButton, CancelButton } from "uu5g05-forms";
+import { Modal } from "uu5g05-elements";
+import MemberList from "./member-list.js";
 import Config from "./config/config.js";
 import importLsi from "../../lsi/import-lsi.js";
 //@@viewOff:imports
@@ -79,9 +80,10 @@ const EditShoppingListModal = createVisualComponent({
   render(props) {
     //@@viewOn:private    
     const lsi = useLsi(importLsi, ["ShoppingList"]);
+    const [memberList, setMemberList] = useState(props.shoppingList.memberIdentities);
 
     async function handleSubmit(event) {
-      const values = { ...event.data.value, ...{color: selectedColor} };
+      const values = { ...event.data.value, ...{color: selectedColor}, ...{memberIdentities: memberList} };
       return props.onSubmit(values);
     }
 
@@ -106,7 +108,7 @@ const EditShoppingListModal = createVisualComponent({
     );
 
     return currentNestingLevel ? (
-      <Form.Provider onSubmit={handleSubmit}>
+      <Form.Provider onSubmit={(handleSubmit)}>
         <Modal header={lsi.edit} footer={formControls} open>
           <Form.View>
             <FormText
@@ -127,6 +129,9 @@ const EditShoppingListModal = createVisualComponent({
               disabled={!props.isOwner}
               required
             />
+            <br/>
+            <Label>{lsi.members}</Label>
+            <MemberList memberList={memberList} setMemberList={setMemberList} isOwner={props.isOwner}/>
           </Form.View>
         </Modal>
       </Form.Provider>

@@ -37,7 +37,12 @@
     "edit": "Edit shopping list",
     "cancelEdit": "Cancel",
     "name": "Name",
-    "color": "Color"
+    "color": "Color",
+    "members": "Members",
+    "userIdentity": "User uuIdentity",
+    "addMember": "Add member",
+    "addMemberError": "Error",
+    "memberAlreadyExists": "This uuIdentity is already added in member list."
   },
   "Task": {
     "add": "Add task",

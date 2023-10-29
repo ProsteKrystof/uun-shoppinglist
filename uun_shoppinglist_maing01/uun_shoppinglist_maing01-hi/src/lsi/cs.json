@@ -37,7 +37,12 @@
     "edit": "Upravit nákupní seznam",
     "cancelEdit": "Zrušit",
     "name": "Název",
-    "color": "Barva"
+    "color": "Barva",
+    "members": "Členové",
+    "userIdentity": "uuIdentity uživatele",
+    "addMember": "Přidat člena",
+    "addMemberError": "Chyba",
+    "memberAlreadyExists": "Tato uuIdentity je již přidaná v seznamu členů."
   },
   "Task": {
     "add": "Přidat položku",
