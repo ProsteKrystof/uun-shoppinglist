@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createComponent, Utils, useState } from "uu5g05";
+import { createComponent, Utils, useState, useEffect, useSession } from "uu5g05";
 import Config from "./config/config.js";
 //@@viewOff:imports
 
@@ -19,19 +19,19 @@ let initialShoppingListData = {
     {
       id: Utils.String.generateId(),
       name: "Rohlíky",
-      addedBy: "3119-2385-1",
+      addedBy: "Petr Novák",
       completed: false
     },
     {
       id: Utils.String.generateId(),
       name: "Chleba",
-      addedBy: "3119-2385-1",
+      addedBy: "Petr Novák",
       completed: false
     },
     {
       id: Utils.String.generateId(),
       name: "Sůl",
-      addedBy: "3119-2385-1",
+      addedBy: "Petr Novák",
       completed: true
     }
   ]
@@ -59,14 +59,22 @@ const ListDataProvider = createComponent({
   render(props) {
     //@@viewOn:private   
     const [shoppingList, setShoppingList] = useState(initialShoppingListData);
+    const { identity } = useSession();
+
+    useEffect(() => {
+      // pro ucely testovani nastavi momentalni uuid jako majitele seznamu
+      let newList = {...shoppingList};
+      newList.ownerIdentity = identity.uuIdentity;
+      setShoppingList(newList);
+    }, [])
 
     // tasks
     const taskFunctions = {
-      createTask(taskName, uuid) {
+      createTask(taskName, userName) {
         let task = {
           id: Utils.String.generateId(),
           name: taskName,
-          addedBy: uuid,
+          addedBy: userName,
           completed: false
         };
 

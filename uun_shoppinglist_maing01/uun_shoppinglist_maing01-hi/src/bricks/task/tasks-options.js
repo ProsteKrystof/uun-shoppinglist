@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, useState, Lsi } from "uu5g05";
+import { createVisualComponent, Utils, Content, useState, useSession, Lsi } from "uu5g05";
 import Config from "./config/config.js";
 import Uu5Elements from "uu5g05-elements";
 import AddTaskModal from "./add-task-modal.js";
@@ -29,14 +29,13 @@ const TasksOptions = createVisualComponent({
   //@@viewOff:propTypes
 
   //@@viewOn:defaultProps
-  defaultProps: {
-    name: "Shopping List"
-  },
+  defaultProps: {},
   //@@viewOff:defaultProps
 
   render(props) {
     //@@viewOn:private
     const { children } = props;
+    const { identity } = useSession();
     // add task modal
     const [showAddTaskModal, setShowAddTaskModal] = useState(false);
     //@@viewOff:private
@@ -49,16 +48,18 @@ const TasksOptions = createVisualComponent({
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, TasksOptions);
 
     async function handleAddTaskSubmit(values) {
-      props.addTask(values.name, "1234-1234-1");
+      props.addTask(values.name, identity.name);
       handleAddTaskClose();
     }
+
+    const isOwner = props.shoppingList.ownerIdentity === identity.uuIdentity;
 
     const handleAddTaskOpen = () => setShowAddTaskModal(true);
     const handleAddTaskClose = () => setShowAddTaskModal(false);
 
     return currentNestingLevel ? (
       <div {...attrs}>
-        <h1><Uu5Elements.Icon style={{color:props.color}} icon="uugds-circle-solid"/> {props.name}</h1>
+        <h1><Uu5Elements.Icon style={{color:props.shoppingList.color}} icon="uugds-circle-solid"/> {props.shoppingList.name}</h1>
         <div style={{ display: "flex", marginBottom: 10 }}>
           <Uu5Elements.Button
             significance="highlighted"
@@ -71,12 +72,12 @@ const TasksOptions = createVisualComponent({
             icon="uugds-settings"
             significance="highlighted"
           />
-          <Uu5Elements.Button
+          {!isOwner && (<Uu5Elements.Button
             className={Config.Css.css({marginLeft: 10})}
             icon="mdi-exit-to-app"
             significance="highlighted"
             colorScheme="red"
-          />
+          />)}
 
           <Uu5Elements.Toggle
             label={<Lsi import={importLsi} path={["Task", "showFinished"]} />}

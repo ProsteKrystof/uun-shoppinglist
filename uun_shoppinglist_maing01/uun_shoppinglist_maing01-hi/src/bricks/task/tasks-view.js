@@ -54,8 +54,7 @@ const TasksView = createVisualComponent({
           borderRadius="expressive"
         >
           <TasksOptions
-            name={props.shoppingList.name}
-            color={props.shoppingList.color}
+            shoppingList={props.shoppingList}
             addTask={props.taskFunctions.createTask}
             showCompleted={showCompleted}
             setShowCompleted={setShowCompleted}

@@ -1,8 +1,9 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content } from "uu5g05";
+import { createVisualComponent, Utils, Content, useSession } from "uu5g05";
 import Config from "./config/config.js";
 import ListDataProvider from "../bricks/shopping-list/list-data-provider.js";
 import TasksView from "../bricks/task/tasks-view.js";
+import { withRoute } from "uu_plus4u5g02-app";
 //@@viewOff:imports
 
 //@@viewOn:constants
@@ -17,7 +18,7 @@ const Css = {
 //@@viewOn:helpers
 //@@viewOff:helpers
 
-const ShoppingListDetail = createVisualComponent({
+let ShoppingListDetail = createVisualComponent({
   //@@viewOn:statics
   uu5Tag: Config.TAG + "ShoppingListDetail",
   nestingLevel: ["areaCollection", "area"],
@@ -55,6 +56,8 @@ const ShoppingListDetail = createVisualComponent({
     //@@viewOff:render
   },
 });
+
+ShoppingListDetail = withRoute(ShoppingListDetail, {authenticated: true});
 
 //@@viewOn:exports
 export { ShoppingListDetail };
