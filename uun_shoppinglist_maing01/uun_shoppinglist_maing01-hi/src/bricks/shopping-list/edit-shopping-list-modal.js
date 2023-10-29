@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, useState, useLsi } from "uu5g05";
+import { createVisualComponent, Utils, useState, useLsi, useRef } from "uu5g05";
 import { Form, FormText, Color, Label, SubmitButton, CancelButton } from "uu5g05-forms";
 import { Modal } from "uu5g05-elements";
 import MemberList from "./member-list.js";
@@ -80,16 +80,16 @@ const EditShoppingListModal = createVisualComponent({
   render(props) {
     //@@viewOn:private    
     const lsi = useLsi(importLsi, ["ShoppingList"]);
+    let selectedColor = useRef(props.shoppingList.color);
     const [memberList, setMemberList] = useState(props.shoppingList.memberIdentities);
 
     async function handleSubmit(event) {
-      const values = { ...event.data.value, ...{color: selectedColor}, ...{memberIdentities: memberList} };
+      const values = { ...event.data.value, ...{color: selectedColor.current}, ...{memberIdentities: memberList} };
       return props.onSubmit(values);
     }
 
-    let selectedColor = props.shoppingList.color;
     function handleColorOnChange(event) {
-      selectedColor = event.data.value;
+      selectedColor.current = event.data.value;
     }
     //@@viewOff:private
 
@@ -123,7 +123,7 @@ const EditShoppingListModal = createVisualComponent({
 
             <ColorPicker
               label={lsi.color}
-              value={props.shoppingList.color}
+              value={selectedColor.current}
               valueType="colorScheme"
               onChange={handleColorOnChange}
               disabled={!props.isOwner}
