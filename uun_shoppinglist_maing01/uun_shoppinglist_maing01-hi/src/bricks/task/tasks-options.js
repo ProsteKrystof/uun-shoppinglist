@@ -111,6 +111,7 @@ const TasksOptions = createVisualComponent({
         {showEditShoppingListModal && (
           <EditShoppingListModal
             shoppingList={props.shoppingList}
+            isOwner={isOwner}
             onSubmit={handleEditShoppingListSubmit}
             onCancel={handleEditShoppingListClose}
             open

@@ -1,7 +1,7 @@
 //@@viewOn:imports
 import { createVisualComponent, Utils, useState, useLsi } from "uu5g05";
 import { Form, FormText, Color, SubmitButton, CancelButton } from "uu5g05-forms";
-import { Modal } from "uu5g05-elements";
+import { Modal, Button } from "uu5g05-elements";
 import Config from "./config/config.js";
 import importLsi from "../../lsi/import-lsi.js";
 //@@viewOff:imports
@@ -101,7 +101,7 @@ const EditShoppingListModal = createVisualComponent({
     const formControls = (
       <div className={Css.controls()}>
         <CancelButton onClick={props.onCancel}>{lsi.cancelEdit}</CancelButton>
-        <SubmitButton>{lsi.edit}</SubmitButton>
+        {props.isOwner && <SubmitButton>{lsi.edit}</SubmitButton>}
       </div>
     );
 
@@ -115,6 +115,7 @@ const EditShoppingListModal = createVisualComponent({
               name="name"
               maxLength={255}
               className={Css.input()}
+              disabled={!props.isOwner}
               required
             />
 
@@ -123,6 +124,7 @@ const EditShoppingListModal = createVisualComponent({
               value={props.shoppingList.color}
               valueType="colorScheme"
               onChange={handleColorOnChange}
+              disabled={!props.isOwner}
               required
             />
           </Form.View>
