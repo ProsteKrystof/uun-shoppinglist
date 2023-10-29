@@ -41,6 +41,8 @@ const TasksOptions = createVisualComponent({
     const [showAddTaskModal, setShowAddTaskModal] = useState(false);
     // edit shopping list modal
     const [showEditShoppingListModal, setShowEditShoppingListModal] = useState(false);
+    // leave shopping list dialog
+    const [leaveDialogOpen, setLeaveDialogOpen] = useState(false);
     //@@viewOff:private
 
     //@@viewOn:interface
@@ -58,6 +60,16 @@ const TasksOptions = createVisualComponent({
     async function handleEditShoppingListSubmit(values) {
       props.updateShoppingList(values)
       handleEditShoppingListClose();
+    }
+
+    function handleLeaveShoppingList() {
+      const memberIdentity = identity.uuIdentity;
+      let newMembers = props.shoppingList.memberIdentities.filter((item) => item !== memberIdentity);
+      let newList = [...newMembers];
+
+      props.updateShoppingList({memberIdentities: newMembers});
+      console.log("Shopping list left successfully");
+      console.log(newList);
     }
 
     const isOwner = props.shoppingList.ownerIdentity === identity.uuIdentity;
@@ -89,6 +101,7 @@ const TasksOptions = createVisualComponent({
             icon="mdi-exit-to-app"
             significance="highlighted"
             colorScheme="red"
+            onClick={() => setLeaveDialogOpen(true)}
           />)}
 
           <Uu5Elements.Toggle
@@ -117,6 +130,32 @@ const TasksOptions = createVisualComponent({
             open
           />
         )}
+
+        {/* Leave shopping list dialog */}
+        <Uu5Elements.Dialog
+          open={leaveDialogOpen}
+          onClose={() => setLeaveDialogOpen(false)}
+          header={
+            <Lsi import={importLsi} path={["ShoppingList", "leaveHeader"]} />
+          }
+          icon={<Uu5Elements.Svg code="uugdssvg-activity-problem" />}
+          info={
+            <Lsi import={importLsi} path={["ShoppingList", "leaveInfo"]} />
+          }
+          actionDirection="horizontal"
+          actionList={[
+            {
+              children: <Lsi import={importLsi} path={["ShoppingList", "leaveDeny"]} />,
+              significance: "distinct",
+            },
+            {
+              children: <Lsi import={importLsi} path={["ShoppingList", "leaveConfirm"]} />,
+              onClick: handleLeaveShoppingList,
+              colorScheme: "red",
+              significance: "highlighted",
+            },
+          ]}
+        />
 
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
       </div>

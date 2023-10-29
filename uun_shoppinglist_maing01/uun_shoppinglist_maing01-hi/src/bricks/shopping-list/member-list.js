@@ -39,12 +39,12 @@ const MemberList = createVisualComponent({
     const { addAlert } = Uu5Elements.useAlertBus();
     const [inputIdentity, setInputIdentity] = useState("");
 
-    const handleInputIdentityChange = event => {
+    function handleInputIdentityChange(event) {
       const result = event.target.value.replace(/[^0-9-]/, '');
       setInputIdentity(result.substring(0, 20));
     }
 
-    const handleInputIdentityButtonOnClick = () => {
+    function handleInputIdentityButtonOnClick() {
       if (inputIdentity == "") return; // prevent adding empty strings
       if (props.memberList.indexOf(inputIdentity) !== -1) { // prevent adding duplicate strings
         addAlert({
@@ -63,7 +63,7 @@ const MemberList = createVisualComponent({
       setInputIdentity(""); // clear identity input
     }
 
-    const handleMemberDeleteButton = (memberIdentity) => {
+    function handleMemberDeleteButton(memberIdentity) {
       let newMembers = props.memberList.filter((item) => item !== memberIdentity);
       let newList = [...newMembers];
 

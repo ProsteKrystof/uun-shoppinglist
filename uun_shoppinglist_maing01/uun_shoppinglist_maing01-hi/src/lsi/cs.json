@@ -42,7 +42,11 @@
     "userIdentity": "uuIdentity uživatele",
     "addMember": "Přidat člena",
     "addMemberError": "Chyba",
-    "memberAlreadyExists": "Tato uuIdentity je již přidaná v seznamu členů."
+    "memberAlreadyExists": "Tato uuIdentity je již přidaná v seznamu členů.",
+    "leaveHeader": "Opustit tento seznam?",
+    "leaveInfo": "Po opuštění již tento seznam nepůjde zobrazit.",
+    "leaveConfirm": "Opustit",
+    "leaveDeny": "Zrušit"
   },
   "Task": {
     "add": "Přidat položku",

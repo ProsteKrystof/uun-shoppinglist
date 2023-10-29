@@ -42,7 +42,11 @@
     "userIdentity": "User uuIdentity",
     "addMember": "Add member",
     "addMemberError": "Error",
-    "memberAlreadyExists": "This uuIdentity is already added in member list."
+    "memberAlreadyExists": "This uuIdentity is already added in member list.",
+    "leaveHeader": "Leave this shopping list?",
+    "leaveInfo": "You will not be able to view this shopping list after leaving.",
+    "leaveConfirm": "Leave",
+    "leaveDeny": "Cancel"
   },
   "Task": {
     "add": "Add task",
