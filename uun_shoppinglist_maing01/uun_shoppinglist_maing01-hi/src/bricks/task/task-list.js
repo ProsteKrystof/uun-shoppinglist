@@ -44,11 +44,9 @@ const TaskList = createVisualComponent({
 
     return currentNestingLevel ? (
       <div {...attrs}>
-        <TaskCard />
-        <TaskCard />
-        <TaskCard />
-        <TaskCard />
-        <TaskCard />
+        {props.tasks?.map((task) => (
+          <TaskCard key={task.id} taskInfo={task} taskFunctions={props.taskFunctions} />
+        ))}
 
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
       </div>

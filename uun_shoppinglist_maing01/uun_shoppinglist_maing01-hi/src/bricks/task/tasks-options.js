@@ -1,8 +1,8 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, Lsi } from "uu5g05";
+import { createVisualComponent, Utils, Content, useState, Lsi } from "uu5g05";
 import Config from "./config/config.js";
 import Uu5Elements from "uu5g05-elements";
-import { useState } from "uu5g05";
+import AddTaskModal from "./add-task-modal.js";
 import importLsi from "../../lsi/import-lsi.js";
 //@@viewOff:imports
 
@@ -37,6 +37,8 @@ const TasksOptions = createVisualComponent({
   render(props) {
     //@@viewOn:private
     const { children } = props;
+    // add task modal
+    const [showAddTaskModal, setShowAddTaskModal] = useState(false);
     //@@viewOff:private
 
     //@@viewOn:interface
@@ -58,14 +60,23 @@ const TasksOptions = createVisualComponent({
       );
     }
 
+    async function handleAddTaskSubmit(values) {
+      props.addTask(values.name, "1234-1234-1");
+      handleAddTaskClose();
+    }
+
+    const handleAddTaskOpen = () => setShowAddTaskModal(true);
+    const handleAddTaskClose = () => setShowAddTaskModal(false);
+
     return currentNestingLevel ? (
       <div {...attrs}>
-        <h1><Uu5Elements.Icon style={{color:"#107042"}} icon="uugds-circle-solid"/> {props.name}</h1>
+        <h1><Uu5Elements.Icon style={{color:props.color}} icon="uugds-circle-solid"/> {props.name}</h1>
         <div style={{ display: "flex", marginBottom: 10 }}>
           <Uu5Elements.Button
             significance="highlighted"
             icon="uugds-plus"
             colorScheme="blue"
+            onClick={handleAddTaskOpen}
           ><Lsi import={importLsi} path={["Task", "add"]} /></Uu5Elements.Button>
           <Uu5Elements.Button
             className={Config.Css.css({marginLeft: 10})}
@@ -85,6 +96,15 @@ const TasksOptions = createVisualComponent({
             style={{marginLeft: "auto"}}
           />
         </div>
+
+        {showAddTaskModal && (
+          <AddTaskModal
+            onSubmit={handleAddTaskSubmit}
+            onCancel={handleAddTaskClose}
+            open
+          />
+        )}
+
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
       </div>
     ) : null;

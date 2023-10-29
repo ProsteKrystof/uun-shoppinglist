@@ -34,6 +34,14 @@ const TaskCard = createVisualComponent({
   render(props) {
     //@@viewOn:private
     const { children } = props;
+
+    function handleComplete() {
+      props.taskFunctions.completeTask(props.taskInfo);
+    }
+
+    function handleRemove() {
+      props.taskFunctions.removeTask(props.taskInfo);
+    }
     //@@viewOff:private
 
     //@@viewOn:interface
@@ -51,20 +59,38 @@ const TaskCard = createVisualComponent({
           colorScheme="grey"
           significance="distinct"
         >
-          <h2 style={{marginBottom: 5}}>Rohlíky</h2>
+          <h2 style={{marginBottom: 5}}>{props.taskInfo.name}</h2>
           <div style={{display: "flex"}}>
-            <p style={{marginTop: 5}}>{<Lsi import={importLsi} path={["Task", "addedBy"]} />}: Karel</p>
+            <p style={{marginTop: 5}}>{<Lsi import={importLsi} path={["Task", "addedBy"]} />}: {props.taskInfo.addedBy}</p>
             <div style={{marginLeft: "auto", marginRight: 16}}>
-              <Uu5Elements.Button
-                significance="highlighted"
-                colorScheme="blue"
-                icon="uugds-check"
-              ><Lsi import={importLsi} path={["Task", "finish"]} /></Uu5Elements.Button>
+              {/* Finish/Finished button */}
+              {props.taskInfo.completed
+              ? 
+                <Uu5Elements.Button
+                  significance="highlighted"
+                  colorScheme="green"
+                  icon="uugds-check"
+                >
+                  <Lsi import={importLsi} path={["Task", "finished"]} />
+                </Uu5Elements.Button>
+              : 
+                <Uu5Elements.Button
+                  significance="highlighted"
+                  colorScheme="blue"
+                  icon="uugds-check"
+                  onClick={handleComplete}
+                >
+                  <Lsi import={importLsi} path={["Task", "finish"]} />
+                </Uu5Elements.Button>
+              }
+
+              {/* Delete button */}
               <Uu5Elements.Button
                 style={{marginLeft: 5}}
                 significance="highlighted"
                 colorScheme="red"
                 icon="mdi-trash-can"
+                onClick={handleRemove}
               />
             </div>
           </div>

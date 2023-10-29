@@ -37,6 +37,9 @@
     "add": "Add task",
     "showFinished": "Show finished tasks",
     "addedBy": "Added by",
-    "finish": "Finish"
+    "finish": "Finish",
+    "finished": "Finished",
+    "taskName": "Task name",
+    "cancelAdd": "Cancel"
   }
 }

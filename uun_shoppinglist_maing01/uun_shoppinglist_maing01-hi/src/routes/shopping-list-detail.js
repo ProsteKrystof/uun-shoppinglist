@@ -1,6 +1,7 @@
 //@@viewOn:imports
 import { createVisualComponent, Utils, Content } from "uu5g05";
 import Config from "./config/config.js";
+import ListDataProvider from "../bricks/shopping-list/list-data-provider.js";
 import TasksView from "../bricks/task/tasks-view.js";
 //@@viewOff:imports
 
@@ -46,7 +47,9 @@ const ShoppingListDetail = createVisualComponent({
       <div {...attrs}>
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
 
-        <TasksView />
+        <ListDataProvider>
+          {({shoppingList, taskFunctions}) => <TasksView shoppingList={shoppingList} taskFunctions={taskFunctions} />}
+        </ListDataProvider>
       </div>
     ) : null;
     //@@viewOff:render

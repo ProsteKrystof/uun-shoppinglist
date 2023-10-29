@@ -37,6 +37,9 @@
     "add": "Přidat položku",
     "showFinished": "Zobrazit dokončené položky",
     "addedBy": "Přidal",
-    "finish": "Dokončit"
+    "finish": "Dokončit",
+    "finished": "Dokončeno",
+    "taskName": "Název položky",
+    "cancelAdd": "Zrušit"
   }
 }

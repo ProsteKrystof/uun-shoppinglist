@@ -51,8 +51,8 @@ const TasksView = createVisualComponent({
           className={Config.Css.css({ padding: 16, margin: 50 })}
           borderRadius="expressive"
         >
-          <TasksOptions name="Nákupní seznam 1" />
-          <TaskList />
+          <TasksOptions name={props.shoppingList.name} color={props.shoppingList.color} addTask={props.taskFunctions.createTask} />
+          <TaskList tasks={props.shoppingList.tasks} taskFunctions={props.taskFunctions} />
         </Uu5Elements.Box>
 
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
