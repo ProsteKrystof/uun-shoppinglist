@@ -41,16 +41,6 @@ const AddTaskModal = createVisualComponent({
       const values = { ...event.data.value };
       return props.onSubmit(values);
     }
-
-    function handleValidate(event) {
-      const { name } = event.data.value;
-
-      if (!name) {
-        return {
-          message: "No name",
-        };
-      }
-    }
     //@@viewOff:private
 
     //@@viewOn:interface

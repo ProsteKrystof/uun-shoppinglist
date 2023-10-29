@@ -56,6 +56,7 @@ const TasksView = createVisualComponent({
           <TasksOptions
             shoppingList={props.shoppingList}
             addTask={props.taskFunctions.createTask}
+            updateShoppingList={props.updateShoppingList}
             showCompleted={showCompleted}
             setShowCompleted={setShowCompleted}
           />

@@ -3,6 +3,7 @@ import { createVisualComponent, Utils, Content, useState, useSession, Lsi } from
 import Config from "./config/config.js";
 import Uu5Elements from "uu5g05-elements";
 import AddTaskModal from "./add-task-modal.js";
+import EditShoppingListModal from "../shopping-list/edit-shopping-list-modal.js";
 import importLsi from "../../lsi/import-lsi.js";
 //@@viewOff:imports
 
@@ -38,6 +39,8 @@ const TasksOptions = createVisualComponent({
     const { identity } = useSession();
     // add task modal
     const [showAddTaskModal, setShowAddTaskModal] = useState(false);
+    // edit shopping list modal
+    const [showEditShoppingListModal, setShowEditShoppingListModal] = useState(false);
     //@@viewOff:private
 
     //@@viewOn:interface
@@ -52,14 +55,22 @@ const TasksOptions = createVisualComponent({
       handleAddTaskClose();
     }
 
+    async function handleEditShoppingListSubmit(values) {
+      props.updateShoppingList(values)
+      handleEditShoppingListClose();
+    }
+
     const isOwner = props.shoppingList.ownerIdentity === identity.uuIdentity;
 
     const handleAddTaskOpen = () => setShowAddTaskModal(true);
     const handleAddTaskClose = () => setShowAddTaskModal(false);
 
+    const handleEditShoppingListOpen = () => setShowEditShoppingListModal(true);
+    const handleEditShoppingListClose = () => setShowEditShoppingListModal(false);
+
     return currentNestingLevel ? (
       <div {...attrs}>
-        <h1><Uu5Elements.Icon style={{color:props.shoppingList.color}} icon="uugds-circle-solid"/> {props.shoppingList.name}</h1>
+        <h1><Uu5Elements.Icon colorScheme={props.shoppingList.color} icon="uugds-circle-solid"/> {props.shoppingList.name}</h1>
         <div style={{ display: "flex", marginBottom: 10 }}>
           <Uu5Elements.Button
             significance="highlighted"
@@ -71,6 +82,7 @@ const TasksOptions = createVisualComponent({
             className={Config.Css.css({marginLeft: 10})}
             icon="uugds-settings"
             significance="highlighted"
+            onClick={handleEditShoppingListOpen}
           />
           {!isOwner && (<Uu5Elements.Button
             className={Config.Css.css({marginLeft: 10})}
@@ -92,6 +104,15 @@ const TasksOptions = createVisualComponent({
           <AddTaskModal
             onSubmit={handleAddTaskSubmit}
             onCancel={handleAddTaskClose}
+            open
+          />
+        )}
+
+        {showEditShoppingListModal && (
+          <EditShoppingListModal
+            shoppingList={props.shoppingList}
+            onSubmit={handleEditShoppingListSubmit}
+            onCancel={handleEditShoppingListClose}
             open
           />
         )}

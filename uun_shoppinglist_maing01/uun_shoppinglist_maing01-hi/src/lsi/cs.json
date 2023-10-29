@@ -33,6 +33,12 @@
     "home": "Vítejte",
     "about": "O aplikaci"
   },
+  "ShoppingList": {
+    "edit": "Upravit nákupní seznam",
+    "cancelEdit": "Zrušit",
+    "name": "Název",
+    "color": "Barva"
+  },
   "Task": {
     "add": "Přidat položku",
     "showFinished": "Zobrazit dokončené položky",

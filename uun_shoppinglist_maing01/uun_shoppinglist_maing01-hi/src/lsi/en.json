@@ -33,6 +33,12 @@
     "home": "Welcome",
     "about": "About Application"
   },
+  "ShoppingList": {
+    "edit": "Edit shopping list",
+    "cancelEdit": "Cancel",
+    "name": "Name",
+    "color": "Color"
+  },
   "Task": {
     "add": "Add task",
     "showFinished": "Show finished tasks",

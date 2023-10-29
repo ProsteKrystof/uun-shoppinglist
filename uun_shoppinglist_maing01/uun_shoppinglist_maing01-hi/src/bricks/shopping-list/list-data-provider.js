@@ -13,7 +13,7 @@ let initialShoppingListData = {
   ownerIdentity: "3119-2385-1", // UU ID majitele nákupního seznamu
   memberIdentities: ["1111-1111-1", "2222-2222-2"], // UU IDs členů nákupního seznamu
   name: "Nákupní seznam 1",
-  color: "#ad3024",
+  color: "red",
   archived: false,
   tasks: [
     {
@@ -67,6 +67,11 @@ const ListDataProvider = createComponent({
       newList.ownerIdentity = identity.uuIdentity;
       setShoppingList(newList);
     }, [])
+    
+    // shopping list
+    function updateShoppingList(newInfo) {
+      setShoppingList({...shoppingList, ...newInfo});
+    }
 
     // tasks
     const taskFunctions = {
@@ -104,7 +109,7 @@ const ListDataProvider = createComponent({
     //@@viewOff:interface
 
     //@@viewOn:render
-    const value = { shoppingList, taskFunctions };
+    const value = { shoppingList, taskFunctions, updateShoppingList };
     return typeof props.children === "function" ? props.children(value) : props.children;
     //@@viewOff:render
   },
