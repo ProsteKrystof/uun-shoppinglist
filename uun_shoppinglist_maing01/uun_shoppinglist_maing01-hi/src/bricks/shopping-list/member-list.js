@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, useState, useLsi } from "uu5g05";
+import { createVisualComponent, Utils, Content, PropTypes, useState, useLsi } from "uu5g05";
 import Uu5Elements from "uu5g05-elements";
 import MemberItem from "./member-item.js";
 import Config from "./config/config.js";
@@ -25,7 +25,11 @@ const MemberList = createVisualComponent({
   //@@viewOff:statics
 
   //@@viewOn:propTypes
-  propTypes: {},
+  propTypes: {
+    members: PropTypes.array.isRequired,
+    setMemberList: PropTypes.func.isRequired,
+    isOwner: PropTypes.bool.isRequired
+  },
   //@@viewOff:propTypes
 
   //@@viewOn:defaultProps

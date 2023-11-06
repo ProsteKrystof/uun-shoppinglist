@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, useState, useLsi, useRef } from "uu5g05";
+import { createVisualComponent, Utils, PropTypes, useState, useLsi, useRef } from "uu5g05";
 import { Form, FormText, Color, Label, SubmitButton, CancelButton } from "uu5g05-forms";
 import { Modal } from "uu5g05-elements";
 import MemberList from "./member-list.js";
@@ -70,7 +70,12 @@ const EditShoppingListModal = createVisualComponent({
   //@@viewOff:statics
 
   //@@viewOn:propTypes
-  propTypes: {},
+  propTypes: {
+    shoppingList: PropTypes.object.isRequired,
+    isOwner: PropTypes.bool.isRequired,
+    onSubmit: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired
+  },
   //@@viewOff:propTypes
 
   //@@viewOn:defaultProps

@@ -66,12 +66,12 @@ const ListDataProvider = createComponent({
       let newList = {...shoppingList};
       newList.ownerIdentity = identity.uuIdentity;
       setShoppingList(newList);
-    }, [])
+    }, []);
     
     // shopping list
     function updateShoppingList(newInfo) {
       setShoppingList({...shoppingList, ...newInfo});
-    }
+    };
 
     // tasks
     const taskFunctions = {
@@ -102,7 +102,7 @@ const ListDataProvider = createComponent({
   
         setShoppingList(newList);
       }
-    }
+    };
     //@@viewOff:private
 
     //@@viewOn:interface

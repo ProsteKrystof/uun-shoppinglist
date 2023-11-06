@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, useState } from "uu5g05";
+import { createVisualComponent, Utils, Content, PropTypes, useState } from "uu5g05";
 import Config from "./config/config.js";
 import Uu5Elements from "uu5g05-elements";
 import TasksOptions from "./tasks-options.js";
@@ -25,7 +25,15 @@ const TasksView = createVisualComponent({
   //@@viewOff:statics
 
   //@@viewOn:propTypes
-  propTypes: {},
+  propTypes: {
+    shoppingList: PropTypes.object.isRequired,
+    taskFunctions: PropTypes.shape({
+      createTask: PropTypes.func.isRequired,
+      completeTask: PropTypes.func.isRequired,
+      removeTask: PropTypes.func.isRequired,
+    }).isRequired,
+    updateShoppingList: PropTypes.func.isRequired,
+  },
   //@@viewOff:propTypes
 
   //@@viewOn:defaultProps
@@ -53,6 +61,11 @@ const TasksView = createVisualComponent({
           className={Config.Css.css({ padding: 16, margin: 50 })}
           borderRadius="expressive"
         >
+          <Uu5Elements.Box
+            colorScheme="green"
+            significance="highlighted"
+            width={126}
+          />
           <TasksOptions
             shoppingList={props.shoppingList}
             addTask={props.taskFunctions.createTask}

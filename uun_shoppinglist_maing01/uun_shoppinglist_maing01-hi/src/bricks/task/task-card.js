@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, Lsi } from "uu5g05";
+import { createVisualComponent, Utils, Content, PropTypes, Lsi } from "uu5g05";
 import Uu5Elements from "uu5g05-elements";
 import importLsi from "../../lsi/import-lsi.js";
 import Config from "./config/config.js";
@@ -24,7 +24,18 @@ const TaskCard = createVisualComponent({
   //@@viewOff:statics
 
   //@@viewOn:propTypes
-  propTypes: {},
+  propTypes: {
+    taskInfo: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      addedBy: PropTypes.string.isRequired,
+      completed: PropTypes.bool.isRequired
+    }).isRequired,
+    taskFunctions: PropTypes.shape({
+      completeTask: PropTypes.func.isRequired,
+      removeTask: PropTypes.func.isRequired,
+    }).isRequired
+  },
   //@@viewOff:propTypes
 
   //@@viewOn:defaultProps
@@ -56,7 +67,6 @@ const TaskCard = createVisualComponent({
         <Uu5Elements.Box
           className={Config.Css.css({ paddingLeft: 16, paddingBottom: 5, paddingTop: 1, marginBottom: 15 })}
           borderRadius="expressive"
-          colorScheme="grey"
           significance="distinct"
         >
           <h2 style={{marginBottom: 5}}>{props.taskInfo.name}</h2>

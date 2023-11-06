@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, useLsi } from "uu5g05";
+import { createVisualComponent, Utils, PropTypes, useLsi } from "uu5g05";
 import { Form, FormText, SubmitButton, CancelButton } from "uu5g05-forms";
 import { Modal } from "uu5g05-elements";
 import Config from "./config/config.js";
@@ -26,7 +26,10 @@ const AddTaskModal = createVisualComponent({
   //@@viewOff:statics
 
   //@@viewOn:propTypes
-  propTypes: {},
+  propTypes: {
+    onSubmit: PropTypes.func.isRequired,
+    onCancel: PropTypes.func.isRequired
+  },
   //@@viewOff:propTypes
 
   //@@viewOn:defaultProps

@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, useState, useSession, Lsi } from "uu5g05";
+import { createVisualComponent, Utils, Content, PropTypes, useState, useSession, Lsi } from "uu5g05";
 import Config from "./config/config.js";
 import Uu5Elements from "uu5g05-elements";
 import AddTaskModal from "./add-task-modal.js";
@@ -26,7 +26,13 @@ const TasksOptions = createVisualComponent({
   //@@viewOff:statics
 
   //@@viewOn:propTypes
-  propTypes: {},
+  propTypes: {
+    shoppingList: PropTypes.object.isRequired,
+    addTask: PropTypes.func.isRequired,
+    updateShoppingList: PropTypes.func.isRequired,
+    showCompleted: PropTypes.bool.isRequired,
+    setShowCompleted: PropTypes.func.isRequired
+  },
   //@@viewOff:propTypes
 
   //@@viewOn:defaultProps

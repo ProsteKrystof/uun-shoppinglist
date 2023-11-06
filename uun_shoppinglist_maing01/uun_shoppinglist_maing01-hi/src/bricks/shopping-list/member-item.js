@@ -1,6 +1,6 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content } from "uu5g05";
-import Uu5Elements, { InfoItem } from "uu5g05-elements";
+import { createVisualComponent, Utils, Content, PropTypes } from "uu5g05";
+import Uu5Elements from "uu5g05-elements";
 import Config from "./config/config.js";
 //@@viewOff:imports
 
@@ -23,7 +23,11 @@ const MemberItem = createVisualComponent({
   //@@viewOff:statics
 
   //@@viewOn:propTypes
-  propTypes: {},
+  propTypes: {
+    member: PropTypes.string.isRequired,
+    handleDelete: PropTypes.func.isRequired,
+    allowRemove: PropTypes.bool.isRequired
+  },
   //@@viewOff:propTypes
 
   //@@viewOn:defaultProps

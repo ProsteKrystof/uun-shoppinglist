@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content } from "uu5g05";
+import { createVisualComponent, Utils, Content, PropTypes } from "uu5g05";
 import Config from "./config/config.js";
 import TaskCard from "./task-card.js";
 //@@viewOff:imports
@@ -23,7 +23,15 @@ const TaskList = createVisualComponent({
   //@@viewOff:statics
 
   //@@viewOn:propTypes
-  propTypes: {},
+  propTypes: {
+    tasks: PropTypes.array.isRequired,
+    taskFunctions: PropTypes.shape({
+      createTask: PropTypes.func.isRequired,
+      completeTask: PropTypes.func.isRequired,
+      removeTask: PropTypes.func.isRequired,
+    }).isRequired,
+    showCompleted: PropTypes.bool.isRequired
+  },
   //@@viewOff:propTypes
 
   //@@viewOn:defaultProps
