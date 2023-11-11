@@ -4,6 +4,7 @@ import Config from "./config/config.js";
 import Uu5Elements from "uu5g05-elements";
 import TasksOptions from "./tasks-options.js";
 import TaskList from "./task-list.js";
+import { getSchemeColor } from "../utils.js";
 //@@viewOff:imports
 
 //@@viewOn:constants
@@ -46,26 +47,6 @@ const TasksView = createVisualComponent({
     const [showCompleted, setShowCompleted] = useState(false);
 
     const tasksToShow = showCompleted ? props.shoppingList.tasks : props.shoppingList.tasks.filter((task) => task.completed === false);
-
-    // needed for left color bar of task view
-    const listColors = {
-      "light-blue": "#039BE5",
-      "blue": "#1976D2",
-      "dark-blue": "#3949AB",
-      "dark-purple": "#5E35B1",
-      "cyan": "#00ACC1",
-      "dark-green": "#00897B",
-      "green": "#388E3C",
-      "light-green": "#7CB342",
-      "pink": "#D81B60",
-      "red": "#E53935",
-      "orange": "#EF6C00",
-      "yellow": "#FDD835",
-      "purple": "#8E24AA",
-      "brown": "#5D4037",
-      "steel": "#586D79",
-      "grey": "#616161"
-    }
     //@@viewOff:private
 
     //@@viewOn:interface
@@ -80,7 +61,7 @@ const TasksView = createVisualComponent({
         <Uu5Elements.Box
           className={Config.Css.css({ padding: 0, margin: 50 })}
           borderRadius="expressive"
-          style={{ backgroundColor: listColors[props.shoppingList.color] }}
+          style={{ backgroundColor: getSchemeColor(props.shoppingList.color) }}
         >
           <Uu5Elements.Box
             className={Config.Css.css({ padding: 16, marginLeft: 5 })}

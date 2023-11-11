@@ -9,14 +9,20 @@ import Home from "../routes/home.js";
 //@@viewOff:imports
 
 //@@viewOn:constants
+const ShoppingLists = Utils.Component.lazy(() => import("../routes/shopping-lists.js"));
 const ShoppingListDetail = Utils.Component.lazy(() => import("../routes/shopping-list-detail.js"));
 const About = Utils.Component.lazy(() => import("../routes/about.js"));
 const InitAppWorkspace = Utils.Component.lazy(() => import("../routes/init-app-workspace.js"));
 const ControlPanel = Utils.Component.lazy(() => import("../routes/control-panel.js"));
 
+const test = {
+  name: "testik",
+  desc: "testik"
+}
+
 const ROUTE_MAP = {
-  "": { redirect: "shoppingListDetail" },
-  home: (props) => <Home {...props} />,
+  "": { redirect: "shoppingLists" },
+  shoppingLists: (props) => <ShoppingLists {...props} test={test} />,
   shoppingListDetail: (props) => <ShoppingListDetail {...props} />,
   about: (props) => <About {...props} />,
   "sys/uuAppWorkspace/initUve": (props) => <InitAppWorkspace {...props} />,

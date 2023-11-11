@@ -34,10 +34,15 @@
     "about": "O aplikaci"
   },
   "ShoppingList": {
+    "yourShoppingLists": "Vaše nákupní seznamy",
+    "create": "Vytvořit nový",
     "edit": "Upravit nákupní seznam",
     "cancelEdit": "Zrušit",
+    "showArchived": "Zobrazit archivované seznamy",
     "name": "Název",
     "color": "Barva",
+    "owner": "Majitel",
+    "member": "Člen",
     "members": "Členové",
     "userIdentity": "uuIdentity uživatele",
     "addMember": "Přidat člena",

@@ -34,10 +34,15 @@
     "about": "About Application"
   },
   "ShoppingList": {
+    "yourShoppingLists": "Your shopping lists",
+    "create": "Create new",
     "edit": "Edit shopping list",
     "cancelEdit": "Cancel",
+    "showArchived": "Show archived lists",
     "name": "Name",
     "color": "Color",
+    "owner": "Owner",
+    "member": "Member",
     "members": "Members",
     "userIdentity": "User uuIdentity",
     "addMember": "Add member",
