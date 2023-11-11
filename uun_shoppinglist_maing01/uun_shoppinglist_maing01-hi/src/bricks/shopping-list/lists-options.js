@@ -2,6 +2,7 @@
 import { createVisualComponent, Utils, Content, PropTypes, useState, useSession, useLsi } from "uu5g05";
 import Config from "./config/config.js";
 import Uu5Elements from "uu5g05-elements";
+import EditShoppingListModal from "./edit-shopping-list-modal.js";
 import importLsi from "../../lsi/import-lsi.js";
 //@@viewOff:imports
 
@@ -38,6 +39,9 @@ const ListsOptions = createVisualComponent({
     //@@viewOn:private
     const { children } = props;
     const lsi = useLsi(importLsi, ["ShoppingList"]);
+
+    // edit shopping list modal
+    const [showEditShoppingListModal, setShowEditShoppingListModal] = useState(false);
     //@@viewOff:private
 
     //@@viewOn:interface
@@ -47,6 +51,14 @@ const ListsOptions = createVisualComponent({
     const attrs = Utils.VisualComponent.getAttrs(props, Css.main());
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, ListsOptions);
 
+    async function handleEditShoppingListSubmit(values) {
+      console.log("create list", values);
+      handleEditShoppingListClose();
+    }
+
+    const handleEditShoppingListOpen = () => setShowEditShoppingListModal(true);
+    const handleEditShoppingListClose = () => setShowEditShoppingListModal(false);
+
     return currentNestingLevel ? (
       <div {...attrs}>
         <h1><Uu5Elements.Icon icon="uugds-checkbox-list"/> {lsi.yourShoppingLists}</h1>
@@ -55,8 +67,8 @@ const ListsOptions = createVisualComponent({
             significance="highlighted"
             icon="uugds-plus"
             colorScheme="blue"
-            onClick={() => console.log("Click")}
-          >{lsi.create}</Uu5Elements.Button>
+            onClick={handleEditShoppingListOpen}
+          >{lsi.createNew}</Uu5Elements.Button>
 
           <Uu5Elements.Toggle
             label={lsi.showArchived}
@@ -66,6 +78,16 @@ const ListsOptions = createVisualComponent({
             onChange={(e) => props.setShowArchived(e.data.value)}
           />
         </div>
+
+        {showEditShoppingListModal && (
+          <EditShoppingListModal
+            isOwner={true}
+            onSubmit={handleEditShoppingListSubmit}
+            onCancel={handleEditShoppingListClose}
+            open
+          />
+        )}
+
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
       </div>
     ) : null;

@@ -71,7 +71,7 @@ const EditShoppingListModal = createVisualComponent({
 
   //@@viewOn:propTypes
   propTypes: {
-    shoppingList: PropTypes.object.isRequired,
+    shoppingList: PropTypes.object,
     isOwner: PropTypes.bool.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
@@ -85,8 +85,12 @@ const EditShoppingListModal = createVisualComponent({
   render(props) {
     //@@viewOn:private    
     const lsi = useLsi(importLsi, ["ShoppingList"]);
-    let selectedColor = useRef(props.shoppingList.color);
-    const [memberList, setMemberList] = useState(props.shoppingList.memberIdentities);
+
+    const editMode = props.shoppingList !== undefined;
+
+    let selectedColor = useRef(editMode ? props.shoppingList.color : "light-blue");
+    const [memberList, setMemberList] = useState(editMode ? props.shoppingList.memberIdentities : []);
+
 
     async function handleSubmit(event) {
       const values = { ...event.data.value, ...{color: selectedColor.current}, ...{memberIdentities: memberList} };
@@ -107,18 +111,19 @@ const EditShoppingListModal = createVisualComponent({
 
     const formControls = (
       <div className={Css.controls()}>
-        <CancelButton onClick={props.onCancel}>{lsi.cancelEdit}</CancelButton>
-        {props.isOwner && <SubmitButton>{lsi.edit}</SubmitButton>}
+        <CancelButton onClick={props.onCancel}>{lsi.cancel}</CancelButton>
+        {props.isOwner && <SubmitButton>{editMode ? lsi.edit : lsi.create}</SubmitButton>}
       </div>
     );
 
     return currentNestingLevel ? (
       <Form.Provider onSubmit={(handleSubmit)}>
-        <Modal header={lsi.edit} footer={formControls} open>
+        <Modal header={editMode ? lsi.edit : lsi.create} footer={formControls} open>
           <Form.View>
             <FormText
               label={lsi.name}
-              initialValue={props.shoppingList.name}
+              placeholder={lsi.name}
+              initialValue={editMode ? props.shoppingList.name : ""}
               name="name"
               maxLength={255}
               className={Css.input()}

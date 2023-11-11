@@ -26,7 +26,7 @@ const MemberList = createVisualComponent({
 
   //@@viewOn:propTypes
   propTypes: {
-    members: PropTypes.array.isRequired,
+    members: PropTypes.array,
     setMemberList: PropTypes.func.isRequired,
     isOwner: PropTypes.bool.isRequired
   },
@@ -118,7 +118,7 @@ const MemberList = createVisualComponent({
 
           {/* Member list */}
           {props.memberList?.map((member) => (
-            <MemberItem key={member.id} member={member} allowRemove={props.isOwner} handleDelete={handleMemberDeleteButton} />
+            <MemberItem key={member} member={member} allowRemove={props.isOwner} handleDelete={handleMemberDeleteButton} />
           ))}
         </Uu5Elements.Box>
         <Content nestingLevel={currentNestingLevel}>{children}</Content>

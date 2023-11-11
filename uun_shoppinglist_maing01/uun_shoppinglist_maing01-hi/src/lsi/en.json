@@ -35,9 +35,10 @@
   },
   "ShoppingList": {
     "yourShoppingLists": "Your shopping lists",
-    "create": "Create new",
+    "create": "Create shopping list",
+    "createNew": "Create new",
     "edit": "Edit shopping list",
-    "cancelEdit": "Cancel",
+    "cancel": "Cancel",
     "showArchived": "Show archived lists",
     "name": "Name",
     "color": "Color",

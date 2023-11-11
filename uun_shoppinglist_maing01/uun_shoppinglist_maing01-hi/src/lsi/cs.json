@@ -35,9 +35,10 @@
   },
   "ShoppingList": {
     "yourShoppingLists": "Vaše nákupní seznamy",
-    "create": "Vytvořit nový",
+    "create": "Vytvořit nákupní seznam",
+    "createNew": "Vytvořit nový",
     "edit": "Upravit nákupní seznam",
-    "cancelEdit": "Zrušit",
+    "cancel": "Zrušit",
     "showArchived": "Zobrazit archivované seznamy",
     "name": "Název",
     "color": "Barva",
