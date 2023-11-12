@@ -25,6 +25,26 @@
       "sys/uuAppWorkspace/initUve": {
         "sysStateList": ["created"],
         "profileList": ["Public", "AwidLicenseOwner"]
+      },
+      "task/create": {
+        "sysStateList": ["active"],
+        "profileList": ["Authenticated"]
+      },
+      "task/delete": {
+        "sysStateList": ["active"],
+        "profileList": ["Authenticated"]
+      },
+      "task/finish": {
+        "sysStateList": ["active"],
+        "profileList": ["Authenticated"]
+      },
+      "task/get": {
+        "sysStateList": ["active"],
+        "profileList": ["Authenticated"]
+      },
+      "task/list": {
+        "sysStateList": ["active"],
+        "profileList": ["Authenticated"]
       }
     }
   }

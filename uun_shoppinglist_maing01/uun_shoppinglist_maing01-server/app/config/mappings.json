@@ -25,6 +25,31 @@
         "realization": "index.html",
         "httpMethod": "GET",
         "type": "UVE"
+      },
+      "task/create": {
+        "realization": "api/controllers/TaskController.create",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "task/delete": {
+        "realization": "api/controllers/TaskController.delete",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "task/finish": {
+        "realization": "api/controllers/TaskController.finish",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "task/get": {
+        "realization": "api/controllers/TaskController.get",
+        "httpMethod": "GET",
+        "type": "CMD"
+      },
+      "task/list": {
+        "realization": "api/controllers/TaskController.list",
+        "httpMethod": "GET",
+        "type": "CMD"
       }
     }
   }
