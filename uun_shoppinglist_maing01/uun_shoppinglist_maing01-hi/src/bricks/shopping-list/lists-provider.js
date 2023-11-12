@@ -79,13 +79,55 @@ const ListsProvider = createComponent({
   render(props) {
     //@@viewOn:private
     const [shoppingLists, setShoppingLists] = useState(initialShoppingLists);
+
+    function createList(list) {
+      // nahodne nastaveni poctu ukolu a dokoncenych ukolu pro ucely testovani
+      const randomTotalTasks = Math.floor(Math.random() * 10);
+      const randomCompletedTasks = Math.floor(Math.random() * randomTotalTasks);
+
+      const newList = {
+        ...list,
+        id: Utils.String.generateId(),
+        sys: {
+          cts: new Date(),
+          mts: new Date(),
+          rev: 0
+        },
+        archived: false,
+        totalTasks: randomTotalTasks,
+        completedTasks: randomCompletedTasks
+      };
+      console.log(newList);
+      setShoppingLists((prevState) => [...prevState, newList]);
+    }
+
+    function archiveList(listId) {
+      const newList = shoppingLists.map((list) => {
+        if (list.id === listId) {
+          list.archived = true;
+        }
+        return list;
+      });
+      setShoppingLists(newList);
+    }
+
+    function deleteList(listId) {
+      const newList = shoppingLists.filter((list) => list.id !== listId);
+      setShoppingLists(newList);
+    }
+
+    function leaveList(listId) {
+      // pro ucely testovani pouze vymaze list
+      const newList = shoppingLists.filter((list) => list.id !== listId);
+      setShoppingLists(newList);
+    }
     //@@viewOff:private
 
     //@@viewOn:interface
     //@@viewOff:interface
 
     //@@viewOn:render
-    const value = { shoppingLists };
+    const value = { shoppingLists, createList, archiveList, deleteList, leaveList };
     return typeof props.children === "function" ? props.children(value) : props.children;
     //@@viewOff:render
   },

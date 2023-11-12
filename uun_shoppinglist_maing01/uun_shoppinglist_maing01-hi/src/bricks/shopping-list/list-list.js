@@ -26,7 +26,10 @@ const ListList = createVisualComponent({
   //@@viewOn:propTypes
   propTypes: {
     lists: PropTypes.array.isRequired,
-    showArchived: PropTypes.bool.isRequired
+    showArchived: PropTypes.bool.isRequired,
+    archiveList: PropTypes.func.isRequired,
+    deleteList: PropTypes.func.isRequired,
+    leaveList: PropTypes.func.isRequired
   },
   //@@viewOff:propTypes
 
@@ -52,7 +55,7 @@ const ListList = createVisualComponent({
           data={props.lists}
           emptyState={<div>There are no lists.</div>}
         >
-          <ListCard />
+          <ListCard archiveList={props.archiveList} deleteList={props.deleteList} leaveList={props.leaveList} />
         </Grid>
 
         <Content nestingLevel={currentNestingLevel}>{children}</Content>

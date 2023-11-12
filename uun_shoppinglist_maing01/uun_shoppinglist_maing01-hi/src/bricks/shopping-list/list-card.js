@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, PropTypes, useSession, useLsi } from "uu5g05";
+import { createVisualComponent, Utils, Content, PropTypes, useSession, useState, useLsi } from "uu5g05";
 import Uu5Elements from "uu5g05-elements";
 import importLsi from "../../lsi/import-lsi.js";
 import ProgressTracker from "../task/progress-tracker.js";
@@ -26,7 +26,10 @@ const ListCard = createVisualComponent({
   //@@viewOff:statics
 
   //@@viewOn:propTypes
-  propTypes: {},
+  propTypes: {
+    archiveList: PropTypes.func.isRequired,
+    deleteList: PropTypes.func.isRequired
+  },
   //@@viewOff:propTypes
 
   //@@viewOn:defaultProps
@@ -39,6 +42,24 @@ const ListCard = createVisualComponent({
     const listDataObject = props.data;
     const { identity } = useSession();
     const lsi = useLsi(importLsi, ["ShoppingList"]);
+
+    const [archiveDialogOpen, setArchiveDialogOpen] = useState(false);
+
+    const isOwner = listDataObject.ownerIdentity === identity.uuIdentity;
+    const canBeArchived = isOwner && !listDataObject.archived;
+    const canBeDeleted = isOwner && listDataObject.archived;
+
+    function handleArchive() {
+      props.archiveList(listDataObject.id);
+    }
+
+    function handleDelete() {
+      props.deleteList(listDataObject.id);
+    }
+
+    function handleLeave() {
+      props.leaveList(listDataObject.id);
+    }
     //@@viewOff:private
 
     //@@viewOn:interface
@@ -61,13 +82,18 @@ const ListCard = createVisualComponent({
             borderRadius="expressive"
             significance="distinct"
           >
-            {
-              listDataObject.archived ? (
-                <h2 style={{marginBottom: 5, color: "grey"}}> <Uu5Elements.Icon icon={"mdi-archive"} /> {listDataObject.name}</h2>
-              ) : (
-                <h2 style={{marginBottom: 5}}>{listDataObject.name}</h2>
-              )
-            }
+            <div style={{display: "flex"}}>
+              {
+                listDataObject.archived ? (
+                  <h2 style={{marginBottom: 5, color: "grey"}}> <Uu5Elements.Icon icon={"mdi-archive"} /> {listDataObject.name}</h2>
+                ) : (
+                  <h2 style={{marginBottom: 5}}>{listDataObject.name}</h2>
+                )
+              }
+              <div style={{marginLeft: "auto", marginRight: 16, marginTop: 16}}>
+                <ProgressTracker completedAmount={listDataObject.completedTasks} totalAmount={listDataObject.totalTasks} />
+              </div>
+            </div>
 
             <div style={{display: "flex"}}>
               {
@@ -78,11 +104,55 @@ const ListCard = createVisualComponent({
                 )
               }
               <div style={{marginLeft: "auto", marginRight: 16}}>
-                <ProgressTracker completedAmount={listDataObject.completedTasks} totalAmount={listDataObject.totalTasks} />
+                {canBeArchived && <Uu5Elements.Button
+                  style={{marginBottom: 5}}
+                  significance="highlighted"
+                  colorScheme="red"
+                  icon="mdi-archive"
+                  onClick={() => setArchiveDialogOpen(true)}
+                />}
+
+                {canBeDeleted && <Uu5Elements.Button
+                  style={{marginBottom: 5}}
+                  significance="highlighted"
+                  colorScheme="red"
+                  icon="mdi-trash-can"
+                  onClick={handleDelete}
+                />}
+
+                {!isOwner && <Uu5Elements.Button
+                  style={{marginBottom: 5}}
+                  significance="highlighted"
+                  colorScheme="red"
+                  icon="mdi-exit-to-app"
+                  onClick={handleLeave}
+                />}
               </div>
             </div>
           </Uu5Elements.Box>
         </Uu5Elements.Box>
+
+        {/* Archive shopping list dialog */}
+        <Uu5Elements.Dialog
+          open={archiveDialogOpen}
+          onClose={() => setArchiveDialogOpen(false)}
+          header={lsi.archiveHeader}
+          icon={<Uu5Elements.Svg code="uugdssvg-svg-folder" />}
+          info={lsi.archiveInfo}
+          actionDirection="horizontal"
+          actionList={[
+            {
+              children: lsi.archiveDeny,
+              significance: "distinct",
+            },
+            {
+              children: lsi.archive,
+              onClick: handleArchive,
+              colorScheme: "red",
+              significance: "highlighted",
+            },
+          ]}
+        />
 
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
       </div>

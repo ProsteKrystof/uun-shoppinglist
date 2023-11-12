@@ -26,7 +26,11 @@ const ListsView = createVisualComponent({
 
   //@@viewOn:propTypes
   propTypes: {
-    shoppingLists: PropTypes.array.isRequired
+    shoppingLists: PropTypes.array.isRequired,
+    createList: PropTypes.func.isRequired,
+    archiveList: PropTypes.func.isRequired,
+    deleteList: PropTypes.func.isRequired,
+    leaveList: PropTypes.func.isRequired
   },
   //@@viewOff:propTypes
 
@@ -38,6 +42,8 @@ const ListsView = createVisualComponent({
     //@@viewOn:private
     const { children } = props;
     const [showArchived, setShowArchived] = useState(false);
+
+    console.log(props);
 
     const listsToShow = showArchived ? props.shoppingLists : props.shoppingLists.filter((list) => list.archived === false);
     //@@viewOff:private
@@ -58,10 +64,14 @@ const ListsView = createVisualComponent({
           <ListsOptions
             showArchived={showArchived}
             setShowArchived={setShowArchived}
+            createList={props.createList}
           />
           <ListList
             lists={listsToShow}
             showArchived={showArchived}
+            archiveList={props.archiveList}
+            deleteList={props.deleteList}
+            leaveList={props.leaveList}
           />
         </Uu5Elements.Box>
 

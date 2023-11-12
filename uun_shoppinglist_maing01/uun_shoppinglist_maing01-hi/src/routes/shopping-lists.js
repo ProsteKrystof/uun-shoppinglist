@@ -44,14 +44,18 @@ let ShoppingLists = createVisualComponent({
     const attrs = Utils.VisualComponent.getAttrs(props, Css.main());
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, ShoppingLists);
 
-    console.log(props);
-
     return currentNestingLevel ? (
       <div {...attrs}>
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
 
         <ListsProvider>
-          {({ shoppingLists }) => <ListsView shoppingLists={shoppingLists} />}
+          {({ shoppingLists, createList, archiveList, deleteList, leaveList }) => <ListsView
+            shoppingLists={shoppingLists}
+            createList={createList}
+            archiveList={archiveList}
+            deleteList={deleteList}
+            leaveList={leaveList}
+          />}
         </ListsProvider>
       </div>
     ) : null;

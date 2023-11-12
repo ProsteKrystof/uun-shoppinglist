@@ -39,7 +39,9 @@
     "createNew": "Vytvořit nový",
     "edit": "Upravit nákupní seznam",
     "cancel": "Zrušit",
+    "archive": "Archivovat",
     "showArchived": "Zobrazit archivované seznamy",
+    "delete": "Smazat",
     "name": "Název",
     "color": "Barva",
     "owner": "Majitel",
@@ -51,8 +53,11 @@
     "memberAlreadyExists": "Tato uuIdentity je již přidaná v seznamu členů.",
     "leaveHeader": "Opustit tento seznam?",
     "leaveInfo": "Po opuštění již tento seznam nepůjde zobrazit.",
-    "leaveConfirm": "Opustit",
-    "leaveDeny": "Zrušit"
+    "leave": "Opustit",
+    "leaveDeny": "Zrušit",
+    "archiveHeader": "Archivovat tento seznam?",
+    "archiveInfo": "Po archivaci již tento seznam nepůjde zobrazit.",
+    "archiveDeny": "Zrušit"
   },
   "Task": {
     "add": "Přidat položku",

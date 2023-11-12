@@ -27,7 +27,8 @@ const ListsOptions = createVisualComponent({
   //@@viewOn:propTypes
   propTypes: {
     showArchived: PropTypes.bool.isRequired,
-    setShowArchived: PropTypes.func.isRequired
+    setShowArchived: PropTypes.func.isRequired,
+    createList: PropTypes.func.isRequired
   },
   //@@viewOff:propTypes
 
@@ -39,6 +40,7 @@ const ListsOptions = createVisualComponent({
     //@@viewOn:private
     const { children } = props;
     const lsi = useLsi(importLsi, ["ShoppingList"]);
+    const { identity } = useSession();
 
     // edit shopping list modal
     const [showEditShoppingListModal, setShowEditShoppingListModal] = useState(false);
@@ -52,7 +54,8 @@ const ListsOptions = createVisualComponent({
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, ListsOptions);
 
     async function handleEditShoppingListSubmit(values) {
-      console.log("create list", values);
+      props.createList({...values, ...{ownerIdentity: identity.uuIdentity}})
+
       handleEditShoppingListClose();
     }
 

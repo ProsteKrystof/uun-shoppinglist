@@ -39,7 +39,9 @@
     "createNew": "Create new",
     "edit": "Edit shopping list",
     "cancel": "Cancel",
+    "archive": "Archive",
     "showArchived": "Show archived lists",
+    "delete": "Delete",
     "name": "Name",
     "color": "Color",
     "owner": "Owner",
@@ -51,8 +53,11 @@
     "memberAlreadyExists": "This uuIdentity is already added in member list.",
     "leaveHeader": "Leave this shopping list?",
     "leaveInfo": "You will not be able to view this shopping list after leaving.",
-    "leaveConfirm": "Leave",
-    "leaveDeny": "Cancel"
+    "leave": "Leave",
+    "leaveDeny": "Cancel",
+    "archiveHeader": "Archive this shopping list?",
+    "archiveInfo": "You will not be able to view this shopping list after archiving.",
+    "archiveDeny": "Cancel"
   },
   "Task": {
     "add": "Add task",

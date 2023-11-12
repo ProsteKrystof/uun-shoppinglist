@@ -155,7 +155,7 @@ const TasksOptions = createVisualComponent({
               significance: "distinct",
             },
             {
-              children: <Lsi import={importLsi} path={["ShoppingList", "leaveConfirm"]} />,
+              children: <Lsi import={importLsi} path={["ShoppingList", "leave"]} />,
               onClick: handleLeaveShoppingList,
               colorScheme: "red",
               significance: "highlighted",
