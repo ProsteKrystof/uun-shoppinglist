@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createComponent, Utils, Content, useState } from "uu5g05";
+import { createComponent, Utils, useState, useEffect, useSession } from "uu5g05";
 import Config from "./config/config.js";
 //@@viewOff:imports
 
@@ -13,26 +13,11 @@ let initialShoppingLists = [
     },
     ownerIdentity: "3119-2385-1", // UU ID majitele nákupního seznamu
     memberIdentities: ["1111-1111-1", "2222-2222-2"], // UU IDs členů nákupního seznamu
-    name: "Nákupní seznam 1",
+    name: "Nákupní seznam na víkend",
     color: "red",
     archived: false,
     totalTasks: 3,
     completedTasks: 1
-  },
-  {
-    id: Utils.String.generateId(),
-    sys: {
-      cts: "2023-10-27 18:50:13.532Z",
-      mts: "2023-10-27 18:51:42.128Z",
-      rev: 0
-    },
-    ownerIdentity: "3911-9463-333-0000", // UU ID majitele nákupního seznamu
-    memberIdentities: ["1111-1111-1", "2222-2222-2"], // UU IDs členů nákupního seznamu
-    name: "Nákupní seznam 2",
-    color: "yellow",
-    archived: false,
-    totalTasks: 4,
-    completedTasks: 4
   },
   {
     id: Utils.String.generateId(),
@@ -43,8 +28,8 @@ let initialShoppingLists = [
     },
     ownerIdentity: "3119-2385-1", // UU ID majitele nákupního seznamu
     memberIdentities: ["1111-1111-1", "2222-2222-2"], // UU IDs členů nákupního seznamu
-    name: "Nákupní seznam 3",
-    color: "green",
+    name: "Tesco nákupy",
+    color: "blue",
     archived: true,
     totalTasks: 8,
     completedTasks: 5
@@ -55,9 +40,6 @@ let initialShoppingLists = [
 //@@viewOff:constants
 
 //@@viewOn:css
-const Css = {
-  main: () => Config.Css.css({}),
-};
 //@@viewOff:css
 
 //@@viewOn:helpers
@@ -79,6 +61,17 @@ const ListsProvider = createComponent({
   render(props) {
     //@@viewOn:private
     const [shoppingLists, setShoppingLists] = useState(initialShoppingLists);
+    const { identity } = useSession();
+
+    useEffect(() => {
+      // pro ucely testovani vytvori novy seznam a nastavi momentalni uuId jako majitele
+      createList({
+        ownerIdentity: identity.uuIdentity,
+        name: "Nákupní seznam na týden",
+        color: "yellow",
+        memberIdentities: []
+      })
+    }, []);
 
     function createList(list) {
       // nahodne nastaveni poctu ukolu a dokoncenych ukolu pro ucely testovani

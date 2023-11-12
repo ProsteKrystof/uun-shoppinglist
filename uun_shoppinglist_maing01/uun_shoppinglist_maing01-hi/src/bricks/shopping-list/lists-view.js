@@ -43,8 +43,6 @@ const ListsView = createVisualComponent({
     const { children } = props;
     const [showArchived, setShowArchived] = useState(false);
 
-    console.log(props);
-
     const listsToShow = showArchived ? props.shoppingLists : props.shoppingLists.filter((list) => list.archived === false);
     //@@viewOff:private
 
