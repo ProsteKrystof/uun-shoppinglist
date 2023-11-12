@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createComponent, Utils, useState, useEffect, useSession } from "uu5g05";
+import { createComponent, Utils, PropTypes, useState, useEffect, useSession } from "uu5g05";
 import Config from "./config/config.js";
 //@@viewOff:imports
 
@@ -49,7 +49,9 @@ const ListDataProvider = createComponent({
   //@@viewOff:statics
 
   //@@viewOn:propTypes
-  propTypes: {},
+  propTypes: {
+    id: PropTypes.string.isRequired
+  },
   //@@viewOff:propTypes
 
   //@@viewOn:defaultProps
@@ -66,6 +68,9 @@ const ListDataProvider = createComponent({
       let newList = {...shoppingList};
       newList.ownerIdentity = identity.uuIdentity;
       setShoppingList(newList);
+
+      // vypsat ID seznamu k ziskani (bude pouzito pro ziskani dat ze backendu)
+      console.log("ID seznamu k ziskani: " + props.id);
     }, []);
     
     // shopping list

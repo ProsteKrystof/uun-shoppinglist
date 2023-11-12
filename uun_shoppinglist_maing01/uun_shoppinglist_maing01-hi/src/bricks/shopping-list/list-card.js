@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, PropTypes, useSession, useState, useLsi } from "uu5g05";
+import { createVisualComponent, Utils, Content, PropTypes, useSession, useState, useRoute, useLsi } from "uu5g05";
 import Uu5Elements from "uu5g05-elements";
 import importLsi from "../../lsi/import-lsi.js";
 import ProgressTracker from "../task/progress-tracker.js";
@@ -42,6 +42,7 @@ const ListCard = createVisualComponent({
     const { children } = props;
     const listDataObject = props.data;
     const { identity } = useSession();
+    const [route, setRoute] = useRoute();
     const lsi = useLsi(importLsi, ["ShoppingList"]);
 
     const [archiveDialogOpen, setArchiveDialogOpen] = useState(false);
@@ -63,6 +64,21 @@ const ListCard = createVisualComponent({
     function handleLeave() {
       props.leaveList(listDataObject.id);
     }
+
+    function handleArchiveButton(event) {
+      event.stopPropagation();
+      setArchiveDialogOpen(true);
+    }
+
+    function handleDeleteButton(event) {
+      event.stopPropagation();
+      setDeleteDialogOpen(true);
+    }
+
+    function handleLeaveButton(event) {
+      event.stopPropagation();
+      setLeaveDialogOpen(true);
+    }
     //@@viewOff:private
 
     //@@viewOn:interface
@@ -79,6 +95,7 @@ const ListCard = createVisualComponent({
           borderRadius="expressive"
           significance="distinct"
           style={{ backgroundColor: getSchemeColor(listDataObject.color) }}
+          onClick={() => setRoute("shoppingListDetail", { id: listDataObject.id })}
         >
           <Uu5Elements.Box
             className={Config.Css.css({ paddingLeft: 16, paddingBottom: 5, paddingTop: 1, marginLeft: 5, marginRight: -2 })}
@@ -112,7 +129,7 @@ const ListCard = createVisualComponent({
                   significance="highlighted"
                   colorScheme="red"
                   icon="mdi-archive"
-                  onClick={() => setArchiveDialogOpen(true)}
+                  onClick={handleArchiveButton}
                 />}
 
                 {canBeDeleted && <Uu5Elements.Button
@@ -120,7 +137,7 @@ const ListCard = createVisualComponent({
                   significance="highlighted"
                   colorScheme="red"
                   icon="mdi-trash-can"
-                  onClick={() => setDeleteDialogOpen(true)}
+                  onClick={handleDeleteButton}
                 />}
 
                 {!isOwner && <Uu5Elements.Button
@@ -128,7 +145,7 @@ const ListCard = createVisualComponent({
                   significance="highlighted"
                   colorScheme="red"
                   icon="mdi-exit-to-app"
-                  onClick={() => setLeaveDialogOpen(true)}
+                  onClick={handleLeaveButton}
                 />}
               </div>
             </div>

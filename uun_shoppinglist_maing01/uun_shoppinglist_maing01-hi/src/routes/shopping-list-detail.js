@@ -48,8 +48,12 @@ let ShoppingListDetail = createVisualComponent({
       <div {...attrs}>
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
 
-        <ListDataProvider>
-          {({shoppingList, taskFunctions, updateShoppingList}) => <TasksView shoppingList={shoppingList} taskFunctions={taskFunctions} updateShoppingList={updateShoppingList} />}
+        <ListDataProvider id={props.params.id}>
+          {({shoppingList, taskFunctions, updateShoppingList}) => <TasksView
+            shoppingList={shoppingList}
+            taskFunctions={taskFunctions}
+            updateShoppingList={updateShoppingList}
+          />}
         </ListDataProvider>
       </div>
     ) : null;
