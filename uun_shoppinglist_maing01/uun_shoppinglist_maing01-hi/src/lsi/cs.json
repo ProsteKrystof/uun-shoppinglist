@@ -35,6 +35,7 @@
   },
   "ShoppingList": {
     "yourShoppingLists": "Vaše nákupní seznamy",
+    "noLists": "Žádné nákupní seznamy k zobrazení.",
     "create": "Vytvořit nákupní seznam",
     "createNew": "Vytvořit nový",
     "edit": "Upravit nákupní seznam",
@@ -57,7 +58,10 @@
     "leaveDeny": "Zrušit",
     "archiveHeader": "Archivovat tento seznam?",
     "archiveInfo": "Po archivaci již tento seznam nepůjde zobrazit.",
-    "archiveDeny": "Zrušit"
+    "archiveDeny": "Zrušit",
+    "deleteHeader": "Smazat tento seznam?",
+    "deleteInfo": "Tento seznam bude trvale smazán.",
+    "deleteDeny": "Zrušit"
   },
   "Task": {
     "add": "Přidat položku",

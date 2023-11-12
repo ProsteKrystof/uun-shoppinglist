@@ -1,8 +1,7 @@
 //@@viewOn:imports
 import { createVisualComponent, Utils, Content, PropTypes, useLsi } from "uu5g05";
+import Uu5Elements from "uu5g05-elements";
 import Config from "./config/config.js";
-import ListCard from "./list-card.js";
-import { Grid } from "uu5tilesg02-elements";
 import importLsi from "../../lsi/import-lsi.js";
 //@@viewOff:imports
 
@@ -18,19 +17,17 @@ const Css = {
 //@@viewOn:helpers
 //@@viewOff:helpers
 
-const ListList = createVisualComponent({
+const LeaveDialog = createVisualComponent({
   //@@viewOn:statics
-  uu5Tag: Config.TAG + "ListList",
+  uu5Tag: Config.TAG + "LeaveDialog",
   nestingLevel: ["areaCollection", "area"],
   //@@viewOff:statics
 
   //@@viewOn:propTypes
   propTypes: {
-    lists: PropTypes.array.isRequired,
-    showArchived: PropTypes.bool.isRequired,
-    archiveList: PropTypes.func.isRequired,
-    deleteList: PropTypes.func.isRequired,
-    leaveList: PropTypes.func.isRequired
+    leaveDialogOpen: PropTypes.bool.isRequired,
+    setLeaveDialogOpen: PropTypes.func.isRequired,
+    handleLeave: PropTypes.func.isRequired
   },
   //@@viewOff:propTypes
 
@@ -49,16 +46,30 @@ const ListList = createVisualComponent({
 
     //@@viewOn:render
     const attrs = Utils.VisualComponent.getAttrs(props, Css.main());
-    const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, ListList);
+    const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, LeaveDialog);
 
     return currentNestingLevel ? (
       <div {...attrs}>
-        <Grid
-          data={props.lists}
-          emptyState={<div>{lsi.noLists}</div>}
-        >
-          <ListCard archiveList={props.archiveList} deleteList={props.deleteList} leaveList={props.leaveList} />
-        </Grid>
+        <Uu5Elements.Dialog
+          open={props.leaveDialogOpen}
+          onClose={() => props.setLeaveDialogOpen(false)}
+          header={lsi.leaveHeader}
+          icon={<Uu5Elements.Svg code="uugdssvg-activity-problem" />}
+          info={lsi.leaveInfo}
+          actionDirection="horizontal"
+          actionList={[
+            {
+              children: lsi.leaveDeny,
+              significance: "distinct",
+            },
+            {
+              children: lsi.leave,
+              onClick: props.handleLeave,
+              colorScheme: "red",
+              significance: "highlighted",
+            },
+          ]}
+        />
 
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
       </div>
@@ -68,6 +79,6 @@ const ListList = createVisualComponent({
 });
 
 //@@viewOn:exports
-export { ListList };
-export default ListList;
+export { LeaveDialog };
+export default LeaveDialog;
 //@@viewOff:exports

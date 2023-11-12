@@ -3,6 +3,7 @@ import { createVisualComponent, Utils, Content, PropTypes, useSession, useState,
 import Uu5Elements from "uu5g05-elements";
 import importLsi from "../../lsi/import-lsi.js";
 import ProgressTracker from "../task/progress-tracker.js";
+import LeaveDialog from "./leave-dialog.js";
 import { getSchemeColor } from "../utils.js";
 import Config from "./config/config.js";
 //@@viewOff:imports
@@ -44,6 +45,8 @@ const ListCard = createVisualComponent({
     const lsi = useLsi(importLsi, ["ShoppingList"]);
 
     const [archiveDialogOpen, setArchiveDialogOpen] = useState(false);
+    const [leaveDialogOpen, setLeaveDialogOpen] = useState(false);
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
     const isOwner = listDataObject.ownerIdentity === identity.uuIdentity;
     const canBeArchived = isOwner && !listDataObject.archived;
@@ -117,7 +120,7 @@ const ListCard = createVisualComponent({
                   significance="highlighted"
                   colorScheme="red"
                   icon="mdi-trash-can"
-                  onClick={handleDelete}
+                  onClick={() => setDeleteDialogOpen(true)}
                 />}
 
                 {!isOwner && <Uu5Elements.Button
@@ -125,7 +128,7 @@ const ListCard = createVisualComponent({
                   significance="highlighted"
                   colorScheme="red"
                   icon="mdi-exit-to-app"
-                  onClick={handleLeave}
+                  onClick={() => setLeaveDialogOpen(true)}
                 />}
               </div>
             </div>
@@ -153,6 +156,31 @@ const ListCard = createVisualComponent({
             },
           ]}
         />
+
+        {/* Delete shopping list dialog */}
+        <Uu5Elements.Dialog
+          open={deleteDialogOpen}
+          onClose={() => setDeleteDialogOpen(false)}
+          header={lsi.deleteHeader}
+          icon={<Uu5Elements.Svg code="uugdssvg-svg-delete" />}
+          info={lsi.deleteInfo}
+          actionDirection="horizontal"
+          actionList={[
+            {
+              children: lsi.deleteDeny,
+              significance: "distinct",
+            },
+            {
+              children: lsi.delete,
+              onClick: handleDelete,
+              colorScheme: "red",
+              significance: "highlighted",
+            },
+          ]}
+        />
+
+        {/* Leave shopping list dialog */}
+        <LeaveDialog leaveDialogOpen={leaveDialogOpen} setLeaveDialogOpen={setLeaveDialogOpen} handleLeave={handleLeave} />
 
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
       </div>

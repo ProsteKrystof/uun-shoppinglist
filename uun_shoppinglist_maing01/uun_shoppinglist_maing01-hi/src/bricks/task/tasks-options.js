@@ -4,6 +4,7 @@ import Config from "./config/config.js";
 import Uu5Elements from "uu5g05-elements";
 import AddTaskModal from "./add-task-modal.js";
 import EditShoppingListModal from "../shopping-list/edit-shopping-list-modal.js";
+import LeaveDialog from "../shopping-list/leave-dialog.js";
 import importLsi from "../../lsi/import-lsi.js";
 //@@viewOff:imports
 
@@ -137,31 +138,7 @@ const TasksOptions = createVisualComponent({
           />
         )}
 
-        {/* Leave shopping list dialog */}
-        <Uu5Elements.Dialog
-          open={leaveDialogOpen}
-          onClose={() => setLeaveDialogOpen(false)}
-          header={
-            <Lsi import={importLsi} path={["ShoppingList", "leaveHeader"]} />
-          }
-          icon={<Uu5Elements.Svg code="uugdssvg-activity-problem" />}
-          info={
-            <Lsi import={importLsi} path={["ShoppingList", "leaveInfo"]} />
-          }
-          actionDirection="horizontal"
-          actionList={[
-            {
-              children: <Lsi import={importLsi} path={["ShoppingList", "leaveDeny"]} />,
-              significance: "distinct",
-            },
-            {
-              children: <Lsi import={importLsi} path={["ShoppingList", "leave"]} />,
-              onClick: handleLeaveShoppingList,
-              colorScheme: "red",
-              significance: "highlighted",
-            },
-          ]}
-        />
+        <LeaveDialog leaveDialogOpen={leaveDialogOpen} setLeaveDialogOpen={setLeaveDialogOpen} handleLeave={handleLeaveShoppingList} />
 
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
       </div>
