@@ -50,6 +50,41 @@
         "realization": "api/controllers/TaskController.list",
         "httpMethod": "GET",
         "type": "CMD"
+      },
+      "shoppinglist/create": {
+        "realization": "api/controllers/ShoppinglistController.create",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "shoppinglist/archive": {
+        "realization": "api/controllers/ShoppinglistController.archive",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "shoppinglist/delete": {
+        "realization": "api/controllers/ShoppinglistController.delete",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "shoppinglist/update": {
+        "realization": "api/controllers/ShoppinglistController.update",
+        "httpMethod": "POST",
+        "type": "CMD"
+      },
+      "shoppinglist/get": {
+        "realization": "api/controllers/ShoppinglistController.get",
+        "httpMethod": "GET",
+        "type": "CMD"
+      },
+      "shoppinglist/list": {
+        "realization": "api/controllers/ShoppinglistController.list",
+        "httpMethod": "GET",
+        "type": "CMD"
+      },
+      "shoppinglist/setMembers": {
+        "realization": "api/controllers/ShoppinglistController.setMembers",
+        "httpMethod": "POST",
+        "type": "CMD"
       }
     }
   }

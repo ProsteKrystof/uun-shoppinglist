@@ -2,7 +2,7 @@
 const ShoppinglistMainUseCaseError = require("./shoppinglist-main-use-case-error");
 
 const Create = {
-    UC_CODE: `${ShoppinglistMainUseCaseError.ERROR_PREFIX}task/create/`,
+    UC_CODE: `${ShoppinglistMainUseCaseError.ERROR_PREFIX}shoppinglist/create/`,
 
     InvalidDtoIn: class extends ShoppinglistMainUseCaseError {
         constructor() {
@@ -13,8 +13,20 @@ const Create = {
     },
 };
 
+const Archive = {
+    UC_CODE: `${ShoppinglistMainUseCaseError.ERROR_PREFIX}shoppinglist/archive/`,
+
+    InvalidDtoIn: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Archive.UC_CODE}invalidDtoIn`;
+            this.message = "DtoIn is not valid.";
+        }
+    },
+};
+
 const Delete = {
-    UC_CODE: `${ShoppinglistMainUseCaseError.ERROR_PREFIX}task/delete/`,
+    UC_CODE: `${ShoppinglistMainUseCaseError.ERROR_PREFIX}shoppinglist/delete/`,
 
     InvalidDtoIn: class extends ShoppinglistMainUseCaseError {
         constructor() {
@@ -25,20 +37,20 @@ const Delete = {
     },
 };
 
-const Finish = {
-    UC_CODE: `${ShoppinglistMainUseCaseError.ERROR_PREFIX}task/finish/`,
+const Update = {
+    UC_CODE: `${ShoppinglistMainUseCaseError.ERROR_PREFIX}shoppinglist/update/`,
 
     InvalidDtoIn: class extends ShoppinglistMainUseCaseError {
         constructor() {
             super(...arguments);
-            this.code = `${Finish.UC_CODE}invalidDtoIn`;
+            this.code = `${Update.UC_CODE}invalidDtoIn`;
             this.message = "DtoIn is not valid.";
         }
     },
 };
 
 const Get = {
-    UC_CODE: `${ShoppinglistMainUseCaseError.ERROR_PREFIX}task/get/`,
+    UC_CODE: `${ShoppinglistMainUseCaseError.ERROR_PREFIX}shoppinglist/get/`,
 
     InvalidDtoIn: class extends ShoppinglistMainUseCaseError {
         constructor() {
@@ -50,7 +62,7 @@ const Get = {
 };
 
 const List = {
-    UC_CODE: `${ShoppinglistMainUseCaseError.ERROR_PREFIX}task/list/`,
+    UC_CODE: `${ShoppinglistMainUseCaseError.ERROR_PREFIX}shoppinglist/list/`,
 
     InvalidDtoIn: class extends ShoppinglistMainUseCaseError {
         constructor() {
@@ -61,10 +73,24 @@ const List = {
     },
 };
 
+const SetMembers = {
+    UC_CODE: `${ShoppinglistMainUseCaseError.ERROR_PREFIX}shoppinglist/setMembers/`,
+
+    InvalidDtoIn: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${SetMembers.UC_CODE}invalidDtoIn`;
+            this.message = "DtoIn is not valid.";
+        }
+    },
+};
+
 module.exports = {
     Create,
+    Archive,
     Delete,
-    Finish,
+    Update,
     Get,
-    List
-}
+    List,
+    SetMembers
+};

@@ -45,6 +45,34 @@
       "task/list": {
         "sysStateList": ["active"],
         "profileList": ["Authenticated"]
+      },
+      "shoppinglist/create": {
+        "sysStateList": ["active"],
+        "profileList": ["Authenticated"]
+      },
+      "shoppinglist/archive": {
+        "sysStateList": ["active"],
+        "profileList": ["Authenticated"]
+      },
+      "shoppinglist/delete": {
+        "sysStateList": ["active"],
+        "profileList": ["Authenticated"]
+      },
+      "shoppinglist/update": {
+        "sysStateList": ["active"],
+        "profileList": ["Authenticated"]
+      },
+      "shoppinglist/get": {
+        "sysStateList": ["active"],
+        "profileList": ["Authenticated"]
+      },
+      "shoppinglist/list": {
+        "sysStateList": ["active"],
+        "profileList": ["Authenticated"]
+      },
+      "shoppinglist/setMembers": {
+        "sysStateList": ["active"],
+        "profileList": ["Authenticated"]
       }
     }
   }
