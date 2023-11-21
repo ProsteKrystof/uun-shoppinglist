@@ -23,6 +23,30 @@ const Archive = {
             this.message = "DtoIn is not valid.";
         }
     },
+
+    ShoppinglistDoesNotExist: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Archive.UC_CODE}shoppinglistDoesNotExist`;
+            this.message = "Shoppinglist does not exist.";
+        }
+    },
+
+    ShoppinglistIsAlreadyArchived: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Archive.UC_CODE}shoppinglistIsAlreadyArchived`;
+            this.message = "Shoppinglist is already archived.";
+        }
+    },
+
+    UserNotAuthorized: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Archive.UC_CODE}userNotAuthorized`;
+            this.message = "User is not authorized.";
+        }
+    }
 };
 
 const Delete = {
@@ -35,6 +59,30 @@ const Delete = {
             this.message = "DtoIn is not valid.";
         }
     },
+
+    ShoppinglistDoesNotExist: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Delete.UC_CODE}shoppinglistDoesNotExist`;
+            this.message = "Shoppinglist does not exist.";
+        }
+    },
+
+    UserNotAuthorized: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Delete.UC_CODE}userNotAuthorized`;
+            this.message = "User is not authorized.";
+        }
+    },
+
+    ShoppinglistIsNotArchived: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Delete.UC_CODE}shoppinglistIsNotArchived`;
+            this.message = "Shoppinglist is not archived.";
+        }
+    }
 };
 
 const Update = {
@@ -47,6 +95,30 @@ const Update = {
             this.message = "DtoIn is not valid.";
         }
     },
+
+    ShoppinglistDoesNotExist: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Update.UC_CODE}shoppinglistDoesNotExist`;
+            this.message = "Shoppinglist does not exist.";
+        }
+    },
+
+    UserNotAuthorized: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Update.UC_CODE}userNotAuthorized`;
+            this.message = "User is not authorized.";
+        }
+    },
+
+    ShoppinglistIsArchived: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Update.UC_CODE}shoppinglistIsArchived`;
+            this.message = "Shoppinglist is archived.";
+        }
+    }
 };
 
 const Get = {
@@ -59,6 +131,22 @@ const Get = {
             this.message = "DtoIn is not valid.";
         }
     },
+
+    ShoppinglistDoesNotExist: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Get.UC_CODE}shoppinglistDoesNotExist`;
+            this.message = "Shoppinglist does not exist.";
+        }
+    },
+
+    UserNotAuthorized: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Get.UC_CODE}userNotAuthorized`;
+            this.message = "User is not authorized.";
+        }
+    }
 };
 
 const List = {
@@ -83,6 +171,30 @@ const SetMembers = {
             this.message = "DtoIn is not valid.";
         }
     },
+
+    ShoppinglistDoesNotExist: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${SetMembers.UC_CODE}shoppinglistDoesNotExist`;
+            this.message = "Shoppinglist does not exist.";
+        }
+    },
+
+    UserNotAuthorized: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${SetMembers.UC_CODE}userNotAuthorized`;
+            this.message = "User is not authorized.";
+        }
+    },
+
+    ShoppinglistIsArchived: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${SetMembers.UC_CODE}shoppinglistIsArchived`;
+            this.message = "Shoppinglist is archived.";
+        }
+    }
 };
 
 module.exports = {

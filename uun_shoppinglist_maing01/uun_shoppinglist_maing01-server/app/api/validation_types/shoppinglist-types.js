@@ -1,8 +1,26 @@
 /* eslint-disable */
+const listColors = [
+    "light-blue",
+    "blue",
+    "dark-blue",
+    "dark-purple",
+    "cyan",
+    "dark-green",
+    "green",
+    "light-green",
+    "pink",
+    "red",
+    "orange",
+    "yellow",
+    "purple",
+    "brown",
+    "steel",
+    "grey"
+];
 
 const shoppinglistCreateDtoInType = shape({
     name: string(3, 255).isRequired(),
-    color: string(3, 255).isRequired(),
+    color: oneOf(listColors).isRequired(),
     members: array(shape({
         identity: uuIdentity().isRequired(),
         name: string(3, 255).isRequired()
@@ -20,7 +38,7 @@ const shoppinglistDeleteDtoInType = shape({
 const shoppinglistUpdateDtoInType = shape({
     listId: id().isRequired(),
     name: string(3, 255).isRequired(),
-    color: string(3, 255).isRequired()
+    color: oneOf(listColors).isRequired()
 });
 
 const shoppinglistGetDtoInType = shape({
@@ -28,7 +46,6 @@ const shoppinglistGetDtoInType = shape({
 });
 
 const shoppinglistListDtoInType = shape({
-    uuIdentity: uuIdentity().isRequired(),
     pageInfo: shape({
         pageIndex: integer().isRequired(),
         pageSize: integer().isRequired()

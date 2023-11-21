@@ -3,45 +3,31 @@ const ShoppinglistAbl = require("../../abl/shoppinglist-abl.js");
 
 class ShoppinglistController {
     create(ucEnv) {
-        const awid = ucEnv.getUri().getAwid();
-        const dtoIn = ucEnv.parameters;
-        return ShoppinglistAbl.create(awid, dtoIn);
+        return ShoppinglistAbl.create(ucEnv.getUri().getAwid(), ucEnv.getDtoIn(), ucEnv.getSession());
     }
 
     archive(ucEnv) {
-        const awid = ucEnv.getUri().getAwid();
-        const dtoIn = ucEnv.parameters;
-        return ShoppinglistAbl.archive(awid, dtoIn);
+        return ShoppinglistAbl.archive(ucEnv.getUri().getAwid(), ucEnv.getDtoIn(), ucEnv.getSession());
     }
 
     delete(ucEnv) {
-        const awid = ucEnv.getUri().getAwid();
-        const dtoIn = ucEnv.parameters;
-        return ShoppinglistAbl.delete(awid, dtoIn);
+        return ShoppinglistAbl.delete(ucEnv.getUri().getAwid(), ucEnv.getDtoIn(), ucEnv.getSession());
     }
 
     update(ucEnv) {
-        const awid = ucEnv.getUri().getAwid();
-        const dtoIn = ucEnv.parameters;
-        return ShoppinglistAbl.update(awid, dtoIn);
+        return ShoppinglistAbl.update(ucEnv.getUri().getAwid(), ucEnv.getDtoIn(), ucEnv.getSession());
     }
 
     get(ucEnv) {
-        const awid = ucEnv.getUri().getAwid();
-        const dtoIn = ucEnv.parameters;
-        return ShoppinglistAbl.get(awid, dtoIn);
+        return ShoppinglistAbl.get(ucEnv.getUri().getAwid(), ucEnv.getDtoIn(), ucEnv.getSession());
     }
 
     list(ucEnv) {
-        const awid = ucEnv.getUri().getAwid();
-        const dtoIn = ucEnv.parameters;
-        return ShoppinglistAbl.list(awid, dtoIn);
+        return ShoppinglistAbl.list(ucEnv.getUri().getAwid(), ucEnv.getDtoIn(), ucEnv.getSession());
     }
 
     setMembers(ucEnv) {
-        const awid = ucEnv.getUri().getAwid();
-        const dtoIn = ucEnv.parameters;
-        return ShoppinglistAbl.setMembers(awid, dtoIn);
+        return ShoppinglistAbl.setMembers(ucEnv.getUri().getAwid(), ucEnv.getDtoIn(), ucEnv.getSession());
     }
 }
 
