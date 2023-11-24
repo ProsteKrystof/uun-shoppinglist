@@ -228,6 +228,13 @@ class ShoppinglistAbl {
         // list shoppinglists
         const shoppinglists = await this.dao.listByUuIdentity(awid, uuIdentity, dtoIn.pageInfo);
 
+        // add taskAmount and finishedTaskAmount to shoppinglists
+        for (let shoppinglist of shoppinglists.itemList) {
+            const tasks = await this.taskDao.listByListId(awid, shoppinglist.id.toString(), { pageIndex: 0, pageSize: 1000 });
+            shoppinglist.taskAmount = tasks.itemList.length;
+            shoppinglist.finishedTaskAmount = tasks.itemList.filter(task => task.finished).length;
+        }
+
         // prepare and return dToOut
         const dToOut = { shoppinglists, uuAppErrorMap };
         return dToOut;
