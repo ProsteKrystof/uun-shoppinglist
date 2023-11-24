@@ -36,6 +36,11 @@ class TaskAbl {
             throw new Errors.Create.ShoppinglistDoesNotExist({ uuAppErrorMap }, { listId: dtoIn.listId });
         }
 
+        // check if shoppinglist is archived
+        if (shoppinglist.archived) {
+            throw new Errors.Create.ShoppinglistIsArchived({ uuAppErrorMap }, { listId: dtoIn.listId });
+        }
+
         // check if user is owner or member of shoppinglist
         if (shoppinglist.uuIdentity !== uuIdentity && shoppinglist.members.filter(member => member.identity === uuIdentity).length === 0) {
             throw new Errors.Create.UserNotAuthorized({ uuAppErrorMap }, { uuIdentity });
@@ -77,10 +82,20 @@ class TaskAbl {
             throw new Errors.Delete.TaskDoesNotExist({ uuAppErrorMap }, { id: dtoIn.taskId });
         }
 
-        // check if user is owner or member of shoppinglist
+        // check if shoppinglist exists
         const shoppinglist = await this.shoppinglistDao.get(awid, task.listId);
+        if (!shoppinglist) {
+            throw new Errors.Delete.ShoppinglistDoesNotExist({ uuAppErrorMap }, { listId: task.listId });
+        }
+
+        // check if user is owner or member of shoppinglist
         if (shoppinglist.uuIdentity !== uuIdentity && shoppinglist.members.filter(member => member.identity === uuIdentity).length === 0) {
             throw new Errors.Delete.UserNotAuthorized({ uuAppErrorMap }, { uuIdentity });
+        }
+
+        // check if shoppinglist is archived
+        if (shoppinglist.archived) {
+            throw new Errors.Delete.ShoppinglistIsArchived({ uuAppErrorMap }, { listId: dtoIn.listId });
         }
 
         // delete task
@@ -113,10 +128,20 @@ class TaskAbl {
             throw new Errors.Finish.TaskDoesNotExist({ uuAppErrorMap }, { id: dtoIn.taskId });
         }
 
-        // check if user is owner or member of shoppinglist
+        // check if shoppinglist exists
         const shoppinglist = await this.shoppinglistDao.get(awid, task.listId);
+        if (!shoppinglist) {
+            throw new Errors.Finish.ShoppinglistDoesNotExist({ uuAppErrorMap }, { listId: task.listId });
+        }
+
+        // check if user is owner or member of shoppinglist
         if (shoppinglist.uuIdentity !== uuIdentity && shoppinglist.members.filter(member => member.identity === uuIdentity).length === 0) {
             throw new Errors.Finish.UserNotAuthorized({ uuAppErrorMap }, { uuIdentity });
+        }
+
+        // check if shoppinglist is archived
+        if (shoppinglist.archived) {
+            throw new Errors.Finish.ShoppinglistIsArchived({ uuAppErrorMap }, { listId: dtoIn.listId });
         }
 
         // finish task

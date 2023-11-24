@@ -26,6 +26,14 @@ const Create = {
             this.code = `${Create.UC_CODE}userNotAuthorized`;
             this.message = "User is not authorized to create task.";
         }
+    },
+
+    ShoppinglistIsArchived: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Create.UC_CODE}shoppinglistIsArchived`;
+            this.message = "Shoppinglist is archived.";
+        }
     }
 };
 
@@ -54,6 +62,22 @@ const Delete = {
             this.code = `${Delete.UC_CODE}userNotAuthorized`;
             this.message = "User is not authorized to delete task.";
         }
+    },
+
+    ShoppinglistDoesNotExist: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Delete.UC_CODE}shoppinglistDoesNotExist`;
+            this.message = "Shoppinglist does not exist.";
+        }
+    },
+
+    ShoppinglistIsArchived: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Delete.UC_CODE}shoppinglistIsArchived`;
+            this.message = "Shoppinglist is archived.";
+        }
     }
 };
 
@@ -81,6 +105,22 @@ const Finish = {
             super(...arguments);
             this.code = `${Finish.UC_CODE}userNotAuthorized`;
             this.message = "User is not authorized to finish task.";
+        }
+    },
+
+    ShoppinglistDoesNotExist: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Finish.UC_CODE}shoppinglistDoesNotExist`;
+            this.message = "Shoppinglist does not exist.";
+        }
+    },
+
+    ShoppinglistIsArchived: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Finish.UC_CODE}shoppinglistIsArchived`;
+            this.message = "Shoppinglist is archived.";
         }
     }
 };
