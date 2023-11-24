@@ -1,6 +1,7 @@
 "use strict";
 const { Validator } = require("uu_appg01_server").Validation;
 const { ValidationHelper } = require("uu_appg01_server").AppServer;
+const { DaoFactory } = require("uu_appg01_server").ObjectStore;
 
 const Errors = require("../api/errors/task-error.js");
 const Warnings = require("../api/warnings/task-warning.js");
@@ -8,9 +9,11 @@ const Warnings = require("../api/warnings/task-warning.js");
 class TaskAbl {
     constructor() {
         this.validator = Validator.load();
+        this.dao = DaoFactory.getDao("task");
+        this.shoppinglistDao = DaoFactory.getDao("shoppinglist");
     }
 
-    create(awid, dtoIn) {
+    async create(awid, dtoIn, session) {
         let uuAppErrorMap = {};
 
         // validation of dToIn
@@ -23,15 +26,36 @@ class TaskAbl {
             Errors.Create.InvalidDtoIn
         )
 
-        // prepare and return dToOut
-        const dToOut = { ...dtoIn };
-        dToOut.awid = awid;
-        dToOut.uuAppErrorMap = uuAppErrorMap;
+        // get uuIdentity information from session
+        const uuIdentity = session.getIdentity().getUuIdentity();
+        const uuIdentityName = session.getIdentity().getName();
 
+        // check if shoppinglist exists
+        const shoppinglist = await this.shoppinglistDao.get(awid, dtoIn.listId);
+        if (!shoppinglist) {
+            throw new Errors.Create.ShoppinglistDoesNotExist({ uuAppErrorMap }, { listId: dtoIn.listId });
+        }
+
+        // check if user is owner or member of shoppinglist
+        if (shoppinglist.uuIdentity !== uuIdentity && shoppinglist.members.filter(member => member.identity === uuIdentity).length === 0) {
+            throw new Errors.Create.UserNotAuthorized({ uuAppErrorMap }, { uuIdentity });
+        }
+
+        // create task
+        const uuObject = {
+            ...dtoIn,
+            awid,
+            addedBy: uuIdentityName,
+            finished: false
+        }
+        const task = await this.dao.create(uuObject);
+
+        // prepare and return dToOut
+        const dToOut = { ...task, uuAppErrorMap};
         return dToOut;
     }
 
-    delete(awid, dtoIn) {
+    async delete(awid, dtoIn, session) {
         let uuAppErrorMap = {};
 
         // validation of dToIn
@@ -44,15 +68,30 @@ class TaskAbl {
             Errors.Create.InvalidDtoIn
         )
 
-        // prepare and return dToOut
-        const dToOut = { ...dtoIn };
-        dToOut.awid = awid;
-        dToOut.uuAppErrorMap = uuAppErrorMap;
+        // get uuIdentity information from session
+        const uuIdentity = session.getIdentity().getUuIdentity();
 
+        // check if task exists
+        const task = await this.dao.get(awid, dtoIn.taskId);
+        if (!task) {
+            throw new Errors.Delete.TaskDoesNotExist({ uuAppErrorMap }, { id: dtoIn.taskId });
+        }
+
+        // check if user is owner or member of shoppinglist
+        const shoppinglist = await this.shoppinglistDao.get(awid, task.listId);
+        if (shoppinglist.uuIdentity !== uuIdentity && shoppinglist.members.filter(member => member.identity === uuIdentity).length === 0) {
+            throw new Errors.Delete.UserNotAuthorized({ uuAppErrorMap }, { uuIdentity });
+        }
+
+        // delete task
+        const deletedTask = await this.dao.delete(awid, dtoIn.taskId);
+
+        // prepare and return dToOut
+        const dToOut = { ...deletedTask, uuAppErrorMap };
         return dToOut;
     }
 
-    finish(awid, dtoIn) {
+    async finish(awid, dtoIn, session) {
         let uuAppErrorMap = {};
 
         // validation of dToIn
@@ -65,15 +104,30 @@ class TaskAbl {
             Errors.Create.InvalidDtoIn
         )
 
-        // prepare and return dToOut
-        const dToOut = { ...dtoIn };
-        dToOut.awid = awid;
-        dToOut.uuAppErrorMap = uuAppErrorMap;
+        // get uuIdentity information from session
+        const uuIdentity = session.getIdentity().getUuIdentity();
 
+        // check if task exists
+        const task = await this.dao.get(awid, dtoIn.taskId);
+        if (!task) {
+            throw new Errors.Finish.TaskDoesNotExist({ uuAppErrorMap }, { id: dtoIn.taskId });
+        }
+
+        // check if user is owner or member of shoppinglist
+        const shoppinglist = await this.shoppinglistDao.get(awid, task.listId);
+        if (shoppinglist.uuIdentity !== uuIdentity && shoppinglist.members.filter(member => member.identity === uuIdentity).length === 0) {
+            throw new Errors.Finish.UserNotAuthorized({ uuAppErrorMap }, { uuIdentity });
+        }
+
+        // finish task
+        const finishedTask = await this.dao.update({ ...task, finished: true });
+
+        // prepare and return dToOut
+        const dToOut = { ...finishedTask, uuAppErrorMap };
         return dToOut;
     }
 
-    get(awid, dtoIn) {
+    async get(awid, dtoIn, session) {
         let uuAppErrorMap = {};
 
         // validation of dToIn
@@ -86,15 +140,27 @@ class TaskAbl {
             Errors.Create.InvalidDtoIn
         )
 
-        // prepare and return dToOut
-        const dToOut = { ...dtoIn };
-        dToOut.awid = awid;
-        dToOut.uuAppErrorMap = uuAppErrorMap;
+        // get uuIdentity information from session
+        const uuIdentity = session.getIdentity().getUuIdentity();
 
+        // check if task exists
+        const task = await this.dao.get(awid, dtoIn.taskId);
+        if (!task) {
+            throw new Errors.Get.TaskDoesNotExist({ uuAppErrorMap }, { id: dtoIn.taskId });
+        }
+
+        // check if user is owner or member of shoppinglist
+        const shoppinglist = await this.shoppinglistDao.get(awid, task.listId);
+        if (shoppinglist.uuIdentity !== uuIdentity && shoppinglist.members.filter(member => member.identity === uuIdentity).length === 0) {
+            throw new Errors.Get.UserNotAuthorized({ uuAppErrorMap }, { uuIdentity });
+        }
+
+        // prepare and return dToOut
+        const dToOut = { ...task, uuAppErrorMap };
         return dToOut;
     }
 
-    list(awid, dtoIn) {
+    async list(awid, dtoIn, session) {
         let uuAppErrorMap = {};
 
         // validation of dToIn
@@ -107,11 +173,25 @@ class TaskAbl {
             Errors.Create.InvalidDtoIn
         )
 
-        // prepare and return dToOut
-        const dToOut = { ...dtoIn };
-        dToOut.awid = awid;
-        dToOut.uuAppErrorMap = uuAppErrorMap;
+        // get uuIdentity information from session
+        const uuIdentity = session.getIdentity().getUuIdentity();
 
+        // check if shoppinglist exists
+        const shoppinglist = await this.shoppinglistDao.get(awid, dtoIn.listId);
+        if (!shoppinglist) {
+            throw new Errors.List.ShoppinglistDoesNotExist({ uuAppErrorMap }, { listId: dtoIn.listId });
+        }
+
+        // check if user is owner or member of shoppinglist
+        if (shoppinglist.uuIdentity !== uuIdentity && shoppinglist.members.filter(member => member.identity === uuIdentity).length === 0) {
+            throw new Errors.List.UserNotAuthorized({ uuAppErrorMap }, { uuIdentity });
+        }
+
+        // list tasks
+        const tasks = await this.dao.listByListId(awid, dtoIn.listId, dtoIn.pageInfo);
+
+        // prepare and return dToOut
+        const dToOut = { tasks, uuAppErrorMap };
         return dToOut;
     }
 }

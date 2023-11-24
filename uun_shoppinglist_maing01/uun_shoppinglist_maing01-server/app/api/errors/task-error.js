@@ -11,6 +11,22 @@ const Create = {
             this.message = "DtoIn is not valid.";
         }
     },
+
+    ShoppinglistDoesNotExist: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Create.UC_CODE}shoppinglistDoesNotExist`;
+            this.message = "Shoppinglist does not exist.";
+        }
+    },
+
+    UserNotAuthorized: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Create.UC_CODE}userNotAuthorized`;
+            this.message = "User is not authorized to create task.";
+        }
+    }
 };
 
 const Delete = {
@@ -23,6 +39,22 @@ const Delete = {
             this.message = "DtoIn is not valid.";
         }
     },
+
+    TaskDoesNotExist: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Delete.UC_CODE}taskDoesNotExist`;
+            this.message = "Task does not exist.";
+        }
+    },
+
+    UserNotAuthorized: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Delete.UC_CODE}userNotAuthorized`;
+            this.message = "User is not authorized to delete task.";
+        }
+    }
 };
 
 const Finish = {
@@ -35,6 +67,22 @@ const Finish = {
             this.message = "DtoIn is not valid.";
         }
     },
+
+    TaskDoesNotExist: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Finish.UC_CODE}taskDoesNotExist`;
+            this.message = "Task does not exist.";
+        }
+    },
+
+    UserNotAuthorized: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Finish.UC_CODE}userNotAuthorized`;
+            this.message = "User is not authorized to finish task.";
+        }
+    }
 };
 
 const Get = {
@@ -47,6 +95,22 @@ const Get = {
             this.message = "DtoIn is not valid.";
         }
     },
+
+    TaskDoesNotExist: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Get.UC_CODE}taskDoesNotExist`;
+            this.message = "Task does not exist.";
+        }
+    },
+
+    UserNotAuthorized: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Get.UC_CODE}userNotAuthorized`;
+            this.message = "User is not authorized to get task.";
+        }
+    }
 };
 
 const List = {
@@ -59,6 +123,22 @@ const List = {
             this.message = "DtoIn is not valid.";
         }
     },
+
+    ShoppinglistDoesNotExist: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${List.UC_CODE}shoppinglistDoesNotExist`;
+            this.message = "Shoppinglist does not exist.";
+        }
+    },
+
+    UserNotAuthorized: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${List.UC_CODE}userNotAuthorized`;
+            this.message = "User is not authorized to list tasks.";
+        }
+    }
 };
 
 module.exports = {

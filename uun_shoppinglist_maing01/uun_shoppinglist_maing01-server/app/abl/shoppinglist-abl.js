@@ -160,7 +160,8 @@ class ShoppinglistAbl {
         // update shoppinglist
         const uuObject = {
             ...shoppinglist,
-            ...dtoIn
+            name: dtoIn.name,
+            color: dtoIn.color
         }
         const updatedList = await this.dao.update(uuObject);
 

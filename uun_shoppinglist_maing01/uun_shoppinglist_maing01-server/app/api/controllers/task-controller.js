@@ -3,33 +3,23 @@ const TaskAbl = require("../../abl/task-abl.js");
 
 class TaskController {
     create(ucEnv) {
-        const awid = ucEnv.getUri().getAwid();
-        const dtoIn = ucEnv.parameters;
-        return TaskAbl.create(awid, dtoIn);
+        return TaskAbl.create(ucEnv.getUri().getAwid(), ucEnv.getDtoIn(), ucEnv.getSession());
     }
 
     delete(ucEnv) {
-        const awid = ucEnv.getUri().getAwid();
-        const dtoIn = ucEnv.parameters;
-        return TaskAbl.delete(awid, dtoIn);
+        return TaskAbl.delete(ucEnv.getUri().getAwid(), ucEnv.getDtoIn(), ucEnv.getSession());
     }
 
     finish(ucEnv) {
-        const awid = ucEnv.getUri().getAwid();
-        const dtoIn = ucEnv.parameters;
-        return TaskAbl.finish(awid, dtoIn);
+        return TaskAbl.finish(ucEnv.getUri().getAwid(), ucEnv.getDtoIn(), ucEnv.getSession());
     }
 
     get(ucEnv) {
-        const awid = ucEnv.getUri().getAwid();
-        const dtoIn = ucEnv.parameters;
-        return TaskAbl.get(awid, dtoIn);
+        return TaskAbl.get(ucEnv.getUri().getAwid(), ucEnv.getDtoIn(), ucEnv.getSession());
     }
 
     list(ucEnv) {
-        const awid = ucEnv.getUri().getAwid();
-        const dtoIn = ucEnv.parameters;
-        return TaskAbl.list(awid, dtoIn);
+        return TaskAbl.list(ucEnv.getUri().getAwid(), ucEnv.getDtoIn(), ucEnv.getSession());
     }
 }
 

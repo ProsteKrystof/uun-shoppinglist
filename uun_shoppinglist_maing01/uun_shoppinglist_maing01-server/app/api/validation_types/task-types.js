@@ -2,8 +2,7 @@
 
 const taskCreateDtoInType = shape({
     listId: id().isRequired(),
-    name: string(3, 255).isRequired(),
-    addedBy: string(3, 255).isRequired()
+    name: string(3, 255).isRequired()
 });
 
 const taskDeleteDtoInType = shape({
