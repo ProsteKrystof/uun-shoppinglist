@@ -15,6 +15,10 @@ class ShoppinglistMongo extends UuObjectDao {
         return await super.find({ awid }, pageInfo);
     }
 
+    async listByUuIdentity(awid, uuIdentity, pageInfo) {
+        return await super.find({ awid, $or: [{ uuIdentity }, { members: { $elemMatch: { identity: uuIdentity } } }] }, pageInfo);
+    }
+
     async update(shoppinglist) {
         return await super.findOneAndUpdate({ awid: shoppinglist.awid, id: shoppinglist.id }, shoppinglist, "NONE");
     }

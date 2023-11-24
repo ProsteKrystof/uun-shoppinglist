@@ -10,6 +10,7 @@ class ShoppinglistAbl {
     constructor() {
         this.validator = Validator.load();
         this.dao = DaoFactory.getDao("shoppinglist");
+        this.taskDao = DaoFactory.getDao("task");
     }
 
     async create(awid, dtoIn, session) {
@@ -117,6 +118,12 @@ class ShoppinglistAbl {
             throw new Errors.Delete.ShoppinglistIsNotArchived({ uuAppErrorMap }, { listId: dtoIn.listId });
         }
 
+        // delete all tasks of shoppinglist
+        const tasks = await this.taskDao.listByListId(awid, shoppinglist.id.toString(), { pageIndex: 0, pageSize: 1000 });
+        for (let task of tasks.itemList) {
+            await this.taskDao.delete(awid, task.id);
+        }
+
         // delete shoppinglist
         const deletedList = await this.dao.delete(shoppinglist.awid, shoppinglist.id);
 
@@ -219,15 +226,10 @@ class ShoppinglistAbl {
         const uuIdentity = session.getIdentity().getUuIdentity();
 
         // list shoppinglists
-        const shoppinglists = await this.dao.list(awid, dtoIn.pageInfo);
-
-        // filter shoppinglists by user
-        const filteredShoppinglists = shoppinglists.itemList.filter(
-            shoppinglist => shoppinglist.uuIdentity === uuIdentity || shoppinglist.members.filter(member => member.identity === uuIdentity).length > 0
-        );
+        const shoppinglists = await this.dao.listByUuIdentity(awid, uuIdentity, dtoIn.pageInfo);
 
         // prepare and return dToOut
-        const dToOut = { filteredShoppinglists, uuAppErrorMap };
+        const dToOut = { shoppinglists, uuAppErrorMap };
         return dToOut;
     }
 
