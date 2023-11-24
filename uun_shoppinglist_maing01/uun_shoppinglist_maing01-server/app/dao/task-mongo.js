@@ -1,7 +1,10 @@
 const { UuObjectDao } = require("uu_appg01_server").ObjectStore;
 
 class TaskMongo extends UuObjectDao {
-    async createSchema() {};
+    async createSchema() {
+        await super.createIndex({ awid: 1, id: 1 }, { unique: true });
+        await super.createIndex({ awid: 1, listId: 1 });
+    };
 
     async create(task) {
         return await super.insertOne(task);
