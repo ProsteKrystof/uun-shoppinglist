@@ -1,6 +1,7 @@
 //@@viewOn:imports
-import { createComponent, Utils, useState, useEffect, useSession } from "uu5g05";
+import { createComponent, Utils, useState, useEffect, useDataList, useSession } from "uu5g05";
 import Config from "./config/config.js";
+import Calls from "calls";
 //@@viewOff:imports
 
 let initialShoppingLists = [
@@ -90,7 +91,6 @@ const ListsProvider = createComponent({
         totalTasks: randomTotalTasks,
         completedTasks: randomCompletedTasks
       };
-      console.log(newList);
       setShoppingLists((prevState) => [...prevState, newList]);
     }
 

@@ -39,6 +39,70 @@ const Calls = {
     return await Calls.getWorkspace();
   },
 
+  Shoppinglist: {
+    list(dtoIn) {
+      const commandUri = Calls.getCommandUri("shoppinglist/list");
+      return Calls.call("get", commandUri, dtoIn);
+    },
+
+    get(dtoIn) {
+      const commandUri = Calls.getCommandUri("shoppinglist/get");
+      return Calls.call("get", commandUri, dtoIn);
+    },
+
+    create(dtoIn) {
+      const commandUri = Calls.getCommandUri("shoppinglist/create");
+      return Calls.call("post", commandUri, dtoIn);
+    },
+
+    update(dtoIn) {
+      const commandUri = Calls.getCommandUri("shoppinglist/update");
+      return Calls.call("post", commandUri, dtoIn);
+    },
+
+    delete(dtoIn) {
+      const commandUri = Calls.getCommandUri("shoppinglist/delete");
+      return Calls.call("post", commandUri, dtoIn);
+    },
+
+    archive(dtoIn) {
+      const commandUri = Calls.getCommandUri("shoppinglist/archive");
+      return Calls.call("post", commandUri, dtoIn);
+    },
+
+    setMembers(dtoIn) {
+      const commandUri = Calls.getCommandUri("shoppinglist/setMembers");
+      return Calls.call("post", commandUri, dtoIn);
+    }
+  },
+
+  Task: {
+    list(dtoIn) {
+      const commandUri = Calls.getCommandUri("task/list");
+      return Calls.call("get", commandUri, dtoIn);
+    },
+
+    get(dtoIn) {
+      const commandUri = Calls.getCommandUri("task/get");
+      return Calls.call("get", commandUri, dtoIn);
+    },
+
+    create(dtoIn) {
+      const commandUri = Calls.getCommandUri("task/create");
+      return Calls.call("post", commandUri, dtoIn);
+    },
+
+    delete(dtoIn) {
+      const commandUri = Calls.getCommandUri("task/delete");
+      return Calls.call("post", commandUri, dtoIn);
+    },
+
+    finish(dtoIn) {
+      const commandUri = Calls.getCommandUri("task/finish");
+      return Calls.call("post", commandUri, dtoIn);
+    }
+  },
+
   getCommandUri(useCase, baseUri = Environment.appBaseUri) {
     return (!baseUri.endsWith("/") ? baseUri + "/" : baseUri) + (useCase.startsWith("/") ? useCase.slice(1) : useCase);
   },
