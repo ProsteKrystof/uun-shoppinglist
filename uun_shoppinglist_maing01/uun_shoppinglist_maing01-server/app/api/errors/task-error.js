@@ -100,6 +100,14 @@ const Finish = {
         }
     },
 
+    TaskAlreadyFinished: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Finish.UC_CODE}taskAlreadyFinished`;
+            this.message = "Task is already finished.";
+        }
+    },
+
     UserNotAuthorized: class extends ShoppinglistMainUseCaseError {
         constructor() {
             super(...arguments);

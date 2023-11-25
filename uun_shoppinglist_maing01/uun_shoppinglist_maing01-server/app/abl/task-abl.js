@@ -128,6 +128,11 @@ class TaskAbl {
             throw new Errors.Finish.TaskDoesNotExist({ uuAppErrorMap }, { id: dtoIn.taskId });
         }
 
+        // check if task is already finished
+        if (task.finished) {
+            throw new Errors.Finish.TaskAlreadyFinished({ uuAppErrorMap }, { id: dtoIn.taskId });
+        }
+
         // check if shoppinglist exists
         const shoppinglist = await this.shoppinglistDao.get(awid, task.listId);
         if (!shoppinglist) {
