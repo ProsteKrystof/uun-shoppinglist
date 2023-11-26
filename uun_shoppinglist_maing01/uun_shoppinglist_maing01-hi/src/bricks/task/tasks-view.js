@@ -51,6 +51,9 @@ const TasksView = createVisualComponent({
     const attrs = Utils.VisualComponent.getAttrs(props, Css.main());
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, TasksView);
 
+    const listName = props.shoppingListDataObject.data.name;
+    document.title = listName ? listName + " | ShoppingLists" : "Shopping List | ShoppingLists";
+
     return currentNestingLevel ? (
       <div {...attrs}>
         <Uu5Elements.Box
