@@ -24,14 +24,16 @@ const ProgressTracker = createVisualComponent({
 
   //@@viewOn:propTypes
   propTypes: {
-    completedAmount: PropTypes.number.isRequired,
-    totalAmount: PropTypes.number.isRequired,
+    completedAmount: PropTypes.number,
+    totalAmount: PropTypes.number,
     showIcon: PropTypes.bool,
   },
   //@@viewOff:propTypes
 
   //@@viewOn:defaultProps
   defaultProps: {
+    completedAmount: 0,
+    totalAmount: 0,
     showIcon: true,
   },
   //@@viewOff:defaultProps

@@ -61,20 +61,51 @@ const ListsProvider = createComponent({
 
   render(props) {
     //@@viewOn:private
-    const [shoppingLists, setShoppingLists] = useState(initialShoppingLists);
-    const { identity } = useSession();
+    const shoppinglistDataList = useDataList({
+      handlerMap: {
+        load: handleLoad,
+        loadNext: handleLoadNext,
+        create: handleCreate
+      },
+      itemHandlerMap: {
+        update: handleUpdate,
+        delete: handleDelete,
+        archive: handleArchive,
+        leave: handleLeave
+      },
+      pageSize: 100
+    });
 
-    useEffect(() => {
-      // pro ucely testovani vytvori novy seznam a nastavi momentalni uuId jako majitele
-      createList({
-        ownerIdentity: identity.uuIdentity,
-        name: "Nákupní seznam na týden",
-        color: "yellow",
-        memberIdentities: []
-      })
-    }, []);
+    function handleLoad(dtoIn) {
+      dtoIn.pageInfo.pageIndex = 0;
+      return Calls.Shoppinglist.list(dtoIn);
+    }
 
-    function createList(list) {
+    function handleLoadNext(dtoIn) {
+      return Calls.Shoppinglist.list(dtoIn);
+    }
+
+    function handleCreate(dtoIn) {
+      return Calls.Shoppinglist.create(dtoIn);
+    }
+
+    function handleUpdate(dtoIn) {
+      return Calls.Shoppinglist.update(dtoIn);
+    }
+
+    function handleDelete(dtoIn) {
+      return Calls.Shoppinglist.delete(dtoIn);
+    }
+
+    function handleArchive(dtoIn) {
+      return Calls.Shoppinglist.archive(dtoIn);
+    }
+
+    function handleLeave(dtoIn) {
+      return Calls.Shoppinglist.leave(dtoIn);
+    }
+
+    /*function createList(list) {
       // nahodne nastaveni poctu ukolu a dokoncenych ukolu pro ucely testovani
       const randomTotalTasks = Math.floor(Math.random() * 10);
       const randomCompletedTasks = Math.floor(Math.random() * randomTotalTasks);
@@ -113,15 +144,16 @@ const ListsProvider = createComponent({
       // pro ucely testovani pouze vymaze list
       const newList = shoppingLists.filter((list) => list.id !== listId);
       setShoppingLists(newList);
-    }
+    }*/
     //@@viewOff:private
 
     //@@viewOn:interface
     //@@viewOff:interface
 
     //@@viewOn:render
-    const value = { shoppingLists, createList, archiveList, deleteList, leaveList };
-    return typeof props.children === "function" ? props.children(value) : props.children;
+    //const value = { shoppingLists, createList, archiveList, deleteList, leaveList };
+    console.log(shoppinglistDataList);
+    return typeof props.children === "function" ? props.children(shoppinglistDataList) : props.children;
     //@@viewOff:render
   },
 });

@@ -26,11 +26,7 @@ const ListsView = createVisualComponent({
 
   //@@viewOn:propTypes
   propTypes: {
-    shoppingLists: PropTypes.array.isRequired,
-    createList: PropTypes.func.isRequired,
-    archiveList: PropTypes.func.isRequired,
-    deleteList: PropTypes.func.isRequired,
-    leaveList: PropTypes.func.isRequired
+    shoppinglistDataList: PropTypes.object
   },
   //@@viewOff:propTypes
 
@@ -42,8 +38,6 @@ const ListsView = createVisualComponent({
     //@@viewOn:private
     const { children } = props;
     const [showArchived, setShowArchived] = useState(false);
-
-    const listsToShow = showArchived ? props.shoppingLists : props.shoppingLists.filter((list) => list.archived === false);
     //@@viewOff:private
 
     //@@viewOn:interface
@@ -52,6 +46,9 @@ const ListsView = createVisualComponent({
     //@@viewOn:render
     const attrs = Utils.VisualComponent.getAttrs(props, Css.main());
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, ListsView);
+
+    const shoppingLists = props.shoppinglistDataList.data.filter((item) => item !== undefined);
+    const listsToShow = showArchived ? shoppingLists : shoppingLists.filter((list) => list.archived === false);
 
     return currentNestingLevel ? (
       <div {...attrs}>
@@ -62,14 +59,12 @@ const ListsView = createVisualComponent({
           <ListsOptions
             showArchived={showArchived}
             setShowArchived={setShowArchived}
-            createList={props.createList}
+            shoppinglistDataList={props.shoppinglistDataList}
           />
           <ListList
             lists={listsToShow}
             showArchived={showArchived}
-            archiveList={props.archiveList}
-            deleteList={props.deleteList}
-            leaveList={props.leaveList}
+            shoppinglistDataList={props.shoppinglistDataList}
           />
         </Uu5Elements.Box>
 

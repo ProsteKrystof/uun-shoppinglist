@@ -28,7 +28,7 @@ const ListsOptions = createVisualComponent({
   propTypes: {
     showArchived: PropTypes.bool.isRequired,
     setShowArchived: PropTypes.func.isRequired,
-    createList: PropTypes.func.isRequired
+    shoppinglistDataList: PropTypes.object
   },
   //@@viewOff:propTypes
 
@@ -54,7 +54,16 @@ const ListsOptions = createVisualComponent({
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, ListsOptions);
 
     async function handleEditShoppingListSubmit(values) {
-      props.createList({...values, ...{ownerIdentity: identity.uuIdentity}})
+      let shoppingList;
+
+      try {
+        shoppingList = await props.shoppinglistDataList.handlerMap.create(values);
+      } catch (e) {
+        console.error(e);
+        return;
+      }
+
+      props.shoppinglistDataList.handlerMap.load();
 
       handleEditShoppingListClose();
     }

@@ -1,5 +1,6 @@
 //@@viewOn:imports
 import { createVisualComponent, Utils, Content } from "uu5g05";
+import { RouteController } from "uu_plus4u5g02-app";
 import Config from "./config/config.js";
 import ListsProvider from "../bricks/shopping-list/lists-provider.js";
 import ListsView from "../bricks/shopping-list/lists-view.js";
@@ -49,13 +50,11 @@ let ShoppingLists = createVisualComponent({
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
 
         <ListsProvider>
-          {({ shoppingLists, createList, archiveList, deleteList, leaveList }) => <ListsView
-            shoppingLists={shoppingLists}
-            createList={createList}
-            archiveList={archiveList}
-            deleteList={deleteList}
-            leaveList={leaveList}
-          />}
+          {(shoppinglistDataList) => (
+            <RouteController routeDataObject={shoppinglistDataList}>
+              <ListsView shoppinglistDataList={shoppinglistDataList} />
+            </RouteController>
+          )}
         </ListsProvider>
       </div>
     ) : null;

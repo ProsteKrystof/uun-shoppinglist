@@ -28,9 +28,7 @@ const ListList = createVisualComponent({
   propTypes: {
     lists: PropTypes.array.isRequired,
     showArchived: PropTypes.bool.isRequired,
-    archiveList: PropTypes.func.isRequired,
-    deleteList: PropTypes.func.isRequired,
-    leaveList: PropTypes.func.isRequired
+    shoppinglistDataList: PropTypes.object
   },
   //@@viewOff:propTypes
 
@@ -42,6 +40,50 @@ const ListList = createVisualComponent({
     //@@viewOn:private
     const { children } = props;
     const lsi = useLsi(importLsi, ["ShoppingList"]);
+
+    async function handleArchive(shoppinglistDataObject) {
+      try {
+        await shoppinglistDataObject.handlerMap.archive();
+      } catch (e) {
+        console.error(e);
+        return;
+      }
+
+      props.shoppinglistDataList.handlerMap.load();
+    }
+
+    async function handleDelete(shoppinglistDataObject) {
+      try {
+        await shoppinglistDataObject.handlerMap.delete();
+      } catch (e) {
+        console.error(e);
+        return;
+      }
+    }
+
+    async function handleLeave(shoppinglistDataObject) {
+      try {
+        await shoppinglistDataObject.handlerMap.leave();
+      } catch (e) {
+        console.error(e);
+        return;
+      }
+
+      props.shoppinglistDataList.handlerMap.load();
+    }
+
+    async function handleLoadNext({ indexFrom }) {
+      try {
+        await props.shoppinglistDataList.handlerMap.loadNext({
+          pageInfo: {
+            pageIndex: Math.floor(indexFrom / props.shoppinglistDataList.pageSize)
+          }
+        });
+      } catch (e) {
+        console.error(e);
+        return;
+      }
+    }
     //@@viewOff:private
 
     //@@viewOn:interface
@@ -51,13 +93,18 @@ const ListList = createVisualComponent({
     const attrs = Utils.VisualComponent.getAttrs(props, Css.main());
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, ListList);
 
+    const shoppingLists = props.shoppinglistDataList.data.filter((item) => item !== undefined);
+    const listsToShow = props.showArchived ? shoppingLists : shoppingLists.filter((list) => list.data.archived === false);
+    console.log(listsToShow);
+
     return currentNestingLevel ? (
       <div {...attrs}>
         <Grid
-          data={props.lists}
+          data={listsToShow}
+          onLoad={handleLoadNext}
           emptyState={<div>{lsi.noLists}</div>}
         >
-          <ListCard archiveList={props.archiveList} deleteList={props.deleteList} leaveList={props.leaveList} />
+          <ListCard archiveList={handleArchive} deleteList={handleDelete} leaveList={handleLeave} />
         </Grid>
 
         <Content nestingLevel={currentNestingLevel}>{children}</Content>

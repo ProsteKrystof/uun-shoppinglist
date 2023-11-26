@@ -49,20 +49,16 @@ const ListCard = createVisualComponent({
     const [leaveDialogOpen, setLeaveDialogOpen] = useState(false);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
-    const isOwner = listDataObject.ownerIdentity === identity.uuIdentity;
-    const canBeArchived = isOwner && !listDataObject.archived;
-    const canBeDeleted = isOwner && listDataObject.archived;
-
     function handleArchive() {
-      props.archiveList(listDataObject.id);
+      props.archiveList(listDataObject);
     }
 
     function handleDelete() {
-      props.deleteList(listDataObject.id);
+      props.deleteList(listDataObject);
     }
 
     function handleLeave() {
-      props.leaveList(listDataObject.id);
+      props.leaveList(listDataObject);
     }
 
     function handleArchiveButton(event) {
@@ -87,6 +83,11 @@ const ListCard = createVisualComponent({
     //@@viewOn:render
     const attrs = Utils.VisualComponent.getAttrs(props, Css.main());
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, ListCard);
+    const list = listDataObject.data;
+
+    const isOwner = list.uuIdentity === identity.uuIdentity;
+    const canBeArchived = isOwner && !list.archived;
+    const canBeDeleted = isOwner && list.archived;
 
     return currentNestingLevel ? (
       <div {...attrs}>
@@ -94,8 +95,8 @@ const ListCard = createVisualComponent({
           className={Config.Css.css({ padding: 0, marginBottom: 5, marginRight: 2 })}
           borderRadius="expressive"
           significance="distinct"
-          style={{ backgroundColor: getSchemeColor(listDataObject.color) }}
-          onClick={() => setRoute("shoppingListDetail", { id: listDataObject.id })}
+          style={{ backgroundColor: getSchemeColor(list.color) }}
+          onClick={() => setRoute("shoppingListDetail", { id: list.id })}
         >
           <Uu5Elements.Box
             className={Config.Css.css({ paddingLeft: 16, paddingBottom: 5, paddingTop: 1, marginLeft: 5, marginRight: -2 })}
@@ -104,20 +105,20 @@ const ListCard = createVisualComponent({
           >
             <div style={{display: "flex"}}>
               {
-                listDataObject.archived ? (
-                  <h2 style={{marginBottom: 5, color: "grey"}}> <Uu5Elements.Icon icon={"mdi-archive"} /> {listDataObject.name}</h2>
+                list.archived ? (
+                  <h2 style={{marginBottom: 5, color: "grey"}}> <Uu5Elements.Icon icon={"mdi-archive"} /> {list.name}</h2>
                 ) : (
-                  <h2 style={{marginBottom: 5}}>{listDataObject.name}</h2>
+                  <h2 style={{marginBottom: 5}}>{list.name}</h2>
                 )
               }
               <div style={{marginLeft: "auto", marginRight: 16, marginTop: 16}}>
-                <ProgressTracker completedAmount={listDataObject.completedTasks} totalAmount={listDataObject.totalTasks} />
+                <ProgressTracker completedAmount={list.finishedTaskAmount} totalAmount={list.taskAmount} />
               </div>
             </div>
 
             <div style={{display: "flex"}}>
               {
-                listDataObject.ownerIdentity === identity.uuIdentity ? (
+                isOwner ? (
                   <p style={{marginTop: 5}}><Uu5Elements.Icon icon={"mdi-account-circle"} /> {lsi.owner}</p>
                 ) : (
                   <p style={{marginTop: 5}}><Uu5Elements.Icon icon={"mdi-account"} /> {lsi.member}</p>

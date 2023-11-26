@@ -73,6 +73,11 @@ const Calls = {
     setMembers(dtoIn) {
       const commandUri = Calls.getCommandUri("shoppinglist/setMembers");
       return Calls.call("post", commandUri, dtoIn);
+    },
+
+    leave(dtoIn) {
+      const commandUri = Calls.getCommandUri("shoppinglist/leave");
+      return Calls.call("post", commandUri, dtoIn);
     }
   },
 
