@@ -61,6 +61,7 @@ const ListDataProvider = createComponent({
 
   render(props) {
     //@@viewOn:private
+    const { identity } = useSession(); // pro testovani
     const shoppinglistDataObject = useDataObject({
       handlerMap: {
         load: handleLoad,
@@ -139,6 +140,13 @@ const ListDataProvider = createComponent({
     //@@viewOn:render
     //const value = { shoppingList, taskFunctions, updateShoppingList };
     console.log(shoppinglistDataObject);
+
+    // pro ucely testovani nastavit uuIdentity a uuIdentityName u seznamu na momentalniho uzivatele
+    console.log("Testovaci funkce pro nastaveni identity u seznamu zapnuta - nezapomenout vypnout!");
+    if (shoppinglistDataObject?.data) {
+      shoppinglistDataObject.data.uuIdentity = identity.uuIdentity;
+      shoppinglistDataObject.data.uuIdentityName = identity.name;
+    }
     return typeof props.children === "function" ? props.children(shoppinglistDataObject) : props.children;
     //@@viewOff:render
   },

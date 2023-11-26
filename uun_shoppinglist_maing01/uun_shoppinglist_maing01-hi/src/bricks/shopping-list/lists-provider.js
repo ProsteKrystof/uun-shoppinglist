@@ -28,6 +28,7 @@ const ListsProvider = createComponent({
 
   render(props) {
     //@@viewOn:private
+    const { identity } = useSession(); // pro testovani
     const shoppinglistDataList = useDataList({
       handlerMap: {
         load: handleLoad,
@@ -77,6 +78,16 @@ const ListsProvider = createComponent({
     //@@viewOff:interface
 
     //@@viewOn:render
+
+    // pro ucely testovani nastavit uuIdentity a uuIdentityName u prvnich dvou seznamu na momentalniho uzivatele
+    console.log("Testovaci funkce pro nastaveni identit u seznamu zapnuta - nezapomenout vypnout!");
+    shoppinglistDataList?.data?.forEach((list) => {
+      if (list.data.id === "6560a7eab6a10b2c3cd03ea5" || list.data.id === "65639cb73905378b6463aaa7") {
+        list.data.uuIdentity = identity.uuIdentity;
+        list.data.uuIdentityName = identity.name;
+      }
+    });
+
     return typeof props.children === "function" ? props.children(shoppinglistDataList) : props.children;
     //@@viewOff:render
   },
