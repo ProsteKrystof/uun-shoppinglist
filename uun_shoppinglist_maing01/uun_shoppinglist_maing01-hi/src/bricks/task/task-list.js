@@ -1,6 +1,6 @@
 //@@viewOn:imports
 import { createVisualComponent, Utils, Content, PropTypes, useLsi } from "uu5g05";
-import { useAlertBus } from "uu5g05-elements";
+import { useAlertBus, Pending } from "uu5g05-elements";
 import Config from "./config/config.js";
 import TaskCard from "./task-card.js";
 import importLsi from "../../lsi/import-lsi.js";
@@ -91,12 +91,19 @@ const TaskList = createVisualComponent({
           <TaskCard key={task.id} taskDataObject={task} finishTask={handleFinish} deleteTask={handleDelete} />
         ))}
 
-        {state !== "errorNoData" && tasksToShow.length === 0 && (
+        {(state !== "errorNoData" && state !== "pendingNoData") && tasksToShow.length === 0 && (
           <p>{lsi.noTasks}</p>
         )}
 
         {state === "errorNoData" && (
           <p>{lsi.loadError}</p>
+        )}
+
+        {state === "pendingNoData" && (
+          <Pending
+            size="max"
+            style={{ position: "unset", pointerEvents: "unset" }}
+          />
         )}
 
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
