@@ -59,7 +59,7 @@
     "leave": "Leave",
     "leaveDeny": "Cancel",
     "archiveHeader": "Archive this shopping list?",
-    "archiveInfo": "You will not be able to view this shopping list after archiving.",
+    "archiveInfo": "You will not be able to edit this shopping list after archiving.",
     "archiveDeny": "Cancel",
     "deleteHeader": "Delete this shopping list?",
     "deleteInfo": "This shopping list will be permanently deleted.",

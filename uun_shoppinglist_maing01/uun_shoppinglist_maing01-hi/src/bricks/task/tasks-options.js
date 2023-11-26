@@ -64,6 +64,8 @@ const TasksOptions = createVisualComponent({
     const attrs = Utils.VisualComponent.getAttrs(props, Css.main());
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, TasksOptions);
 
+    const isArchived = props.shoppingListDataObject.data.archived === true;
+
     async function handleAddTaskSubmit(values) {
       let task;
 
@@ -125,12 +127,14 @@ const TasksOptions = createVisualComponent({
             icon="uugds-plus"
             colorScheme="blue"
             onClick={handleAddTaskOpen}
+            disabled={isArchived}
           >{lsi.Task.add}</Uu5Elements.Button>
           <Uu5Elements.Button
             className={Config.Css.css({marginLeft: 10})}
             icon="uugds-settings"
             significance="highlighted"
             onClick={handleEditShoppingListOpen}
+            disabled={isArchived}
           />
           {!isOwner && (<Uu5Elements.Button
             className={Config.Css.css({marginLeft: 10})}
