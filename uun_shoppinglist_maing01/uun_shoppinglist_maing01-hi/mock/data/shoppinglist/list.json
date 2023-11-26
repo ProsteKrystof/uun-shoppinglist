@@ -1,0 +1,121 @@
+{
+	"itemList": [
+		{
+			"name": "Nákupní seznam na týden",
+			"color": "dark-purple",
+			"members": [
+				{
+					"identity": "1234-5678-9",
+					"name": "Unknown"
+				},
+				{
+					"identity": "1111-1111",
+					"name": "Unknown"
+				}
+			],
+			"awid": "22222222222222222222222222222222",
+			"archived": false,
+			"uuIdentity": "3911-9463-333-0000",
+			"uuIdentityName": "Kryštof Dev Rous",
+			"sys": {
+				"cts": "2023-11-24T13:40:58.607Z",
+				"mts": "2023-11-26T17:41:02.935Z",
+				"rev": 9
+			},
+			"id": "6560a7eab6a10b2c3cd03ea5",
+			"taskAmount": 7,
+			"finishedTaskAmount": 1
+		},
+		{
+			"name": "Nákupní seznam na oslavu",
+			"color": "pink",
+			"members": [],
+			"awid": "22222222222222222222222222222222",
+			"archived": false,
+			"uuIdentity": "3911-9463-333-0000",
+			"uuIdentityName": "Kryštof Dev Rous",
+			"sys": {
+				"cts": "2023-11-26T19:29:59.006Z",
+				"mts": "2023-11-26T19:29:59.006Z",
+				"rev": 0
+			},
+			"id": "65639cb73905378b6463aaa7",
+			"taskAmount": 5,
+			"finishedTaskAmount": 2
+		},
+		{
+			"name": "Zimní výlet na hory",
+			"color": "cyan",
+			"members": [],
+			"awid": "22222222222222222222222222222222",
+			"archived": false,
+			"uuIdentity": "3911-9463-333-0000",
+			"uuIdentityName": "Kryštof Dev Rous",
+			"sys": {
+				"cts": "2023-11-26T19:35:29.911Z",
+				"mts": "2023-11-26T19:35:29.911Z",
+				"rev": 0
+			},
+			"id": "65639e013905378b6463aad6",
+			"taskAmount": 3,
+			"finishedTaskAmount": 1
+		},
+		{
+			"name": "Do školy",
+			"color": "light-blue",
+			"members": [],
+			"awid": "22222222222222222222222222222222",
+			"archived": false,
+			"uuIdentity": "3911-9463-333-0000",
+			"uuIdentityName": "Kryštof Dev Rous",
+			"sys": {
+				"cts": "2023-11-26T19:37:54.920Z",
+				"mts": "2023-11-26T19:37:54.920Z",
+				"rev": 0
+			},
+			"id": "65639e923905378b6463aaea",
+			"taskAmount": 4,
+			"finishedTaskAmount": 0
+		},
+		{
+			"name": "Údržba auta",
+			"color": "red",
+			"members": [],
+			"awid": "22222222222222222222222222222222",
+			"archived": true,
+			"uuIdentity": "3911-9463-333-0000",
+			"uuIdentityName": "Kryštof Dev Rous",
+			"sys": {
+				"cts": "2023-11-26T19:42:51.147Z",
+				"mts": "2023-11-26T19:44:15.464Z",
+				"rev": 1
+			},
+			"id": "65639fbb3905378b6463aaff",
+			"taskAmount": 4,
+			"finishedTaskAmount": 3
+		},
+		{
+			"name": "Nákup na říjen",
+			"color": "orange",
+			"members": [],
+			"awid": "22222222222222222222222222222222",
+			"archived": true,
+			"uuIdentity": "3911-9463-333-0000",
+			"uuIdentityName": "Kryštof Dev Rous",
+			"sys": {
+				"cts": "2023-11-26T19:45:12.713Z",
+				"mts": "2023-11-26T19:46:59.854Z",
+				"rev": 1
+			},
+			"id": "6563a0483905378b6463ab20",
+			"taskAmount": 5,
+			"finishedTaskAmount": 5
+		}
+	],
+	"pageInfo": {
+		"pageIndex": 0,
+		"pageSize": 100,
+		"total": 6
+	},
+	"uuAppErrorMap": {}
+}

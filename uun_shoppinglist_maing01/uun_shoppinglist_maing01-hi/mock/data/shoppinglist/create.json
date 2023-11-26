@@ -1,0 +1,21 @@
+{
+	"name": "Nákupní seznam na víkend",
+	"color": "green",
+	"members": [
+		{
+			"identity": "1234-1234-1234-1234",
+			"name": "Unknown"
+		}
+	],
+	"awid": "22222222222222222222222222222222",
+	"archived": false,
+	"uuIdentity": "3911-9463-333-0000",
+	"uuIdentityName": "Kryštof Dev Rous",
+	"sys": {
+		"cts": "2023-11-26T20:19:03.492Z",
+		"mts": "2023-11-26T20:19:03.492Z",
+		"rev": 0
+	},
+	"id": "6563a837037bc01f4cf17b83",
+	"uuAppErrorMap": {}
+}

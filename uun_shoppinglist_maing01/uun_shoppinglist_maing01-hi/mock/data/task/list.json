@@ -1,0 +1,114 @@
+{
+	"itemList": [
+		{
+			"name": "Chleba",
+			"listId": "6560a7eab6a10b2c3cd03ea5",
+			"awid": "22222222222222222222222222222222",
+			"addedBy": "Kryštof Dev Rous",
+			"finished": false,
+			"sys": {
+				"cts": "2023-11-26T16:11:59.387Z",
+				"mts": "2023-11-26T16:11:59.387Z",
+				"rev": 0
+			},
+			"id": "65636e4fff309726286f5736"
+		},
+		{
+			"name": "Rohlíky",
+			"listId": "6560a7eab6a10b2c3cd03ea5",
+			"awid": "22222222222222222222222222222222",
+			"addedBy": "Kryštof Dev Rous",
+			"finished": false,
+			"sys": {
+				"cts": "2023-11-26T16:12:03.024Z",
+				"mts": "2023-11-26T16:12:03.024Z",
+				"rev": 0
+			},
+			"id": "65636e53ff309726286f5739"
+		},
+		{
+			"name": "Pizza",
+			"listId": "6560a7eab6a10b2c3cd03ea5",
+			"awid": "22222222222222222222222222222222",
+			"addedBy": "Kryštof Dev Rous",
+			"finished": false,
+			"sys": {
+				"cts": "2023-11-26T16:12:06.867Z",
+				"mts": "2023-11-26T16:12:06.867Z",
+				"rev": 0
+			},
+			"id": "65636e56ff309726286f573c"
+		},
+		{
+			"name": "Těstoviny",
+			"listId": "6560a7eab6a10b2c3cd03ea5",
+			"awid": "22222222222222222222222222222222",
+			"addedBy": "Kryštof Dev Rous",
+			"finished": true,
+			"sys": {
+				"cts": "2023-11-26T16:12:14.255Z",
+				"mts": "2023-11-26T16:53:47.328Z",
+				"rev": 1
+			},
+			"id": "65636e5eff309726286f573f"
+		},
+		{
+			"name": "Máslo",
+			"listId": "6560a7eab6a10b2c3cd03ea5",
+			"awid": "22222222222222222222222222222222",
+			"addedBy": "Kryštof Dev Rous",
+			"finished": false,
+			"sys": {
+				"cts": "2023-11-26T19:27:47.337Z",
+				"mts": "2023-11-26T19:27:47.337Z",
+				"rev": 0
+			},
+			"id": "65639c333905378b6463aaa2"
+		},
+		{
+			"name": "Špagety",
+			"listId": "6560a7eab6a10b2c3cd03ea5",
+			"awid": "22222222222222222222222222222222",
+			"addedBy": "Kryštof Dev Rous",
+			"finished": false,
+			"sys": {
+				"cts": "2023-11-26T19:33:21.478Z",
+				"mts": "2023-11-26T19:33:21.478Z",
+				"rev": 0
+			},
+			"id": "65639d813905378b6463aace"
+		},
+		{
+			"name": "Banány",
+			"listId": "6560a7eab6a10b2c3cd03ea5",
+			"awid": "22222222222222222222222222222222",
+			"addedBy": "Kryštof Dev Rous",
+			"finished": false,
+			"sys": {
+				"cts": "2023-11-26T19:33:36.413Z",
+				"mts": "2023-11-26T19:33:36.413Z",
+				"rev": 0
+			},
+			"id": "65639d903905378b6463aad1"
+		},
+		{
+			"listId": "6560a7eab6a10b2c3cd03ea5",
+			"name": "Rohlíky",
+			"awid": "22222222222222222222222222222222",
+			"addedBy": "Kryštof Dev Rous",
+			"finished": true,
+			"sys": {
+				"cts": "2023-11-26T20:24:51.873Z",
+				"mts": "2023-11-26T20:26:49.498Z",
+				"rev": 1
+			},
+			"id": "6563a993037bc01f4cf17b8a"
+		}
+	],
+	"pageInfo": {
+		"pageIndex": 0,
+		"pageSize": 30,
+		"total": 8
+	},
+	"uuAppErrorMap": {}
+}
