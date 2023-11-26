@@ -79,7 +79,8 @@ const TaskList = createVisualComponent({
 
     console.log("taskDataList in list", props.taskDataList);
     let tasksToShow = [];
-    if (props.taskDataList.state === "ready") {
+    const state = props.taskDataList.state;
+    if (state === "ready" || state === "pending" || state === "itemPending" || state === "error") {
       const tasks = props.taskDataList.data.filter((item) => item !== undefined);
       tasksToShow = props.showCompleted ? tasks : tasks.filter((task) => task.data.finished === false);
     }
@@ -89,6 +90,14 @@ const TaskList = createVisualComponent({
         {tasksToShow.map((task) => (
           <TaskCard key={task.id} taskDataObject={task} finishTask={handleFinish} deleteTask={handleDelete} />
         ))}
+
+        {state !== "errorNoData" && tasksToShow.length === 0 && (
+          <p>{lsi.noTasks}</p>
+        )}
+
+        {state === "errorNoData" && (
+          <p>{lsi.loadError}</p>
+        )}
 
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
       </div>

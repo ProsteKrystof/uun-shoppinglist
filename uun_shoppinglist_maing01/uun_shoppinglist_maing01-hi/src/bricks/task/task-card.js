@@ -56,6 +56,8 @@ const TaskCard = createVisualComponent({
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, TaskCard);
     const task = props.taskDataObject.data;
 
+    const isPending = props.taskDataObject.state === "pending";
+
     return currentNestingLevel ? (
       <div {...attrs}>
         <Uu5Elements.Box
@@ -63,7 +65,10 @@ const TaskCard = createVisualComponent({
           borderRadius="expressive"
           significance="distinct"
         >
-          <h2 style={{marginBottom: 5}}>{task.name}</h2>
+          <div style={{display: "flex"}}>
+            {isPending && <Uu5Elements.Pending size="xs" style={{marginTop: 15, marginRight: 10}}/>}
+            <h2 style={{marginBottom: 5}}>{task.name}</h2>
+          </div>
           <div style={{display: "flex"}}>
             <p style={{marginTop: 5}}>{<Lsi import={importLsi} path={["Task", "addedBy"]} />}: {task.addedBy}</p>
             <div style={{marginLeft: "auto", marginRight: 16}}>
@@ -83,6 +88,7 @@ const TaskCard = createVisualComponent({
                   colorScheme="blue"
                   icon="uugds-check"
                   onClick={handleComplete}
+                  disabled={isPending}
                 >
                   <Lsi import={importLsi} path={["Task", "finish"]} />
                 </Uu5Elements.Button>
@@ -95,6 +101,7 @@ const TaskCard = createVisualComponent({
                 colorScheme="red"
                 icon="mdi-trash-can"
                 onClick={handleRemove}
+                disabled={isPending}
               />
             </div>
           </div>

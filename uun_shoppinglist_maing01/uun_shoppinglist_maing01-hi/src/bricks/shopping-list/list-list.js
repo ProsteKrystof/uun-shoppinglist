@@ -115,7 +115,6 @@ const ListList = createVisualComponent({
 
     const shoppingLists = props.shoppinglistDataList.data.filter((item) => item !== undefined);
     const listsToShow = props.showArchived ? shoppingLists : shoppingLists.filter((list) => list.data.archived === false);
-    console.log(listsToShow);
 
     return currentNestingLevel ? (
       <div {...attrs}>

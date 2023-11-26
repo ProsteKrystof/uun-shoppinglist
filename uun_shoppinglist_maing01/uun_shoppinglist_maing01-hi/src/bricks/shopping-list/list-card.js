@@ -90,6 +90,8 @@ const ListCard = createVisualComponent({
     const canBeArchived = isOwner && !list.archived;
     const canBeDeleted = isOwner && list.archived;
 
+    const isPending = listDataObject.state === "pending";
+
     return currentNestingLevel ? (
       <div {...attrs}>
         <Uu5Elements.Box
@@ -105,6 +107,7 @@ const ListCard = createVisualComponent({
             significance="distinct"
           >
             <div style={{display: "flex"}}>
+              {isPending && <Uu5Elements.Pending size="xs" style={{marginTop: 15, marginRight: 10}}/>}
               {
                 list.archived ? (
                   <h2 style={{marginBottom: 5, color: "grey"}}> <Uu5Elements.Icon icon={"mdi-archive"} /> {list.name}</h2>
@@ -132,6 +135,7 @@ const ListCard = createVisualComponent({
                   colorScheme="red"
                   icon="mdi-archive"
                   onClick={handleArchiveButton}
+                  disabled={isPending}
                 />}
 
                 {canBeDeleted && <Uu5Elements.Button
@@ -140,6 +144,7 @@ const ListCard = createVisualComponent({
                   colorScheme="red"
                   icon="mdi-trash-can"
                   onClick={handleDeleteButton}
+                  disabled={isPending}
                 />}
 
                 {!isOwner && <Uu5Elements.Button
@@ -148,6 +153,7 @@ const ListCard = createVisualComponent({
                   colorScheme="red"
                   icon="mdi-exit-to-app"
                   onClick={handleLeaveButton}
+                  disabled={isPending}
                 />}
               </div>
             </div>

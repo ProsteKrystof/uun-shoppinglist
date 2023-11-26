@@ -72,6 +72,7 @@
     "loadNextError": "Loading next shopping lists failed."
   },
   "Task": {
+    "noTasks": "No tasks to display.",
     "add": "Add task",
     "showFinished": "Show finished tasks",
     "addedBy": "Added by",
@@ -81,6 +82,7 @@
     "cancelAdd": "Cancel",
     "createError": "Task creation failed.",
     "finishError": "Task finishing failed.",
-    "deleteError": "Task deletion failed."
+    "deleteError": "Task deletion failed.",
+    "loadError": "Loading tasks failed."
   }
 }

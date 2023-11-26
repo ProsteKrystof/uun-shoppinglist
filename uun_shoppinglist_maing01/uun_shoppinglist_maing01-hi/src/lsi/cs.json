@@ -72,6 +72,7 @@
     "loadNextError": "Načtení dalších seznamů se nezdařilo."
   },
   "Task": {
+    "noTasks": "Žádné položky k zobrazení.",
     "add": "Přidat položku",
     "showFinished": "Zobrazit dokončené položky",
     "addedBy": "Přidal",
@@ -81,6 +82,7 @@
     "cancelAdd": "Zrušit",
     "createError": "Vytvoření položky se nezdařilo.",
     "finishError": "Dokončení položky se nezdařilo.",
-    "deleteError": "Smazání položky se nezdařilo."
+    "deleteError": "Smazání položky se nezdařilo.",
+    "loadError": "Načtení položek se nezdařilo."
   }
 }

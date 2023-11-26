@@ -77,7 +77,6 @@ const ListsProvider = createComponent({
     //@@viewOff:interface
 
     //@@viewOn:render
-    console.log(shoppinglistDataList);
     return typeof props.children === "function" ? props.children(shoppinglistDataList) : props.children;
     //@@viewOff:render
   },
