@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createComponent, Utils, useDataList, PropTypes } from "uu5g05";
+import { createComponent, useDataList, PropTypes } from "uu5g05";
 import Config from "./config/config.js";
 import Calls from "calls";
 //@@viewOff:imports
@@ -66,7 +66,6 @@ const TasksProvider = createComponent({
     //@@viewOff:interface
 
     //@@viewOn:render
-    console.log("taskDataList", taskDataList);
     return typeof props.children === "function" ? props.children(taskDataList) : props.children;
     //@@viewOff:render
   },

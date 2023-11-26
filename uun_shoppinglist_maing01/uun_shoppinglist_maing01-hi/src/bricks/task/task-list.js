@@ -77,7 +77,6 @@ const TaskList = createVisualComponent({
     const attrs = Utils.VisualComponent.getAttrs(props, Css.main());
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, TaskList);
 
-    console.log("taskDataList in list", props.taskDataList);
     let tasksToShow = [];
     const state = props.taskDataList.state;
     if (state === "ready" || state === "pending" || state === "itemPending" || state === "error") {

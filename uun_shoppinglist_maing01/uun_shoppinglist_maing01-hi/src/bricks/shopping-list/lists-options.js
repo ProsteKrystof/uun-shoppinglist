@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, PropTypes, useState, useSession, useRoute, useLsi } from "uu5g05";
+import { createVisualComponent, Utils, Content, PropTypes, useState, useRoute, useLsi } from "uu5g05";
 import { useAlertBus } from "uu5g05-elements";
 import Config from "./config/config.js";
 import Uu5Elements from "uu5g05-elements";
@@ -43,7 +43,6 @@ const ListsOptions = createVisualComponent({
     const lsi = useLsi(importLsi, ["ShoppingList"]);
     const { addAlert } = useAlertBus();
     const [route, setRoute] = useRoute();
-    const { identity } = useSession();
 
     // edit shopping list modal
     const [showEditShoppingListModal, setShowEditShoppingListModal] = useState(false);
@@ -70,9 +69,6 @@ const ListsOptions = createVisualComponent({
         })
         return;
       }
-
-      /*props.shoppinglistDataList.handlerMap.load();
-      handleEditShoppingListClose();*/
 
       setRoute("shoppingListDetail", { id: shoppingList.id });
     }
