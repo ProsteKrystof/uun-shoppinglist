@@ -6,15 +6,15 @@ const taskCreateDtoInType = shape({
 });
 
 const taskDeleteDtoInType = shape({
-    taskId: id().isRequired()
+    id: id().isRequired()
 });
 
 const taskFinishDtoInType = shape({
-    taskId: id().isRequired()
+    id: id().isRequired()
 });
 
 const taskGetDtoInType = shape({
-    taskId: id().isRequired()
+    id: id().isRequired()
 });
 
 const taskListDtoInType = shape({

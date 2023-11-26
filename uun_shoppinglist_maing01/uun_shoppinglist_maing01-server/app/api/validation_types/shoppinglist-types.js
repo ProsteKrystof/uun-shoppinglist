@@ -21,28 +21,25 @@ const listColors = [
 const shoppinglistCreateDtoInType = shape({
     name: string(3, 255).isRequired(),
     color: oneOf(listColors).isRequired(),
-    members: array(shape({
-        identity: uuIdentity().isRequired(),
-        name: string(3, 255).isRequired()
-    })).isRequired()
+    memberIdentities: array(uuIdentity().isRequired()).isRequired()
 });
 
 const shoppinglistArchiveDtoInType = shape({
-    listId: id().isRequired()
+    id: id().isRequired()
 });
 
 const shoppinglistDeleteDtoInType = shape({
-    listId: id().isRequired()
+    id: id().isRequired()
 });
 
 const shoppinglistUpdateDtoInType = shape({
-    listId: id().isRequired(),
+    id: id().isRequired(),
     name: string(3, 255).isRequired(),
     color: oneOf(listColors).isRequired()
 });
 
 const shoppinglistGetDtoInType = shape({
-    listId: id().isRequired()
+    id: id().isRequired()
 });
 
 const shoppinglistListDtoInType = shape({
@@ -53,9 +50,6 @@ const shoppinglistListDtoInType = shape({
 });
 
 const shoppinglistSetMembersDtoInType = shape({
-    listId: id().isRequired(),
-    members: array(shape({
-        identity: uuIdentity().isRequired(),
-        name: string(3, 255).isRequired()
-    })).isRequired()
+    id: id().isRequired(),
+    memberIdentities: array(uuIdentity().isRequired()).isRequired()
 });

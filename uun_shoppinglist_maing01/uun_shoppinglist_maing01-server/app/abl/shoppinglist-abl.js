@@ -2,6 +2,8 @@
 const { Validator } = require("uu_appg01_server").Validation;
 const { ValidationHelper } = require("uu_appg01_server").AppServer;
 const { DaoFactory } = require("uu_appg01_server").ObjectStore;
+const AppClient = require("uu_appg01_server").AppClient;
+const { UriBuilder } = require("uu_appg01_server").Uri;
 
 const Errors = require("../api/errors/shoppinglist-error.js");
 const Warnings = require("../api/warnings/shoppinglist-warning.js");
@@ -26,13 +28,36 @@ class ShoppinglistAbl {
             Errors.Create.InvalidDtoIn
         );
 
+        // use AppClient to get personName from uuIdentity
+        const uuIdmBaseUri = "https://uuapp-dev.plus4u.net/uu-identitymanagement-maing01/58ceb15c275c4b31bfe0fc9768aa6a9c";
+        const uuIdmPersonIdentityLoadUri = UriBuilder.parse(uuIdmBaseUri).setUseCase("uuPersonIdentity/load");
+
+        let members = [];
+        for (let member of dtoIn.memberIdentities) {
+            const personIdentityLoadDtoIn = {
+                uuIdentity: member,
+            };
+
+            let personName = "Uknown";
+            try {
+                let personIdentityLoadDtoOut = await AppClient.cmdGet(uuIdmPersonIdentityLoadUri, personIdentityLoadDtoIn, { session });
+                personName = personIdentityLoadDtoOut.name + " " + personIdentityLoadDtoOut.surname;
+            } catch (e) {
+                console.log(e);
+            };
+
+            members.push({ identity: member, name: personName });
+        }
+
         // get uuIdentity information from session
         const uuIdentity = session.getIdentity().getUuIdentity();
         const uuIdentityName = session.getIdentity().getName();
 
         // save shoppinglist to uuObjectStore
         const uuObject = {
-            ...dtoIn,
+            name: dtoIn.name,
+            color: dtoIn.color,
+            members,
             awid,
             archived: false,
             uuIdentity,
@@ -62,19 +87,19 @@ class ShoppinglistAbl {
         const uuIdentity = session.getIdentity().getUuIdentity();
 
         // check if shoppinglist exists
-        const shoppinglist = await this.dao.get(awid, dtoIn.listId);
+        const shoppinglist = await this.dao.get(awid, dtoIn.id);
         if (!shoppinglist) {
-            throw new Errors.Archive.ShoppinglistDoesNotExist({ uuAppErrorMap }, { listId: dtoIn.listId });
+            throw new Errors.Archive.ShoppinglistDoesNotExist({ uuAppErrorMap }, { id: dtoIn.id });
         }
 
         // check if shoppinglist is already archived
         if (shoppinglist.archived) {
-            throw new Errors.Archive.ShoppinglistIsAlreadyArchived({ uuAppErrorMap }, { listId: dtoIn.listId });
+            throw new Errors.Archive.ShoppinglistIsAlreadyArchived({ uuAppErrorMap }, { id: dtoIn.id });
         }
 
         // check if user is owner of shoppinglist
         if (shoppinglist.uuIdentity !== uuIdentity) {
-            throw new Errors.Archive.UserNotAuthorized({ uuAppErrorMap }, { listId: dtoIn.listId });
+            throw new Errors.Archive.UserNotAuthorized({ uuAppErrorMap }, { id: dtoIn.id });
         }
 
         // archive shoppinglist
@@ -103,19 +128,19 @@ class ShoppinglistAbl {
         const uuIdentity = session.getIdentity().getUuIdentity();
 
         // check if shoppinglist exists
-        const shoppinglist = await this.dao.get(awid, dtoIn.listId);
+        const shoppinglist = await this.dao.get(awid, dtoIn.id);
         if (!shoppinglist) {
-            throw new Errors.Delete.ShoppinglistDoesNotExist({ uuAppErrorMap }, { listId: dtoIn.listId });
+            throw new Errors.Delete.ShoppinglistDoesNotExist({ uuAppErrorMap }, { id: dtoIn.id });
         }
 
         // check if user is owner of shoppinglist
         if (shoppinglist.uuIdentity !== uuIdentity) {
-            throw new Errors.Delete.UserNotAuthorized({ uuAppErrorMap }, { listId: dtoIn.listId });
+            throw new Errors.Delete.UserNotAuthorized({ uuAppErrorMap }, { id: dtoIn.id });
         }
 
         // check if shoppinglist is archived
         if (!shoppinglist.archived) {
-            throw new Errors.Delete.ShoppinglistIsNotArchived({ uuAppErrorMap }, { listId: dtoIn.listId });
+            throw new Errors.Delete.ShoppinglistIsNotArchived({ uuAppErrorMap }, { id: dtoIn.id });
         }
 
         // delete all tasks of shoppinglist
@@ -149,19 +174,19 @@ class ShoppinglistAbl {
         const uuIdentity = session.getIdentity().getUuIdentity();
 
         // check if shoppinglist exists
-        const shoppinglist = await this.dao.get(awid, dtoIn.listId);
+        const shoppinglist = await this.dao.get(awid, dtoIn.id);
         if (!shoppinglist) {
-            throw new Errors.Update.ShoppinglistDoesNotExist({ uuAppErrorMap }, { listId: dtoIn.listId });
+            throw new Errors.Update.ShoppinglistDoesNotExist({ uuAppErrorMap }, { id: dtoIn.id });
         }
 
         // check if user is owner of shoppinglist
         if (shoppinglist.uuIdentity !== uuIdentity) {
-            throw new Errors.Update.UserNotAuthorized({ uuAppErrorMap }, { listId: dtoIn.listId });
+            throw new Errors.Update.UserNotAuthorized({ uuAppErrorMap }, { id: dtoIn.id });
         }
 
         // check if shoppinglist is archived
         if (shoppinglist.archived) {
-            throw new Errors.Update.ShoppinglistIsArchived({ uuAppErrorMap }, { listId: dtoIn.listId });
+            throw new Errors.Update.ShoppinglistIsArchived({ uuAppErrorMap }, { id: dtoIn.id });
         }
 
         // update shoppinglist
@@ -194,14 +219,14 @@ class ShoppinglistAbl {
         const uuIdentity = session.getIdentity().getUuIdentity();
 
         // check if shoppinglist exists
-        const shoppinglist = await this.dao.get(awid, dtoIn.listId);
+        const shoppinglist = await this.dao.get(awid, dtoIn.id);
         if (!shoppinglist) {
-            throw new Errors.Get.ShoppinglistDoesNotExist({ uuAppErrorMap }, { listId: dtoIn.listId });
+            throw new Errors.Get.ShoppinglistDoesNotExist({ uuAppErrorMap }, { id: dtoIn.id });
         }
 
         // check if user is owner or member of shoppinglist
         if (shoppinglist.uuIdentity !== uuIdentity && shoppinglist.members.filter(member => member.identity === uuIdentity).length === 0) {
-            throw new Errors.Get.UserNotAuthorized({ uuAppErrorMap }, { listId: dtoIn.listId });
+            throw new Errors.Get.UserNotAuthorized({ uuAppErrorMap }, { id: dtoIn.id });
         }
 
         // prepare and return dToOut
@@ -236,7 +261,7 @@ class ShoppinglistAbl {
         }
 
         // prepare and return dToOut
-        const dToOut = { shoppinglists, uuAppErrorMap };
+        const dToOut = { ...shoppinglists, uuAppErrorMap };
         return dToOut;
     }
 
@@ -257,23 +282,44 @@ class ShoppinglistAbl {
         const uuIdentity = session.getIdentity().getUuIdentity();
 
         // check if shoppinglist exists
-        const shoppinglist = await this.dao.get(awid, dtoIn.listId);
+        const shoppinglist = await this.dao.get(awid, dtoIn.id);
         if (!shoppinglist) {
-            throw new Errors.SetMembers.ShoppinglistDoesNotExist({ uuAppErrorMap }, { listId: dtoIn.listId });
+            throw new Errors.SetMembers.ShoppinglistDoesNotExist({ uuAppErrorMap }, { id: dtoIn.id });
         }
 
         // check if user is owner of shoppinglist
         if (shoppinglist.uuIdentity !== uuIdentity) {
-            throw new Errors.SetMembers.UserNotAuthorized({ uuAppErrorMap }, { listId: dtoIn.listId });
+            throw new Errors.SetMembers.UserNotAuthorized({ uuAppErrorMap }, { id: dtoIn.id });
         }
 
         // check if shoppinglist is archived
         if (shoppinglist.archived) {
-            throw new Errors.SetMembers.ShoppinglistIsArchived({ uuAppErrorMap }, { listId: dtoIn.listId });
+            throw new Errors.SetMembers.ShoppinglistIsArchived({ uuAppErrorMap }, { id: dtoIn.id });
+        }
+
+        // use AppClient to get personName from uuIdentity
+        const uuIdmBaseUri = "https://uuapp-dev.plus4u.net/uu-identitymanagement-maing01/58ceb15c275c4b31bfe0fc9768aa6a9c";
+        const uuIdmPersonIdentityLoadUri = UriBuilder.parse(uuIdmBaseUri).setUseCase("uuPersonIdentity/load");
+
+        let members = [];
+        for (let member of dtoIn.memberIdentities) {
+            const personIdentityLoadDtoIn = {
+                uuIdentity: member,
+            };
+
+            let personName = "Uknown";
+            try {
+                let personIdentityLoadDtoOut = await AppClient.cmdGet(uuIdmPersonIdentityLoadUri, personIdentityLoadDtoIn, { session });
+                personName = personIdentityLoadDtoOut.name + " " + personIdentityLoadDtoOut.surname;
+            } catch (e) {
+                console.log(e);
+            };
+
+            members.push({ identity: member, name: personName });
         }
 
         // set members
-        shoppinglist.members = dtoIn.members;
+        shoppinglist.members = members;
         const updatedList = await this.dao.update(shoppinglist);
 
         // prepare and return dToOut

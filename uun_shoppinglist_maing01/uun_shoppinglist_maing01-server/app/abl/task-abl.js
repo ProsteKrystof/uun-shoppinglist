@@ -77,9 +77,9 @@ class TaskAbl {
         const uuIdentity = session.getIdentity().getUuIdentity();
 
         // check if task exists
-        const task = await this.dao.get(awid, dtoIn.taskId);
+        const task = await this.dao.get(awid, dtoIn.id);
         if (!task) {
-            throw new Errors.Delete.TaskDoesNotExist({ uuAppErrorMap }, { id: dtoIn.taskId });
+            throw new Errors.Delete.TaskDoesNotExist({ uuAppErrorMap }, { id: dtoIn.id });
         }
 
         // check if shoppinglist exists
@@ -99,7 +99,7 @@ class TaskAbl {
         }
 
         // delete task
-        const deletedTask = await this.dao.delete(awid, dtoIn.taskId);
+        const deletedTask = await this.dao.delete(awid, dtoIn.id);
 
         // prepare and return dToOut
         const dToOut = { ...deletedTask, uuAppErrorMap };
@@ -123,14 +123,14 @@ class TaskAbl {
         const uuIdentity = session.getIdentity().getUuIdentity();
 
         // check if task exists
-        const task = await this.dao.get(awid, dtoIn.taskId);
+        const task = await this.dao.get(awid, dtoIn.id);
         if (!task) {
-            throw new Errors.Finish.TaskDoesNotExist({ uuAppErrorMap }, { id: dtoIn.taskId });
+            throw new Errors.Finish.TaskDoesNotExist({ uuAppErrorMap }, { id: dtoIn.id });
         }
 
         // check if task is already finished
         if (task.finished) {
-            throw new Errors.Finish.TaskAlreadyFinished({ uuAppErrorMap }, { id: dtoIn.taskId });
+            throw new Errors.Finish.TaskAlreadyFinished({ uuAppErrorMap }, { id: dtoIn.id });
         }
 
         // check if shoppinglist exists
@@ -174,9 +174,9 @@ class TaskAbl {
         const uuIdentity = session.getIdentity().getUuIdentity();
 
         // check if task exists
-        const task = await this.dao.get(awid, dtoIn.taskId);
+        const task = await this.dao.get(awid, dtoIn.id);
         if (!task) {
-            throw new Errors.Get.TaskDoesNotExist({ uuAppErrorMap }, { id: dtoIn.taskId });
+            throw new Errors.Get.TaskDoesNotExist({ uuAppErrorMap }, { id: dtoIn.id });
         }
 
         // check if user is owner or member of shoppinglist
