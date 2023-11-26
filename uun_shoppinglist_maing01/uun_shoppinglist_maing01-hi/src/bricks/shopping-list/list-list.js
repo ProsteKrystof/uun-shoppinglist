@@ -1,5 +1,6 @@
 //@@viewOn:imports
 import { createVisualComponent, Utils, Content, PropTypes, useLsi } from "uu5g05";
+import { useAlertBus } from "uu5g05-elements";
 import Config from "./config/config.js";
 import ListCard from "./list-card.js";
 import { Grid } from "uu5tilesg02-elements";
@@ -39,6 +40,7 @@ const ListList = createVisualComponent({
   render(props) {
     //@@viewOn:private
     const { children } = props;
+    const { addAlert } = useAlertBus();
     const lsi = useLsi(importLsi, ["ShoppingList"]);
 
     async function handleArchive(shoppinglistDataObject) {
@@ -46,6 +48,11 @@ const ListList = createVisualComponent({
         await shoppinglistDataObject.handlerMap.archive();
       } catch (e) {
         console.error(e);
+        addAlert({
+          header: lsi.archiveError,
+          message: e.message,
+          priority: "error"
+        });
         return;
       }
 
@@ -57,6 +64,11 @@ const ListList = createVisualComponent({
         await shoppinglistDataObject.handlerMap.delete();
       } catch (e) {
         console.error(e);
+        addAlert({
+          header: lsi.deleteError,
+          message: e.message,
+          priority: "error"
+        });
         return;
       }
     }
@@ -66,6 +78,11 @@ const ListList = createVisualComponent({
         await shoppinglistDataObject.handlerMap.leave();
       } catch (e) {
         console.error(e);
+        addAlert({
+          header: lsi.leaveError,
+          message: e.message,
+          priority: "error"
+        });
         return;
       }
     }
@@ -79,6 +96,11 @@ const ListList = createVisualComponent({
         });
       } catch (e) {
         console.error(e);
+        addAlert({
+          header: lsi.loadNextError,
+          message: e.message,
+          priority: "error"
+        })
         return;
       }
     }

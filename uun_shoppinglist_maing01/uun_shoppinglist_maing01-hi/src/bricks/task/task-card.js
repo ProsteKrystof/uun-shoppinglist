@@ -25,16 +25,9 @@ const TaskCard = createVisualComponent({
 
   //@@viewOn:propTypes
   propTypes: {
-    taskInfo: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      addedBy: PropTypes.string.isRequired,
-      completed: PropTypes.bool.isRequired
-    }).isRequired,
-    taskFunctions: PropTypes.shape({
-      completeTask: PropTypes.func.isRequired,
-      removeTask: PropTypes.func.isRequired,
-    }).isRequired
+    taskDataObject: PropTypes.object.isRequired,
+    finishTask: PropTypes.func.isRequired,
+    deleteTask: PropTypes.func.isRequired
   },
   //@@viewOff:propTypes
 
@@ -47,11 +40,11 @@ const TaskCard = createVisualComponent({
     const { children } = props;
 
     function handleComplete() {
-      props.taskFunctions.completeTask(props.taskInfo);
+      props.finishTask(props.taskDataObject);
     }
 
     function handleRemove() {
-      props.taskFunctions.removeTask(props.taskInfo);
+      props.deleteTask(props.taskDataObject);
     }
     //@@viewOff:private
 
@@ -61,6 +54,7 @@ const TaskCard = createVisualComponent({
     //@@viewOn:render
     const attrs = Utils.VisualComponent.getAttrs(props, Css.main());
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, TaskCard);
+    const task = props.taskDataObject.data;
 
     return currentNestingLevel ? (
       <div {...attrs}>
@@ -69,13 +63,13 @@ const TaskCard = createVisualComponent({
           borderRadius="expressive"
           significance="distinct"
         >
-          <h2 style={{marginBottom: 5}}>{props.taskInfo.name}</h2>
+          <h2 style={{marginBottom: 5}}>{task.name}</h2>
           <div style={{display: "flex"}}>
-            <p style={{marginTop: 5}}>{<Lsi import={importLsi} path={["Task", "addedBy"]} />}: {props.taskInfo.addedBy}</p>
+            <p style={{marginTop: 5}}>{<Lsi import={importLsi} path={["Task", "addedBy"]} />}: {task.addedBy}</p>
             <div style={{marginLeft: "auto", marginRight: 16}}>
               {/* Finish/Finished button */}
-              {props.taskInfo.completed
-              ? 
+              {task.finished
+              ?
                 <Uu5Elements.Button
                   significance="highlighted"
                   colorScheme="green"
@@ -83,7 +77,7 @@ const TaskCard = createVisualComponent({
                 >
                   <Lsi import={importLsi} path={["Task", "finished"]} />
                 </Uu5Elements.Button>
-              : 
+              :
                 <Uu5Elements.Button
                   significance="highlighted"
                   colorScheme="blue"

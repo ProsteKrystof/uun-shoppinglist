@@ -50,6 +50,7 @@ const ListCard = createVisualComponent({
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
     function handleArchive() {
+      console.log(listDataObject);
       props.archiveList(listDataObject);
     }
 

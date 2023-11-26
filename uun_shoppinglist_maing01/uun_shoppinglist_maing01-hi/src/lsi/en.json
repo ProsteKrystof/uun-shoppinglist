@@ -52,6 +52,8 @@
     "addMember": "Add member",
     "addMemberError": "Error",
     "memberAlreadyExists": "This uuIdentity is already added in member list.",
+    "invalidIdentity": "Invalid uuIdentity.",
+    "addSelfError": "You cannot add yourself to the member list.",
     "leaveHeader": "Leave this shopping list?",
     "leaveInfo": "You will not be able to view this shopping list after leaving.",
     "leave": "Leave",
@@ -61,7 +63,13 @@
     "archiveDeny": "Cancel",
     "deleteHeader": "Delete this shopping list?",
     "deleteInfo": "This shopping list will be permanently deleted.",
-    "deleteDeny": "Cancel"
+    "deleteDeny": "Cancel",
+    "createError": "Shopping list creation failed.",
+    "editError": "Shopping list editing failed.",
+    "archiveError": "Shopping list archiving failed.",
+    "deleteError": "Shopping list deletion failed.",
+    "leaveError": "Leaving shopping list failed.",
+    "loadNextError": "Loading next shopping lists failed."
   },
   "Task": {
     "add": "Add task",
@@ -70,6 +78,9 @@
     "finish": "Finish",
     "finished": "Finished",
     "taskName": "Task name",
-    "cancelAdd": "Cancel"
+    "cancelAdd": "Cancel",
+    "createError": "Task creation failed.",
+    "finishError": "Task finishing failed.",
+    "deleteError": "Task deletion failed."
   }
 }

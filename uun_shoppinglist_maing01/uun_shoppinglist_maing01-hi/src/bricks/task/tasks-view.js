@@ -27,7 +27,8 @@ const TasksView = createVisualComponent({
 
   //@@viewOn:propTypes
   propTypes: {
-    shoppingListDataObject: PropTypes.object
+    shoppingListDataObject: PropTypes.object,
+    taskDataList: PropTypes.object
   },
   //@@viewOff:propTypes
 
@@ -64,10 +65,12 @@ const TasksView = createVisualComponent({
           >
             <TasksOptions
               shoppingListDataObject={props.shoppingListDataObject}
+              taskDataList={props.taskDataList}
               showCompleted={showCompleted}
               setShowCompleted={setShowCompleted}
             />
-            {/*<TaskList tasks={tasksToShow} taskFunctions={props.taskFunctions} showCompleted={showCompleted} />*/}
+
+            <TaskList taskDataList={props.taskDataList} showCompleted={showCompleted} />
           </Uu5Elements.Box>
         </Uu5Elements.Box>
 

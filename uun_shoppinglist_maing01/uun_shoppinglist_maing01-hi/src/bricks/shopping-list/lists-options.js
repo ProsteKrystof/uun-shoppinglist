@@ -1,5 +1,6 @@
 //@@viewOn:imports
 import { createVisualComponent, Utils, Content, PropTypes, useState, useSession, useRoute, useLsi } from "uu5g05";
+import { useAlertBus } from "uu5g05-elements";
 import Config from "./config/config.js";
 import Uu5Elements from "uu5g05-elements";
 import EditShoppingListModal from "./edit-shopping-list-modal.js";
@@ -40,6 +41,7 @@ const ListsOptions = createVisualComponent({
     //@@viewOn:private
     const { children } = props;
     const lsi = useLsi(importLsi, ["ShoppingList"]);
+    const { addAlert } = useAlertBus();
     const [route, setRoute] = useRoute();
     const { identity } = useSession();
 
@@ -61,6 +63,11 @@ const ListsOptions = createVisualComponent({
         shoppingList = await props.shoppinglistDataList.handlerMap.create(values);
       } catch (e) {
         console.error(e);
+        addAlert({
+          header: lsi.createError,
+          message: e.message,
+          priority: "error",
+        })
         return;
       }
 

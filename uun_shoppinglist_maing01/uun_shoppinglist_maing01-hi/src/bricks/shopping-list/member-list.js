@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, PropTypes, useState, useLsi } from "uu5g05";
+import { createVisualComponent, Utils, Content, PropTypes, useState, useSession, useLsi } from "uu5g05";
 import Uu5Elements from "uu5g05-elements";
 import MemberItem from "./member-item.js";
 import Config from "./config/config.js";
@@ -39,6 +39,7 @@ const MemberList = createVisualComponent({
   render(props) {
     //@@viewOn:private
     const { children } = props;
+    const { identity } = useSession();
     const lsi = useLsi(importLsi, ["ShoppingList"]);
     const { addAlert } = Uu5Elements.useAlertBus();
     const [inputIdentity, setInputIdentity] = useState("");
@@ -50,10 +51,28 @@ const MemberList = createVisualComponent({
 
     function handleInputIdentityButtonOnClick() {
       if (inputIdentity == "") return; // prevent adding empty strings
-      if (props.memberList.indexOf(inputIdentity) !== -1) { // prevent adding duplicate strings
+      if (props.memberList.filter((item) => item.identity === inputIdentity).length !== 0) { // prevent adding duplicate strings
         addAlert({
           header: lsi.addMemberError,
           message: lsi.memberAlreadyExists,
+          priority: "error",
+          durationMs: 2000
+        })
+        return;
+      }
+      if (/^[0-9]{1,4}\-[0-9]{1,4}(\-[0-9]{1,4}(\-[0-9]{1,4})?)?$/.test(inputIdentity) === false) { // prevent adding invalid identities
+        addAlert({
+          header: lsi.addMemberError,
+          message: lsi.invalidIdentity,
+          priority: "error",
+          durationMs: 2000
+        })
+        return;
+      }
+      if (inputIdentity === identity.uuIdentity) { // prevent adding self
+        addAlert({
+          header: lsi.addMemberError,
+          message: lsi.addSelfError,
           priority: "error",
           durationMs: 2000
         })

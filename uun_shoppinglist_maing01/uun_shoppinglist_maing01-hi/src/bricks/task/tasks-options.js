@@ -1,5 +1,6 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, PropTypes, useState, useSession, useRoute, Lsi } from "uu5g05";
+import { createVisualComponent, Utils, Content, PropTypes, useState, useSession, useRoute, useLsi } from "uu5g05";
+import { useAlertBus } from "uu5g05-elements";
 import Config from "./config/config.js";
 import Uu5Elements from "uu5g05-elements";
 import AddTaskModal from "./add-task-modal.js";
@@ -29,6 +30,7 @@ const TasksOptions = createVisualComponent({
   //@@viewOn:propTypes
   propTypes: {
     shoppingListDataObject: PropTypes.object,
+    taskDataList: PropTypes.object,
     showCompleted: PropTypes.bool.isRequired,
     setShowCompleted: PropTypes.func.isRequired
   },
@@ -41,8 +43,10 @@ const TasksOptions = createVisualComponent({
   render(props) {
     //@@viewOn:private
     const { children } = props;
+    const lsi = useLsi(importLsi);
     const { identity } = useSession();
     const [route, setRoute] = useRoute();
+    const { addAlert } = useAlertBus();
     // add task modal
     const [showAddTaskModal, setShowAddTaskModal] = useState(false);
     // edit shopping list modal
@@ -61,17 +65,34 @@ const TasksOptions = createVisualComponent({
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, TasksOptions);
 
     async function handleAddTaskSubmit(values) {
-      //props.addTask(values.name, identity.name);
+      let task;
+
+      try {
+        task = await props.taskDataList.handlerMap.create({ name: values.name });
+      } catch (e) {
+        console.error(e);
+        addAlert({
+          header: lsi.Task.createError,
+          message: e.message,
+          priority: "error",
+        });
+        return;
+      }
+
       handleAddTaskClose();
     }
 
     async function handleEditShoppingListSubmit(values) {
-      //props.updateShoppingList(values)
       try {
         await props.shoppingListDataObject.handlerMap.update({ name: values.name, color: values.color });
         await props.shoppingListDataObject.handlerMap.setMembers({memberIdentities: values.memberIdentities});
       } catch (e) {
         console.error(e);
+        addAlert({
+          header: lsi.ShoppingList.editError,
+          message: e.message,
+          priority: "error",
+        });
         return;
       }
       handleEditShoppingListClose();
@@ -104,7 +125,7 @@ const TasksOptions = createVisualComponent({
             icon="uugds-plus"
             colorScheme="blue"
             onClick={handleAddTaskOpen}
-          ><Lsi import={importLsi} path={["Task", "add"]} /></Uu5Elements.Button>
+          >{lsi.Task.add}</Uu5Elements.Button>
           <Uu5Elements.Button
             className={Config.Css.css({marginLeft: 10})}
             icon="uugds-settings"
@@ -120,7 +141,7 @@ const TasksOptions = createVisualComponent({
           />)}
 
           <Uu5Elements.Toggle
-            label={<Lsi import={importLsi} path={["Task", "showFinished"]} />}
+            label={lsi.Task.showFinished}
             size="xl"
             style={{marginLeft: "auto"}}
             value={props.showCompleted}
