@@ -29,6 +29,10 @@ class ShoppinglistController {
     setMembers(ucEnv) {
         return ShoppinglistAbl.setMembers(ucEnv.getUri().getAwid(), ucEnv.getDtoIn(), ucEnv.getSession());
     }
+
+    leave(ucEnv) {
+        return ShoppinglistAbl.leave(ucEnv.getUri().getAwid(), ucEnv.getDtoIn(), ucEnv.getSession());
+    }
 }
 
 module.exports = new ShoppinglistController();

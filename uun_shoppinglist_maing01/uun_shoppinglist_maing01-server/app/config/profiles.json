@@ -73,6 +73,10 @@
       "shoppinglist/setMembers": {
         "sysStateList": ["active"],
         "profileList": ["Authenticated"]
+      },
+      "shoppinglist/leave": {
+        "sysStateList": ["active"],
+        "profileList": ["Authenticated"]
       }
     }
   }

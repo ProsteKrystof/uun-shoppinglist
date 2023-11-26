@@ -85,6 +85,11 @@
         "realization": "api/controllers/ShoppinglistController.setMembers",
         "httpMethod": "POST",
         "type": "CMD"
+      },
+      "shoppinglist/leave": {
+        "realization": "api/controllers/ShoppinglistController.leave",
+        "httpMethod": "POST",
+        "type": "CMD"
       }
     }
   }

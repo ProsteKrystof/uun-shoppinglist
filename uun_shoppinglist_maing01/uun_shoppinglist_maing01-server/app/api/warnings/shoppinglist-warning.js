@@ -41,6 +41,12 @@ const Warnings = {
         UnsupportedKeys: {
             code: `${Errors.SetMembers.UC_CODE}unsupportedKeys`,
         },
+    },
+
+    Leave: {
+        UnsupportedKeys: {
+            code: `${Errors.Leave.UC_CODE}unsupportedKeys`,
+        },
     }
 }
 

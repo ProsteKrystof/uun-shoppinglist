@@ -197,6 +197,34 @@ const SetMembers = {
     }
 };
 
+const Leave = {
+    UC_CODE: `${ShoppinglistMainUseCaseError.ERROR_PREFIX}shoppinglist/leave/`,
+
+    InvalidDtoIn: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Leave.UC_CODE}invalidDtoIn`;
+            this.message = "DtoIn is not valid.";
+        }
+    },
+
+    ShoppinglistDoesNotExist: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Leave.UC_CODE}shoppinglistDoesNotExist`;
+            this.message = "Shoppinglist does not exist.";
+        }
+    },
+
+    UserNotAuthorized: class extends ShoppinglistMainUseCaseError {
+        constructor() {
+            super(...arguments);
+            this.code = `${Leave.UC_CODE}userNotAuthorized`;
+            this.message = "User is not authorized.";
+        }
+    }
+};
+
 module.exports = {
     Create,
     Archive,
@@ -204,5 +232,6 @@ module.exports = {
     Update,
     Get,
     List,
-    SetMembers
+    SetMembers,
+    Leave
 };

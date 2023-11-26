@@ -326,6 +326,42 @@ class ShoppinglistAbl {
         const dToOut = { ...updatedList, uuAppErrorMap };
         return dToOut;
     }
+
+    async leave(awid, dtoIn, session) {
+        let uuAppErrorMap = {};
+
+        // validation of dToIn
+        const validationResult = this.validator.validate("shoppinglistLeaveDtoInType", dtoIn);
+        uuAppErrorMap = ValidationHelper.processValidationResult(
+            dtoIn,
+            validationResult,
+            uuAppErrorMap,
+            Warnings.Create.UnsupportedKeys.code,
+            Errors.Create.InvalidDtoIn
+        )
+
+        // get uuIdentity information from session
+        const uuIdentity = session.getIdentity().getUuIdentity();
+
+        // check if shoppinglist exists
+        const shoppinglist = await this.dao.get(awid, dtoIn.id);
+        if (!shoppinglist) {
+            throw new Errors.Leave.ShoppinglistDoesNotExist({ uuAppErrorMap }, { id: dtoIn.id });
+        }
+
+        // check if user is member of shoppinglist
+        if (shoppinglist.members.filter(member => member.identity === uuIdentity).length === 0) {
+            throw new Errors.Leave.UserNotAuthorized({ uuAppErrorMap }, { id: dtoIn.id });
+        }
+
+        // leave shoppinglist
+        shoppinglist.members = shoppinglist.members.filter(member => member.identity !== uuIdentity);
+        const updatedList = await this.dao.update(shoppinglist);
+
+        // prepare and return dToOut
+        const dToOut = { ...updatedList, uuAppErrorMap };
+        return dToOut;
+    }
 }
 
 module.exports = new ShoppinglistAbl();

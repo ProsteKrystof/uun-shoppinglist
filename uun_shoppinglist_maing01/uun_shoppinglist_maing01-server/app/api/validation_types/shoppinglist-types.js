@@ -53,3 +53,7 @@ const shoppinglistSetMembersDtoInType = shape({
     id: id().isRequired(),
     memberIdentities: array(uuIdentity().isRequired()).isRequired()
 });
+
+const shoppinglistLeaveDtoInType = shape({
+    id: id().isRequired()
+});
