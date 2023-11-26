@@ -38,7 +38,7 @@ class ShoppinglistAbl {
                 uuIdentity: member,
             };
 
-            let personName = "Uknown";
+            let personName = "Unknown";
             try {
                 let personIdentityLoadDtoOut = await AppClient.cmdGet(uuIdmPersonIdentityLoadUri, personIdentityLoadDtoIn, { session });
                 personName = personIdentityLoadDtoOut.name + " " + personIdentityLoadDtoOut.surname;
@@ -307,7 +307,7 @@ class ShoppinglistAbl {
                 uuIdentity: member,
             };
 
-            let personName = "Uknown";
+            let personName = "Unknown";
             try {
                 let personIdentityLoadDtoOut = await AppClient.cmdGet(uuIdmPersonIdentityLoadUri, personIdentityLoadDtoIn, { session });
                 personName = personIdentityLoadDtoOut.name + " " + personIdentityLoadDtoOut.surname;
@@ -356,10 +356,10 @@ class ShoppinglistAbl {
 
         // leave shoppinglist
         shoppinglist.members = shoppinglist.members.filter(member => member.identity !== uuIdentity);
-        const updatedList = await this.dao.update(shoppinglist);
+        await this.dao.update(shoppinglist);
 
         // prepare and return dToOut
-        const dToOut = { ...updatedList, uuAppErrorMap };
+        const dToOut = { uuAppErrorMap };
         return dToOut;
     }
 }

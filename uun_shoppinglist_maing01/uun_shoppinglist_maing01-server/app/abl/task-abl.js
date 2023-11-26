@@ -221,7 +221,7 @@ class TaskAbl {
         const tasks = await this.dao.listByListId(awid, dtoIn.listId, dtoIn.pageInfo);
 
         // prepare and return dToOut
-        const dToOut = { tasks, uuAppErrorMap };
+        const dToOut = { ...tasks, uuAppErrorMap };
         return dToOut;
     }
 }
