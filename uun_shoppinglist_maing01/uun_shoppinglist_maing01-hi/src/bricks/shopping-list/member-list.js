@@ -61,14 +61,14 @@ const MemberList = createVisualComponent({
       }
 
       const newList = [...props.memberList];
-      newList.push(inputIdentity);
+      newList.push({identity: inputIdentity, name: "Unknown"});
 
       props.setMemberList(newList);
       setInputIdentity(""); // clear identity input
     }
 
     function handleMemberDeleteButton(memberIdentity) {
-      let newMembers = props.memberList.filter((item) => item !== memberIdentity);
+      let newMembers = props.memberList.filter((item) => item.identity !== memberIdentity);
       let newList = [...newMembers];
 
       props.setMemberList(newList);
@@ -118,7 +118,7 @@ const MemberList = createVisualComponent({
 
           {/* Member list */}
           {props.memberList?.map((member) => (
-            <MemberItem key={member} member={member} allowRemove={props.isOwner} handleDelete={handleMemberDeleteButton} />
+            <MemberItem key={member.identity} member={member} allowRemove={props.isOwner} handleDelete={handleMemberDeleteButton} />
           ))}
         </Uu5Elements.Box>
         <Content nestingLevel={currentNestingLevel}>{children}</Content>

@@ -27,13 +27,7 @@ const TasksView = createVisualComponent({
 
   //@@viewOn:propTypes
   propTypes: {
-    shoppingList: PropTypes.object.isRequired,
-    taskFunctions: PropTypes.shape({
-      createTask: PropTypes.func.isRequired,
-      completeTask: PropTypes.func.isRequired,
-      removeTask: PropTypes.func.isRequired,
-    }).isRequired,
-    updateShoppingList: PropTypes.func.isRequired,
+    shoppingListDataObject: PropTypes.object
   },
   //@@viewOff:propTypes
 
@@ -46,7 +40,7 @@ const TasksView = createVisualComponent({
     const { children } = props;
     const [showCompleted, setShowCompleted] = useState(false);
 
-    const tasksToShow = showCompleted ? props.shoppingList.tasks : props.shoppingList.tasks.filter((task) => task.completed === false);
+    //const tasksToShow = showCompleted ? props.shoppingList.tasks : props.shoppingList.tasks.filter((task) => task.completed === false);
     //@@viewOff:private
 
     //@@viewOn:interface
@@ -61,7 +55,7 @@ const TasksView = createVisualComponent({
         <Uu5Elements.Box
           className={Config.Css.css({ padding: 0, margin: 50 })}
           borderRadius="expressive"
-          style={{ backgroundColor: getSchemeColor(props.shoppingList.color) }}
+          style={{ backgroundColor: getSchemeColor(props.shoppingListDataObject.data.color) }}
         >
           <Uu5Elements.Box
             className={Config.Css.css({ padding: 16, marginLeft: 5 })}
@@ -69,13 +63,11 @@ const TasksView = createVisualComponent({
             significance="subdued"
           >
             <TasksOptions
-              shoppingList={props.shoppingList}
-              addTask={props.taskFunctions.createTask}
-              updateShoppingList={props.updateShoppingList}
+              shoppingListDataObject={props.shoppingListDataObject}
               showCompleted={showCompleted}
               setShowCompleted={setShowCompleted}
             />
-            <TaskList tasks={tasksToShow} taskFunctions={props.taskFunctions} showCompleted={showCompleted} />
+            {/*<TaskList tasks={tasksToShow} taskFunctions={props.taskFunctions} showCompleted={showCompleted} />*/}
           </Uu5Elements.Box>
         </Uu5Elements.Box>
 

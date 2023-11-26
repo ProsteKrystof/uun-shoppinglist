@@ -83,17 +83,19 @@ const EditShoppingListModal = createVisualComponent({
   //@@viewOff:defaultProps
 
   render(props) {
-    //@@viewOn:private    
+    //@@viewOn:private
     const lsi = useLsi(importLsi, ["ShoppingList"]);
 
     const editMode = props.shoppingList !== undefined;
 
     let selectedColor = useRef(editMode ? props.shoppingList.color : "light-blue");
-    const [memberList, setMemberList] = useState(editMode ? props.shoppingList.memberIdentities : []);
+    const [memberList, setMemberList] = useState(editMode ? props.shoppingList.members : []);
 
 
     async function handleSubmit(event) {
-      const values = { ...event.data.value, ...{color: selectedColor.current}, ...{memberIdentities: memberList} };
+      const identities = memberList.map((item) => item.identity);
+
+      const values = { ...event.data.value, ...{color: selectedColor.current}, ...{memberIdentities: identities} };
       return props.onSubmit(values);
     }
 

@@ -1,6 +1,7 @@
 //@@viewOn:imports
-import { createComponent, Utils, PropTypes, useState, useEffect, useSession } from "uu5g05";
+import { createComponent, Utils, PropTypes, useState, useEffect, useDataObject, useSession } from "uu5g05";
 import Config from "./config/config.js";
+import Calls from "calls";
 //@@viewOff:imports
 
 let initialShoppingListData = {
@@ -59,11 +60,33 @@ const ListDataProvider = createComponent({
   //@@viewOff:defaultProps
 
   render(props) {
-    //@@viewOn:private   
-    const [shoppingList, setShoppingList] = useState(initialShoppingListData);
-    const { identity } = useSession();
+    //@@viewOn:private
+    const shoppinglistDataObject = useDataObject({
+      handlerMap: {
+        load: handleLoad,
+        update: handleUpdate,
+        leave: handleLeave,
+        setMembers: handleSetMembers
+      }
+    });
 
-    useEffect(() => {
+    function handleLoad() {
+      return Calls.Shoppinglist.get({id: props.id});
+    };
+
+    function handleUpdate(dtoIn) {
+      return Calls.Shoppinglist.update({...dtoIn, id: props.id});
+    };
+
+    function handleLeave() {
+      return Calls.Shoppinglist.leave({id: props.id});
+    };
+
+    function handleSetMembers(dtoIn) {
+      return Calls.Shoppinglist.setMembers({...dtoIn, id: props.id});
+    }
+
+    /*useEffect(() => {
       // pro ucely testovani nastavi momentalni uuid jako majitele seznamu
       let newList = {...shoppingList};
       newList.ownerIdentity = identity.uuIdentity;
@@ -71,15 +94,15 @@ const ListDataProvider = createComponent({
 
       // vypsat ID seznamu k ziskani (bude pouzito pro ziskani dat ze backendu)
       console.log("ID seznamu k ziskani: " + props.id);
-    }, []);
-    
+    }, []);*/
+
     // shopping list
-    function updateShoppingList(newInfo) {
+    /*function updateShoppingList(newInfo) {
       setShoppingList({...shoppingList, ...newInfo});
-    };
+    };*/
 
     // tasks
-    const taskFunctions = {
+    /*const taskFunctions = {
       createTask(taskName, userName) {
         let task = {
           id: Utils.String.generateId(),
@@ -97,25 +120,26 @@ const ListDataProvider = createComponent({
         let newTasks = shoppingList.tasks.map((item) => item.id === task.id ? {...item, completed: true} : item);
         let newList = {...shoppingList};
         newList.tasks = newTasks;
-  
+
         setShoppingList(newList);
       },
       removeTask(task) {
         let newTasks = shoppingList.tasks.filter((item) => item.id !== task.id);
         let newList = {...shoppingList};
         newList.tasks = newTasks;
-  
+
         setShoppingList(newList);
       }
-    };
+    };*/
     //@@viewOff:private
 
     //@@viewOn:interface
     //@@viewOff:interface
 
     //@@viewOn:render
-    const value = { shoppingList, taskFunctions, updateShoppingList };
-    return typeof props.children === "function" ? props.children(value) : props.children;
+    //const value = { shoppingList, taskFunctions, updateShoppingList };
+    console.log(shoppinglistDataObject);
+    return typeof props.children === "function" ? props.children(shoppinglistDataObject) : props.children;
     //@@viewOff:render
   },
 });

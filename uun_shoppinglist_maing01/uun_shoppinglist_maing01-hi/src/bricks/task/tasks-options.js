@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, PropTypes, useState, useSession, Lsi } from "uu5g05";
+import { createVisualComponent, Utils, Content, PropTypes, useState, useSession, useRoute, Lsi } from "uu5g05";
 import Config from "./config/config.js";
 import Uu5Elements from "uu5g05-elements";
 import AddTaskModal from "./add-task-modal.js";
@@ -28,9 +28,7 @@ const TasksOptions = createVisualComponent({
 
   //@@viewOn:propTypes
   propTypes: {
-    shoppingList: PropTypes.object.isRequired,
-    addTask: PropTypes.func.isRequired,
-    updateShoppingList: PropTypes.func.isRequired,
+    shoppingListDataObject: PropTypes.object,
     showCompleted: PropTypes.bool.isRequired,
     setShowCompleted: PropTypes.func.isRequired
   },
@@ -44,12 +42,15 @@ const TasksOptions = createVisualComponent({
     //@@viewOn:private
     const { children } = props;
     const { identity } = useSession();
+    const [route, setRoute] = useRoute();
     // add task modal
     const [showAddTaskModal, setShowAddTaskModal] = useState(false);
     // edit shopping list modal
     const [showEditShoppingListModal, setShowEditShoppingListModal] = useState(false);
     // leave shopping list dialog
     const [leaveDialogOpen, setLeaveDialogOpen] = useState(false);
+
+    const shoppingList = props.shoppingListDataObject.data;
     //@@viewOff:private
 
     //@@viewOn:interface
@@ -60,26 +61,33 @@ const TasksOptions = createVisualComponent({
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, TasksOptions);
 
     async function handleAddTaskSubmit(values) {
-      props.addTask(values.name, identity.name);
+      //props.addTask(values.name, identity.name);
       handleAddTaskClose();
     }
 
     async function handleEditShoppingListSubmit(values) {
-      props.updateShoppingList(values)
+      //props.updateShoppingList(values)
+      try {
+        await props.shoppingListDataObject.handlerMap.update({ name: values.name, color: values.color });
+        await props.shoppingListDataObject.handlerMap.setMembers({memberIdentities: values.memberIdentities});
+      } catch (e) {
+        console.error(e);
+        return;
+      }
       handleEditShoppingListClose();
     }
 
-    function handleLeaveShoppingList() {
-      const memberIdentity = identity.uuIdentity;
-      let newMembers = props.shoppingList.memberIdentities.filter((item) => item !== memberIdentity);
-      let newList = [...newMembers];
-
-      props.updateShoppingList({memberIdentities: newMembers});
-      console.log("Shopping list left successfully");
-      console.log(newList);
+    async function handleLeaveShoppingList() {
+      try {
+        await props.shoppingListDataObject.handlerMap.leave();
+        setRoute("shoppingLists");
+      } catch (e) {
+        console.error(e);
+        return;
+      }
     }
 
-    const isOwner = props.shoppingList.ownerIdentity === identity.uuIdentity;
+    const isOwner = shoppingList.uuIdentity === identity.uuIdentity;
 
     const handleAddTaskOpen = () => setShowAddTaskModal(true);
     const handleAddTaskClose = () => setShowAddTaskModal(false);
@@ -89,7 +97,7 @@ const TasksOptions = createVisualComponent({
 
     return currentNestingLevel ? (
       <div {...attrs}>
-        <h1><Uu5Elements.Icon colorScheme={props.shoppingList.color} icon="uugds-circle-solid"/> {props.shoppingList.name}</h1>
+        <h1><Uu5Elements.Icon colorScheme={shoppingList.color} icon="uugds-circle-solid"/> {shoppingList.name}</h1>
         <div style={{ display: "flex", marginBottom: 10 }}>
           <Uu5Elements.Button
             significance="highlighted"
@@ -130,7 +138,7 @@ const TasksOptions = createVisualComponent({
 
         {showEditShoppingListModal && (
           <EditShoppingListModal
-            shoppingList={props.shoppingList}
+            shoppingList={shoppingList}
             isOwner={isOwner}
             onSubmit={handleEditShoppingListSubmit}
             onCancel={handleEditShoppingListClose}

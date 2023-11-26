@@ -68,8 +68,6 @@ const ListList = createVisualComponent({
         console.error(e);
         return;
       }
-
-      props.shoppinglistDataList.handlerMap.load();
     }
 
     async function handleLoadNext({ indexFrom }) {

@@ -24,7 +24,7 @@ const MemberItem = createVisualComponent({
 
   //@@viewOn:propTypes
   propTypes: {
-    member: PropTypes.string.isRequired,
+    member: PropTypes.object.isRequired,
     handleDelete: PropTypes.func.isRequired,
     allowRemove: PropTypes.bool.isRequired
   },
@@ -56,14 +56,14 @@ const MemberItem = createVisualComponent({
         >
           <Uu5Elements.InfoItem
             imageSrc="https://cdn.plus4u.net/uu-plus4u5g01/4.0.0/assets/img/anonymous.png"
-            title={props.member}
+            title={props.member.name === "Unknown" ? props.member.identity : props.member.name}
           />
 
           {props.allowRemove && (<Uu5Elements.Button
             style={{marginLeft: "auto", marginRight: 5}}
             colorScheme="red"
             icon="mdi-exit-to-app"
-            onClick={() => props.handleDelete(props.member)}
+            onClick={() => props.handleDelete(props.member.identity)}
           />)}
         </Uu5Elements.Box>
 

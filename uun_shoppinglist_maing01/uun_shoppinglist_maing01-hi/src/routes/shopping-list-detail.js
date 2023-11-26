@@ -1,9 +1,11 @@
 //@@viewOn:imports
 import { createVisualComponent, Utils, Content, useSession } from "uu5g05";
+import { RouteController } from "uu_plus4u5g02-app";
 import Config from "./config/config.js";
 import ListDataProvider from "../bricks/shopping-list/list-data-provider.js";
 import TasksView from "../bricks/task/tasks-view.js";
 import { withRoute } from "uu_plus4u5g02-app";
+import ListsProvider from "../bricks/shopping-list/lists-provider.js";
 //@@viewOff:imports
 
 //@@viewOn:constants
@@ -49,11 +51,11 @@ let ShoppingListDetail = createVisualComponent({
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
 
         <ListDataProvider id={props.params.id}>
-          {({shoppingList, taskFunctions, updateShoppingList}) => <TasksView
-            shoppingList={shoppingList}
-            taskFunctions={taskFunctions}
-            updateShoppingList={updateShoppingList}
-          />}
+          {(shoppingListDataObject) => (
+            <RouteController routeDataObject={shoppingListDataObject}>
+              <TasksView shoppingListDataObject={shoppingListDataObject} />
+            </RouteController>
+          )}
         </ListDataProvider>
       </div>
     ) : null;

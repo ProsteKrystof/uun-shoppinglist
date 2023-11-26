@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, PropTypes, useState, useSession, useLsi } from "uu5g05";
+import { createVisualComponent, Utils, Content, PropTypes, useState, useSession, useRoute, useLsi } from "uu5g05";
 import Config from "./config/config.js";
 import Uu5Elements from "uu5g05-elements";
 import EditShoppingListModal from "./edit-shopping-list-modal.js";
@@ -40,6 +40,7 @@ const ListsOptions = createVisualComponent({
     //@@viewOn:private
     const { children } = props;
     const lsi = useLsi(importLsi, ["ShoppingList"]);
+    const [route, setRoute] = useRoute();
     const { identity } = useSession();
 
     // edit shopping list modal
@@ -63,9 +64,10 @@ const ListsOptions = createVisualComponent({
         return;
       }
 
-      props.shoppinglistDataList.handlerMap.load();
+      /*props.shoppinglistDataList.handlerMap.load();
+      handleEditShoppingListClose();*/
 
-      handleEditShoppingListClose();
+      setRoute("shoppingListDetail", { id: shoppingList.id });
     }
 
     const handleEditShoppingListOpen = () => setShowEditShoppingListModal(true);
