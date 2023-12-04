@@ -15,14 +15,9 @@ const About = Utils.Component.lazy(() => import("../routes/about.js"));
 const InitAppWorkspace = Utils.Component.lazy(() => import("../routes/init-app-workspace.js"));
 const ControlPanel = Utils.Component.lazy(() => import("../routes/control-panel.js"));
 
-const test = {
-  name: "testik",
-  desc: "testik"
-}
-
 const ROUTE_MAP = {
   "": { redirect: "shoppingLists" },
-  shoppingLists: (props) => <ShoppingLists {...props} test={test} />,
+  shoppingLists: (props) => <ShoppingLists {...props} />,
   shoppingListDetail: (props) => <ShoppingListDetail {...props} />,
   about: (props) => <About {...props} />,
   "sys/uuAppWorkspace/initUve": (props) => <InitAppWorkspace {...props} />,

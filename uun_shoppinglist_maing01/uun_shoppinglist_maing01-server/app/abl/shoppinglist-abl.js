@@ -4,9 +4,12 @@ const { ValidationHelper } = require("uu_appg01_server").AppServer;
 const { DaoFactory } = require("uu_appg01_server").ObjectStore;
 const AppClient = require("uu_appg01_server").AppClient;
 const { UriBuilder } = require("uu_appg01_server").Uri;
+const { LoggerFactory } = require("uu_appg01_server").Logging;
 
 const Errors = require("../api/errors/shoppinglist-error.js");
 const Warnings = require("../api/warnings/shoppinglist-warning.js");
+
+const logger = LoggerFactory.get("shoppinglist.Abl.ShoppinglistAbl");
 
 class ShoppinglistAbl {
     constructor() {
@@ -29,21 +32,22 @@ class ShoppinglistAbl {
         );
 
         // use AppClient to get personName from uuIdentity
-        const uuIdmBaseUri = "https://uuapp-dev.plus4u.net/uu-identitymanagement-maing01/58ceb15c275c4b31bfe0fc9768aa6a9c";
-        const uuIdmPersonIdentityLoadUri = UriBuilder.parse(uuIdmBaseUri).setUseCase("uuPersonIdentity/load");
+        const uuPeopleBaseUri = "https://uuapp-dev.plus4u.net/uu-plus4upeople-maing01/0000004723544d1ab0b74000d9f7671c";
+        const uuPeoplePersonIdentityLoadUri = UriBuilder.parse(uuPeopleBaseUri).setUseCase("people/findPerson");
 
         let members = [];
         for (let member of dtoIn.memberIdentities) {
             const personIdentityLoadDtoIn = {
                 uuIdentity: member,
+                private: false
             };
 
             let personName = "Unknown";
             try {
-                let personIdentityLoadDtoOut = await AppClient.cmdGet(uuIdmPersonIdentityLoadUri, personIdentityLoadDtoIn, { session });
-                personName = personIdentityLoadDtoOut.name + " " + personIdentityLoadDtoOut.surname;
+                let personIdentityLoadDtoOut = await AppClient.cmdGet(uuPeoplePersonIdentityLoadUri, personIdentityLoadDtoIn, { session });
+                personName = personIdentityLoadDtoOut.itemList[0].name;
             } catch (e) {
-                console.log(e);
+                logger.warn("Getting name for uuIdentity error: " + e);
             };
 
             members.push({ identity: member, name: personName });
@@ -298,21 +302,22 @@ class ShoppinglistAbl {
         }
 
         // use AppClient to get personName from uuIdentity
-        const uuIdmBaseUri = "https://uuapp-dev.plus4u.net/uu-identitymanagement-maing01/58ceb15c275c4b31bfe0fc9768aa6a9c";
-        const uuIdmPersonIdentityLoadUri = UriBuilder.parse(uuIdmBaseUri).setUseCase("uuPersonIdentity/load");
+        const uuPeopleBaseUri = "https://uuapp-dev.plus4u.net/uu-plus4upeople-maing01/0000004723544d1ab0b74000d9f7671c";
+        const uuPeoplePersonIdentityLoadUri = UriBuilder.parse(uuPeopleBaseUri).setUseCase("people/findPerson");
 
         let members = [];
         for (let member of dtoIn.memberIdentities) {
             const personIdentityLoadDtoIn = {
                 uuIdentity: member,
+                private: false
             };
 
             let personName = "Unknown";
             try {
-                let personIdentityLoadDtoOut = await AppClient.cmdGet(uuIdmPersonIdentityLoadUri, personIdentityLoadDtoIn, { session });
-                personName = personIdentityLoadDtoOut.name + " " + personIdentityLoadDtoOut.surname;
+                let personIdentityLoadDtoOut = await AppClient.cmdGet(uuPeoplePersonIdentityLoadUri, personIdentityLoadDtoIn, { session });
+                personName = personIdentityLoadDtoOut.itemList[0].name;
             } catch (e) {
-                console.log(e);
+                logger.warn("Getting name for uuIdentity error: " + e);
             };
 
             members.push({ identity: member, name: personName });
