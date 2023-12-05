@@ -83,8 +83,8 @@ class ShoppinglistAbl {
             dtoIn,
             validationResult,
             uuAppErrorMap,
-            Warnings.Create.UnsupportedKeys.code,
-            Errors.Create.InvalidDtoIn
+            Warnings.Archive.UnsupportedKeys.code,
+            Errors.Archive.InvalidDtoIn
         )
 
         // get uuIdentity information from session
@@ -124,8 +124,8 @@ class ShoppinglistAbl {
             dtoIn,
             validationResult,
             uuAppErrorMap,
-            Warnings.Create.UnsupportedKeys.code,
-            Errors.Create.InvalidDtoIn
+            Warnings.Delete.UnsupportedKeys.code,
+            Errors.Delete.InvalidDtoIn
         )
 
         // get uuIdentity information from session
@@ -170,8 +170,8 @@ class ShoppinglistAbl {
             dtoIn,
             validationResult,
             uuAppErrorMap,
-            Warnings.Create.UnsupportedKeys.code,
-            Errors.Create.InvalidDtoIn
+            Warnings.Update.UnsupportedKeys.code,
+            Errors.Update.InvalidDtoIn
         )
 
         // get uuIdentity information from session
@@ -215,8 +215,8 @@ class ShoppinglistAbl {
             dtoIn,
             validationResult,
             uuAppErrorMap,
-            Warnings.Create.UnsupportedKeys.code,
-            Errors.Create.InvalidDtoIn
+            Warnings.Get.UnsupportedKeys.code,
+            Errors.Get.InvalidDtoIn
         )
 
         // get uuIdentity information from session
@@ -247,8 +247,8 @@ class ShoppinglistAbl {
             dtoIn,
             validationResult,
             uuAppErrorMap,
-            Warnings.Create.UnsupportedKeys.code,
-            Errors.Create.InvalidDtoIn
+            Warnings.List.UnsupportedKeys.code,
+            Errors.List.InvalidDtoIn
         )
 
         // get uuIdentity information from session
@@ -278,8 +278,8 @@ class ShoppinglistAbl {
             dtoIn,
             validationResult,
             uuAppErrorMap,
-            Warnings.Create.UnsupportedKeys.code,
-            Errors.Create.InvalidDtoIn
+            Warnings.SetMembers.UnsupportedKeys.code,
+            Errors.SetMembers.InvalidDtoIn
         )
 
         // get uuIdentity information from session
@@ -341,8 +341,8 @@ class ShoppinglistAbl {
             dtoIn,
             validationResult,
             uuAppErrorMap,
-            Warnings.Create.UnsupportedKeys.code,
-            Errors.Create.InvalidDtoIn
+            Warnings.Leave.UnsupportedKeys.code,
+            Errors.Leave.InvalidDtoIn
         )
 
         // get uuIdentity information from session
