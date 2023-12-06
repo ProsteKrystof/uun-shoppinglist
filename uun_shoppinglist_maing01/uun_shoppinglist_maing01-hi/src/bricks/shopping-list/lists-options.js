@@ -78,7 +78,7 @@ const ListsOptions = createVisualComponent({
 
     return currentNestingLevel ? (
       <div {...attrs}>
-        <h1><Uu5Elements.Icon icon="uugds-checkbox-list"/> {lsi.yourShoppingLists}</h1>
+        <h1>{lsi.yourShoppingLists}</h1>
         <div style={{ display: "flex", marginBottom: 10 }}>
           <Uu5Elements.Button
             significance="highlighted"

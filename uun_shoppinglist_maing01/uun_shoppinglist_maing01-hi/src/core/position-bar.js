@@ -1,10 +1,8 @@
 //@@viewOn:imports
-import { createVisualComponent, Lsi, useRoute } from "uu5g05";
-import Uu5Elements from "uu5g05-elements";
+import { createVisualComponent, Utils, Content, Lsi } from "uu5g05";
+import { Icon } from "uu5g05-elements";
 import Plus4U5App from "uu_plus4u5g02-app";
-
 import ThemeToggle from "./theme/theme-toggle.js";
-
 import Config from "./config/config.js";
 import importLsi from "../lsi/import-lsi.js";
 //@@viewOff:imports
@@ -13,14 +11,18 @@ import importLsi from "../lsi/import-lsi.js";
 //@@viewOff:constants
 
 //@@viewOn:css
+const Css = {
+  main: () => Config.Css.css({}),
+};
 //@@viewOff:css
 
 //@@viewOn:helpers
 //@@viewOff:helpers
 
-const RouteBar = createVisualComponent({
+const PositionBar = createVisualComponent({
   //@@viewOn:statics
-  uu5Tag: Config.TAG + "RouteBar",
+  uu5Tag: Config.TAG + "PositionBar",
+  nestingLevel: ["areaCollection", "area"],
   //@@viewOff:statics
 
   //@@viewOn:propTypes
@@ -33,33 +35,35 @@ const RouteBar = createVisualComponent({
 
   render(props) {
     //@@viewOn:private
-    const [, setRoute] = useRoute();
-
-    const appActionList = [
-      {children: <ThemeToggle />, collapsed: false},
-      {
-        children: <Lsi import={importLsi} path={["Menu", "about"]} />,
-        onClick: () => setRoute("about"),
-        collapsed: true,
-      },
-    ];
+    const { children } = props;
     //@@viewOff:private
 
     //@@viewOn:interface
     //@@viewOff:interface
 
     //@@viewOn:render
+    const attrs = Utils.VisualComponent.getAttrs(props, Css.main());
+    const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, PositionBar);
+
+    const actionList = [
+      {children: <ThemeToggle />, collapsed: false},
+      {
+        children: <Lsi import={importLsi} path={["Menu", "about"]} />,
+        onClick: () => setRoute("about"),
+        collapsed: true,
+      },
+    ]
+
     return (
-        <Plus4U5App.RouteBar appActionList={appActionList} {...props}>
-          <Uu5Elements.Icon icon="uugds-checkbox-list"/>
-          <Plus4U5App.RouteHeader title={"‎ ShoppingLists"} />
-        </Plus4U5App.RouteBar>
-      );
+      <Plus4U5App.PositionBar view="short" actionList={actionList}>
+        <h2><Icon icon="uugds-checkbox-list" /> ShoppingLists</h2>
+      </Plus4U5App.PositionBar>
+    );
     //@@viewOff:render
   },
 });
 
 //@@viewOn:exports
-export { RouteBar };
-export default RouteBar;
+export { PositionBar };
+export default PositionBar;
 //@@viewOff:exports
