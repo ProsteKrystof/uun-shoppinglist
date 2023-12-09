@@ -82,4 +82,22 @@ describe("Shoppinglist Delete uuCmd tests", () => {
             expect(e.message).toEqual("Shoppinglist is not archived.");
         }
     });
+
+    test("A5 - user is not authorized", async () => {
+        // pouziti RIMO uctu pro vytvoreni listu z jine uuIdentity
+        await TestHelper.login("AuthoritiesRIMO");
+        let list = await TestHelper.executePostCommand("shoppinglist/create", LIST1);
+        let dtoIn = {
+            id: list.id
+        };
+
+        await TestHelper.login("Authorities");
+        expect.assertions(2);
+        try {
+            await TestHelper.executePostCommand("shoppinglist/delete", dtoIn);
+        } catch (e) {
+            expect(e.code).toEqual("uun-shoppinglist-main/shoppinglist/delete/userNotAuthorized");
+            expect(e.message).toEqual("User is not authorized.");
+        }
+    });
 });

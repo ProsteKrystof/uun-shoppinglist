@@ -29,12 +29,29 @@ const LIST3 = {
     memberIdentities: []
 }
 
+const LIST4 = {
+    name: "List 4",
+    color: "red",
+    memberIdentities: []
+}
+
+const LIST5 = {
+    name: "List 5",
+    color: "red",
+    memberIdentities: []
+}
+
 describe("Shoppinglist List uuCmd tests", () => {
     test("HDS", async () => {
-        await TestHelper.login("Authorities");
+        // pouziti RIMO uctu pro vytvoreni listu z jine uuIdentity
+        await TestHelper.login("AuthoritiesRIMO");
         await TestHelper.executePostCommand("shoppinglist/create", LIST1);
         await TestHelper.executePostCommand("shoppinglist/create", LIST2);
+
+        await TestHelper.login("Authorities");
         await TestHelper.executePostCommand("shoppinglist/create", LIST3);
+        await TestHelper.executePostCommand("shoppinglist/create", LIST4);
+        await TestHelper.executePostCommand("shoppinglist/create", LIST5);
 
         let dtoIn = {
             pageInfo: {

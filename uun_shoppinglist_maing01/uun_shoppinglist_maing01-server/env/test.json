@@ -26,6 +26,12 @@
       "accessCode2": "6YNV1u5G290-J!%83708141q51_!763n",
       "uuIdentity": "3039-912-8064-0000",
       "profileList": ["Authorities"]
+    },
+    "AuthoritiesRIMO": {
+      "accessCode1": "RimoAuthorities1",
+      "accessCode2": "RimoAuthorities2",
+      "uuIdentity": "1099-7473-894-0000",
+      "profileList": ["Authorities"]
     }
   },
   "log_level": "FATAL",
