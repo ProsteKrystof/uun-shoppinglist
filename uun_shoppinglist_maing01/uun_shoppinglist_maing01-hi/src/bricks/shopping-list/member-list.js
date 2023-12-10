@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, PropTypes, useState, useSession, useLsi } from "uu5g05";
+import { createVisualComponent, Utils, Content, PropTypes, useState, useSession, useLsi, useScreenSize } from "uu5g05";
 import Uu5Elements from "uu5g05-elements";
 import MemberItem from "./member-item.js";
 import Config from "./config/config.js";
@@ -42,6 +42,7 @@ const MemberList = createVisualComponent({
     const { identity } = useSession();
     const lsi = useLsi(importLsi, ["ShoppingList"]);
     const { addAlert } = Uu5Elements.useAlertBus();
+    const [screenSize] = useScreenSize();
     const [inputIdentity, setInputIdentity] = useState("");
 
     function handleInputIdentityChange(event) {
@@ -101,6 +102,8 @@ const MemberList = createVisualComponent({
     const attrs = Utils.VisualComponent.getAttrs(props, Css.main());
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, MemberList);
 
+    const isSmall = screenSize === "xs";
+
     return currentNestingLevel ? (
       <div {...attrs}>
         <Uu5Elements.Box
@@ -129,7 +132,7 @@ const MemberList = createVisualComponent({
                   icon="uugds-plus"
                   onClick={handleInputIdentityButtonOnClick}
                 >
-                  {lsi.addMember}
+                  {isSmall ? undefined : lsi.addMember}
                 </Uu5Elements.Button>
               )}
             </Uu5Elements.Grid.Item>

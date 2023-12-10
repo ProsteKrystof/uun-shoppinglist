@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, Lsi } from "uu5g05";
+import { createVisualComponent, Utils, Content, Lsi, BackgroundProvider } from "uu5g05";
 import { Icon } from "uu5g05-elements";
 import Plus4U5App from "uu_plus4u5g02-app";
 import ThemeToggle from "./theme/theme-toggle.js";
@@ -55,7 +55,7 @@ const PositionBar = createVisualComponent({
     ]
 
     return (
-      <Plus4U5App.PositionBar view="short" actionList={actionList}>
+      <Plus4U5App.PositionBar view="short" actionList={actionList} significance="subdued">
         <h2><Icon icon="uugds-checkbox-list" /> ShoppingLists</h2>
       </Plus4U5App.PositionBar>
     );

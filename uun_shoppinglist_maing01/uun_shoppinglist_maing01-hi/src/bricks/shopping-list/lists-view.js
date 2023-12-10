@@ -1,9 +1,10 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, PropTypes, useState, useLsi } from "uu5g05";
+import { createVisualComponent, Utils, Content, PropTypes, useState, useScreenSize, useLsi } from "uu5g05";
 import Config from "./config/config.js";
 import Uu5Elements from "uu5g05-elements";
 import ListsOptions from "./lists-options.js";
 import ListList from "./list-list.js";
+import { useThemeContext } from "../../core/theme/theme-context.js";
 import importLsi from "../../lsi/import-lsi.js";
 //@@viewOff:imports
 
@@ -39,6 +40,8 @@ const ListsView = createVisualComponent({
     //@@viewOn:private
     const { children } = props;
     const [showArchived, setShowArchived] = useState(false);
+    const [isDark] = useThemeContext();
+    const [screenSize] = useScreenSize();
     const lsi = useLsi(importLsi, ["ShoppingList"]);
     //@@viewOff:private
 
@@ -54,11 +57,15 @@ const ListsView = createVisualComponent({
 
     document.title = lsi.yourShoppingLists + " | ShoppingLists";
 
+    const isSmall = screenSize === "xs" || screenSize === "s";
+    const mainBoxCss = isSmall ? { padding: 16, margin: 10} : { padding: 16, margin: 50 };
+
     return currentNestingLevel ? (
       <div {...attrs}>
         <Uu5Elements.Box
-          className={Config.Css.css({ padding: 16, margin: 50 })}
+          className={Config.Css.css(mainBoxCss)}
           borderRadius="expressive"
+          significance={isDark ? "highlighted" : undefined}
         >
           <ListsOptions
             showArchived={showArchived}

@@ -1,5 +1,5 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, PropTypes, useState, useRoute, useLsi } from "uu5g05";
+import { createVisualComponent, Utils, Content, PropTypes, useState, useScreenSize, useRoute, useLsi } from "uu5g05";
 import { useAlertBus } from "uu5g05-elements";
 import Config from "./config/config.js";
 import Uu5Elements from "uu5g05-elements";
@@ -43,6 +43,7 @@ const ListsOptions = createVisualComponent({
     const lsi = useLsi(importLsi, ["ShoppingList"]);
     const { addAlert } = useAlertBus();
     const [route, setRoute] = useRoute();
+    const [screenSize] = useScreenSize();
 
     // edit shopping list modal
     const [showEditShoppingListModal, setShowEditShoppingListModal] = useState(false);
@@ -76,6 +77,8 @@ const ListsOptions = createVisualComponent({
     const handleEditShoppingListOpen = () => setShowEditShoppingListModal(true);
     const handleEditShoppingListClose = () => setShowEditShoppingListModal(false);
 
+    const isSmall = screenSize === "xs" || screenSize === "s";
+
     return currentNestingLevel ? (
       <div {...attrs}>
         <h1>{lsi.yourShoppingLists}</h1>
@@ -85,10 +88,10 @@ const ListsOptions = createVisualComponent({
             icon="uugds-plus"
             colorScheme="blue"
             onClick={handleEditShoppingListOpen}
-          >{lsi.createNew}</Uu5Elements.Button>
+          >{isSmall ? undefined : lsi.createNew}</Uu5Elements.Button>
 
           <Uu5Elements.Toggle
-            label={lsi.showArchived}
+            label={isSmall ? lsi.showArchivedSmall : lsi.showArchived}
             size="xl"
             style={{marginLeft: "auto"}}
             value={props.showArchived}

@@ -51,7 +51,7 @@ const ProgressTracker = createVisualComponent({
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, ProgressTracker);
 
     return currentNestingLevel ? (
-      <div {...attrs}>
+      <div {...attrs} style={{textAlign: "right"}}>
         {props.completedAmount === props.totalAmount ? <Uu5Elements.Icon icon="mdi-checkbox-marked-circle" /> : <Uu5Elements.Icon icon="mdi-checkbox-marked-circle-outline" />} {props.completedAmount}/{props.totalAmount}
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
       </div>

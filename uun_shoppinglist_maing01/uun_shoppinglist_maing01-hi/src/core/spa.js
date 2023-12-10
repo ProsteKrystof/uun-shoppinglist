@@ -4,8 +4,9 @@ import Uu5Elements from "uu5g05-elements";
 import Plus4U5 from "uu_plus4u5g02";
 import Plus4U5App from "uu_plus4u5g02-app";
 
+import { useThemeContext } from "./theme/theme-context.js";
+
 import Config from "./config/config.js";
-import Home from "../routes/home.js";
 
 import ThemeProvider from "./theme/theme-provider.js";
 //@@viewOff:imports
@@ -53,6 +54,7 @@ const Spa = createVisualComponent({
 
   render() {
     //@@viewOn:private
+    const [isDark] = useThemeContext();
     //@@viewOff:private
 
     //@@viewOn:interface
@@ -60,13 +62,13 @@ const Spa = createVisualComponent({
 
     //@@viewOn:render
     return (
-      <Plus4U5.SpaProvider initialLanguageList={["en", "cs"]}>
-        <Uu5Elements.ModalBus>
-          <ThemeProvider>
-            <Plus4U5App.Spa routeMap={ROUTE_MAP} />
-          </ThemeProvider>
-        </Uu5Elements.ModalBus>
-      </Plus4U5.SpaProvider>
+      <div style={{backgroundColor: isDark ? "black" : "white"}}>
+        <Plus4U5.SpaProvider initialLanguageList={["en", "cs"]}>
+          <Uu5Elements.ModalBus>
+              <Plus4U5App.Spa routeMap={ROUTE_MAP} />
+          </Uu5Elements.ModalBus>
+        </Plus4U5.SpaProvider>
+      </div>
     );
     //@@viewOff:render
   },

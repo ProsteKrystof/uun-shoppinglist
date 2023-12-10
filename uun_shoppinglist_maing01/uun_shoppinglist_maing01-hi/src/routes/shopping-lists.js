@@ -4,8 +4,9 @@ import { RouteController } from "uu_plus4u5g02-app";
 import Config from "./config/config.js";
 import ListsProvider from "../bricks/shopping-list/lists-provider.js";
 import ListsView from "../bricks/shopping-list/lists-view.js";
-import RouteBar from "../core/route-bar.js";
 import PositionBar from "../core/position-bar.js";
+import RouteBar from "../core/route-bar.js";
+import { useThemeContext } from "../core/theme/theme-context.js";
 import { withRoute } from "uu_plus4u5g02-app";
 //@@viewOff:imports
 
@@ -38,6 +39,7 @@ let ShoppingLists = createVisualComponent({
   render(props) {
     //@@viewOn:private
     const { children } = props;
+    const [isDark] = useThemeContext();
     //@@viewOff:private
 
     //@@viewOn:interface
@@ -48,9 +50,9 @@ let ShoppingLists = createVisualComponent({
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, ShoppingLists);
 
     return currentNestingLevel ? (
-      <div {...attrs}>
+      <div style={{backgroundColor: isDark ? "black" : "white"}} {...attrs}>
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
-        <PositionBar />
+        <RouteBar />
 
         <ListsProvider>
           {(shoppinglistDataList) => (

@@ -1,8 +1,9 @@
 //@@viewOn:imports
-import { createVisualComponent, Utils, Content, PropTypes, Lsi } from "uu5g05";
+import { createVisualComponent, Utils, Content, PropTypes, Lsi, useLsi, useScreenSize } from "uu5g05";
 import Uu5Elements from "uu5g05-elements";
 import importLsi from "../../lsi/import-lsi.js";
 import Config from "./config/config.js";
+import { useThemeContext } from "../../core/theme/theme-context.js";
 //@@viewOff:imports
 
 //@@viewOn:constants
@@ -38,6 +39,9 @@ const TaskCard = createVisualComponent({
   render(props) {
     //@@viewOn:private
     const { children } = props;
+    const lsi = useLsi(importLsi, ["Task"]);
+    const [isDark] = useThemeContext();
+    const [screenSize] = useScreenSize();
 
     function handleComplete() {
       props.finishTask(props.taskDataObject);
@@ -58,19 +62,23 @@ const TaskCard = createVisualComponent({
 
     const isPending = props.taskDataObject.state === "pending";
 
+    const isSmall = screenSize === "xs" || screenSize === "s";
+
+    const addedByText = isSmall ? task.addedBy : lsi.addedBy + ": " + task.addedBy;
+
     return currentNestingLevel ? (
       <div {...attrs}>
         <Uu5Elements.Box
           className={Config.Css.css({ paddingLeft: 16, paddingBottom: 5, paddingTop: 1, marginBottom: 15 })}
           borderRadius="expressive"
-          significance="distinct"
+          significance={isDark ? "common" : "distinct"}
         >
           <div style={{display: "flex"}}>
             {isPending && <Uu5Elements.Pending size="xs" style={{marginTop: 15, marginRight: 10}}/>}
             <h2 style={{marginBottom: 5}}>{task.name}</h2>
           </div>
           <div style={{display: "flex"}}>
-            <p style={{marginTop: 5}}>{<Lsi import={importLsi} path={["Task", "addedBy"]} />}: {task.addedBy}</p>
+            <p style={{marginTop: 5}}>{addedByText}</p>
             <div style={{marginLeft: "auto", marginRight: 16}}>
               {/* Finish/Finished button */}
               {task.finished
@@ -80,7 +88,7 @@ const TaskCard = createVisualComponent({
                   colorScheme="green"
                   icon="uugds-check"
                 >
-                  <Lsi import={importLsi} path={["Task", "finished"]} />
+                  {isSmall ? undefined : lsi.finished}
                 </Uu5Elements.Button>
               :
                 <Uu5Elements.Button
@@ -90,7 +98,7 @@ const TaskCard = createVisualComponent({
                   onClick={handleComplete}
                   disabled={isPending}
                 >
-                  <Lsi import={importLsi} path={["Task", "finish"]} />
+                  {isSmall ? undefined : lsi.finish}
                 </Uu5Elements.Button>
               }
 

@@ -4,6 +4,7 @@ import Uu5Elements from "uu5g05-elements";
 import importLsi from "../../lsi/import-lsi.js";
 import ProgressTracker from "../task/progress-tracker.js";
 import LeaveDialog from "./leave-dialog.js";
+import { useThemeContext } from "../../core/theme/theme-context.js";
 import { getSchemeColor } from "../utils.js";
 import Config from "./config/config.js";
 //@@viewOff:imports
@@ -43,6 +44,7 @@ const ListCard = createVisualComponent({
     const listDataObject = props.data;
     const { identity } = useSession();
     const [route, setRoute] = useRoute();
+    const [isDark] = useThemeContext();
     const lsi = useLsi(importLsi, ["ShoppingList"]);
 
     const [archiveDialogOpen, setArchiveDialogOpen] = useState(false);
@@ -104,18 +106,18 @@ const ListCard = createVisualComponent({
           <Uu5Elements.Box
             className={Config.Css.css({ paddingLeft: 16, paddingBottom: 5, paddingTop: 1, marginLeft: 5, marginRight: -2 })}
             borderRadius="expressive"
-            significance="distinct"
+            significance={isDark ? "common" : "distinct"}
           >
             <div style={{display: "flex"}}>
               {isPending && <Uu5Elements.Pending size="xs" style={{marginTop: 15, marginRight: 10}}/>}
               {
                 list.archived ? (
-                  <h2 style={{marginBottom: 5, color: "grey"}}> <Uu5Elements.Icon icon={"mdi-archive"} /> {list.name}</h2>
+                  <h2 style={{marginBottom: 5, color: (isDark ? "#b5b5b5" : "gray")}}> <Uu5Elements.Icon icon={"mdi-archive"} /> {list.name}</h2>
                 ) : (
                   <h2 style={{marginBottom: 5}}>{list.name}</h2>
                 )
               }
-              <div style={{marginLeft: "auto", marginRight: 16, marginTop: 16}}>
+              <div style={{marginLeft: "auto", marginRight: 16, marginTop: 16, width: 100}}>
                 <ProgressTracker completedAmount={list.finishedTaskAmount} totalAmount={list.taskAmount} />
               </div>
             </div>

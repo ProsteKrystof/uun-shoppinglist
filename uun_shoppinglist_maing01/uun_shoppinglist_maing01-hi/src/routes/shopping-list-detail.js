@@ -5,6 +5,7 @@ import Config from "./config/config.js";
 import ListDataProvider from "../bricks/shopping-list/list-data-provider.js";
 import TasksProvider from "../bricks/task/tasks-provider.js";
 import TasksView from "../bricks/task/tasks-view.js";
+import RouteBar from "../core/route-bar.js";
 import { withRoute } from "uu_plus4u5g02-app";
 //@@viewOff:imports
 
@@ -49,6 +50,7 @@ let ShoppingListDetail = createVisualComponent({
     return currentNestingLevel ? (
       <div {...attrs}>
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
+        <RouteBar />
 
         <ListDataProvider id={props.params.id}>
           {(shoppingListDataObject) => (
