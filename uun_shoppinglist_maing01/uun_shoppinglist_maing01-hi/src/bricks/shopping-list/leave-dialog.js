@@ -1,6 +1,7 @@
 //@@viewOn:imports
 import { createVisualComponent, Utils, Content, PropTypes, useLsi } from "uu5g05";
 import Uu5Elements from "uu5g05-elements";
+import { useThemeContext } from "../../core/theme/theme-context.js";
 import Config from "./config/config.js";
 import importLsi from "../../lsi/import-lsi.js";
 //@@viewOff:imports
@@ -39,6 +40,7 @@ const LeaveDialog = createVisualComponent({
     //@@viewOn:private
     const { children } = props;
     const lsi = useLsi(importLsi, ["ShoppingList"]);
+    const [isDark] = useThemeContext();
     //@@viewOff:private
 
     //@@viewOn:interface
@@ -50,26 +52,28 @@ const LeaveDialog = createVisualComponent({
 
     return currentNestingLevel ? (
       <div {...attrs}>
-        <Uu5Elements.Dialog
-          open={props.leaveDialogOpen}
-          onClose={() => props.setLeaveDialogOpen(false)}
-          header={lsi.leaveHeader}
-          icon={<Uu5Elements.Svg code="uugdssvg-activity-problem" />}
-          info={lsi.leaveInfo}
-          actionDirection="horizontal"
-          actionList={[
-            {
-              children: lsi.leaveDeny,
-              significance: "distinct",
-            },
-            {
-              children: lsi.leave,
-              onClick: props.handleLeave,
-              colorScheme: "red",
-              significance: "highlighted",
-            },
-          ]}
-        />
+        <Uu5Elements.Box significance={isDark ? "highlighted" : "common"}>  
+          <Uu5Elements.Dialog
+            open={props.leaveDialogOpen}
+            onClose={() => props.setLeaveDialogOpen(false)}
+            header={lsi.leaveHeader}
+            icon={<Uu5Elements.Svg code="uugdssvg-activity-problem" />}
+            info={lsi.leaveInfo}
+            actionDirection="horizontal"
+            actionList={[
+              {
+                children: lsi.leaveDeny,
+                significance: "distinct",
+              },
+              {
+                children: lsi.leave,
+                onClick: props.handleLeave,
+                colorScheme: "red",
+                significance: "highlighted",
+              },
+            ]}
+          />
+        </Uu5Elements.Box>
 
         <Content nestingLevel={currentNestingLevel}>{children}</Content>
       </div>

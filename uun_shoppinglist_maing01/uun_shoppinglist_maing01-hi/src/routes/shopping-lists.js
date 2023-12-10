@@ -4,7 +4,6 @@ import { RouteController } from "uu_plus4u5g02-app";
 import Config from "./config/config.js";
 import ListsProvider from "../bricks/shopping-list/lists-provider.js";
 import ListsView from "../bricks/shopping-list/lists-view.js";
-import PositionBar from "../core/position-bar.js";
 import RouteBar from "../core/route-bar.js";
 import { useThemeContext } from "../core/theme/theme-context.js";
 import { withRoute } from "uu_plus4u5g02-app";

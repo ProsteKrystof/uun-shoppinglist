@@ -163,48 +163,52 @@ const ListCard = createVisualComponent({
         </Uu5Elements.Box>
 
         {/* Archive shopping list dialog */}
-        <Uu5Elements.Dialog
-          open={archiveDialogOpen}
-          onClose={() => setArchiveDialogOpen(false)}
-          header={lsi.archiveHeader}
-          icon={<Uu5Elements.Svg code="uugdssvg-svg-folder" />}
-          info={lsi.archiveInfo}
-          actionDirection="horizontal"
-          actionList={[
-            {
-              children: lsi.archiveDeny,
-              significance: "distinct",
-            },
-            {
-              children: lsi.archive,
-              onClick: handleArchive,
-              colorScheme: "red",
-              significance: "highlighted",
-            },
-          ]}
-        />
+        <Uu5Elements.Box significance={isDark ? "highlighted" : "common"}>
+          <Uu5Elements.Dialog
+            open={archiveDialogOpen}
+            onClose={() => setArchiveDialogOpen(false)}
+            header={lsi.archiveHeader}
+            icon={<Uu5Elements.Svg code="uugdssvg-svg-folder" />}
+            info={lsi.archiveInfo}
+            actionDirection="horizontal"
+            actionList={[
+              {
+                children: lsi.archiveDeny,
+                significance: "distinct",
+              },
+              {
+                children: lsi.archive,
+                onClick: handleArchive,
+                colorScheme: "red",
+                significance: "highlighted",
+              },
+            ]}
+          />
+        </Uu5Elements.Box>
 
         {/* Delete shopping list dialog */}
-        <Uu5Elements.Dialog
-          open={deleteDialogOpen}
-          onClose={() => setDeleteDialogOpen(false)}
-          header={lsi.deleteHeader}
-          icon={<Uu5Elements.Svg code="uugdssvg-svg-delete" />}
-          info={lsi.deleteInfo}
-          actionDirection="horizontal"
-          actionList={[
-            {
-              children: lsi.deleteDeny,
-              significance: "distinct",
-            },
-            {
-              children: lsi.delete,
-              onClick: handleDelete,
-              colorScheme: "red",
-              significance: "highlighted",
-            },
-          ]}
-        />
+        <Uu5Elements.Box significance={isDark ? "highlighted" : "common"}>
+          <Uu5Elements.Dialog
+            open={deleteDialogOpen}
+            onClose={() => setDeleteDialogOpen(false)}
+            header={lsi.deleteHeader}
+            icon={<Uu5Elements.Svg code="uugdssvg-svg-delete" />}
+            info={lsi.deleteInfo}
+            actionDirection="horizontal"
+            actionList={[
+              {
+                children: lsi.deleteDeny,
+                significance: "distinct",
+              },
+              {
+                children: lsi.delete,
+                onClick: handleDelete,
+                colorScheme: "red",
+                significance: "highlighted",
+              },
+            ]}
+          />
+        </Uu5Elements.Box>
 
         {/* Leave shopping list dialog */}
         <LeaveDialog leaveDialogOpen={leaveDialogOpen} setLeaveDialogOpen={setLeaveDialogOpen} handleLeave={handleLeave} />
