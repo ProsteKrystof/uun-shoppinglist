@@ -4,6 +4,7 @@ import { useAlertBus } from "uu5g05-elements";
 import Config from "./config/config.js";
 import Uu5Elements from "uu5g05-elements";
 import EditShoppingListModal from "./edit-shopping-list-modal.js";
+import ChartModal from "../../core/chart-modal.js";
 import importLsi from "../../lsi/import-lsi.js";
 //@@viewOff:imports
 
@@ -47,6 +48,8 @@ const ListsOptions = createVisualComponent({
 
     // edit shopping list modal
     const [showEditShoppingListModal, setShowEditShoppingListModal] = useState(false);
+    // chart modal
+    const [showChartModal, setShowChartModal] = useState(false);
     //@@viewOff:private
 
     //@@viewOn:interface
@@ -55,6 +58,20 @@ const ListsOptions = createVisualComponent({
     //@@viewOn:render
     const attrs = Utils.VisualComponent.getAttrs(props, Css.main());
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, ListsOptions);
+
+    function prepareChartData() {
+      const chartData = [];
+
+      props.shoppinglistDataList.data.forEach((list) => {
+        if (list.data.archived && !props.showArchived) {
+          return;
+        }
+
+        chartData.push({name: list.data.name, value: list.data.taskAmount})
+      });
+
+      return chartData;
+    }
 
     async function handleEditShoppingListSubmit(values) {
       let shoppingList;
@@ -77,6 +94,9 @@ const ListsOptions = createVisualComponent({
     const handleEditShoppingListOpen = () => setShowEditShoppingListModal(true);
     const handleEditShoppingListClose = () => setShowEditShoppingListModal(false);
 
+    const handleChartModalOpen = () => setShowChartModal(true);
+    const handleChartModalClose = () => setShowChartModal(false);
+
     const isSmall = screenSize === "xs" || screenSize === "s";
 
     return currentNestingLevel ? (
@@ -89,6 +109,13 @@ const ListsOptions = createVisualComponent({
             colorScheme="blue"
             onClick={handleEditShoppingListOpen}
           >{isSmall ? undefined : lsi.createNew}</Uu5Elements.Button>
+
+          <Uu5Elements.Button
+            className={Config.Css.css({marginLeft: 10})}
+            icon="mdi-chart-donut"
+            significance="highlighted"
+            onClick={handleChartModalOpen}
+          />
 
           <Uu5Elements.Toggle
             label={isSmall ? lsi.showArchivedSmall : lsi.showArchived}
@@ -104,6 +131,15 @@ const ListsOptions = createVisualComponent({
             isOwner={true}
             onSubmit={handleEditShoppingListSubmit}
             onCancel={handleEditShoppingListClose}
+            open
+          />
+        )}
+
+        {showChartModal && (
+          <ChartModal
+            header={lsi.chartHeader}
+            data={prepareChartData()}
+            onClose={handleChartModalClose}
             open
           />
         )}

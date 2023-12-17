@@ -70,7 +70,8 @@
     "archiveError": "Archivace seznamu se nezdařila.",
     "deleteError": "Smazání seznamu se nezdařilo.",
     "leaveError": "Opuštění seznamu se nezdařilo.",
-    "loadNextError": "Načtení dalších seznamů se nezdařilo."
+    "loadNextError": "Načtení dalších seznamů se nezdařilo.",
+    "chartHeader": "Koláčový graf seznamů"
   },
   "Task": {
     "noTasks": "Žádné položky k zobrazení.",
@@ -85,6 +86,12 @@
     "createError": "Vytvoření položky se nezdařilo.",
     "finishError": "Dokončení položky se nezdařilo.",
     "deleteError": "Smazání položky se nezdařilo.",
-    "loadError": "Načtení položek se nezdařilo."
+    "loadError": "Načtení položek se nezdařilo.",
+    "chartHeader": "Koláčový graf položek",
+    "chartFinished": "Dokončené položky",
+    "chartRemaining": "Zbývající položky"
+  },
+  "ChartModal": {
+    "close": "Zavřít"
   }
 }

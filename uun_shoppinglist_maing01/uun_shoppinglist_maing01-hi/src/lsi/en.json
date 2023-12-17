@@ -70,7 +70,8 @@
     "archiveError": "Shopping list archiving failed.",
     "deleteError": "Shopping list deletion failed.",
     "leaveError": "Leaving shopping list failed.",
-    "loadNextError": "Loading next shopping lists failed."
+    "loadNextError": "Loading next shopping lists failed.",
+    "chartHeader": "List pie chart"
   },
   "Task": {
     "noTasks": "No tasks to display.",
@@ -85,6 +86,12 @@
     "createError": "Task creation failed.",
     "finishError": "Task finishing failed.",
     "deleteError": "Task deletion failed.",
-    "loadError": "Loading tasks failed."
+    "loadError": "Loading tasks failed.",
+    "chartHeader": "Task pie chart",
+    "chartFinished": "Finished tasks",
+    "chartRemaining": "Remaining tasks"
+  },
+  "ChartModal": {
+    "close": "Close"
   }
 }

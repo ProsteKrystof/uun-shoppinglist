@@ -5,6 +5,7 @@ import Config from "./config/config.js";
 import Uu5Elements from "uu5g05-elements";
 import AddTaskModal from "./add-task-modal.js";
 import EditShoppingListModal from "../shopping-list/edit-shopping-list-modal.js";
+import ChartModal from "../../core/chart-modal.js";
 import LeaveDialog from "../shopping-list/leave-dialog.js";
 import importLsi from "../../lsi/import-lsi.js";
 //@@viewOff:imports
@@ -52,6 +53,8 @@ const TasksOptions = createVisualComponent({
     const [showAddTaskModal, setShowAddTaskModal] = useState(false);
     // edit shopping list modal
     const [showEditShoppingListModal, setShowEditShoppingListModal] = useState(false);
+    // chart modal
+    const [showChartModal, setShowChartModal] = useState(false);
     // leave shopping list dialog
     const [leaveDialogOpen, setLeaveDialogOpen] = useState(false);
 
@@ -66,6 +69,22 @@ const TasksOptions = createVisualComponent({
     const currentNestingLevel = Utils.NestingLevel.getNestingLevel(props, TasksOptions);
 
     const isArchived = props.shoppingListDataObject.data.archived === true;
+
+    function prepareChartData() {
+      let taskNum = 0;
+      let finishedTaskNum = 0;
+
+      props.taskDataList.data.forEach((task) => {
+        if (task.data.finished === true) {
+          finishedTaskNum++;
+        }
+        else {
+          taskNum++;
+        }
+      });
+
+      return [{name: lsi.Task.chartRemaining, value: taskNum}, {name: lsi.Task.chartFinished, value: finishedTaskNum}];
+    }
 
     async function handleAddTaskSubmit(values) {
       let task;
@@ -119,6 +138,9 @@ const TasksOptions = createVisualComponent({
     const handleEditShoppingListOpen = () => setShowEditShoppingListModal(true);
     const handleEditShoppingListClose = () => setShowEditShoppingListModal(false);
 
+    const handleChartModalOpen = () => setShowChartModal(true);
+    const handleChartModalClose = () => setShowChartModal(false);
+
     const isSmall = screenSize === "xs" || screenSize === "s";
 
     return currentNestingLevel ? (
@@ -138,6 +160,12 @@ const TasksOptions = createVisualComponent({
             significance="highlighted"
             onClick={handleEditShoppingListOpen}
             disabled={isArchived}
+          />
+          <Uu5Elements.Button
+            className={Config.Css.css({marginLeft: 10})}
+            icon="mdi-chart-donut"
+            significance="highlighted"
+            onClick={handleChartModalOpen}
           />
           {!isOwner && (<Uu5Elements.Button
             className={Config.Css.css({marginLeft: 10})}
@@ -170,6 +198,15 @@ const TasksOptions = createVisualComponent({
             isOwner={isOwner}
             onSubmit={handleEditShoppingListSubmit}
             onCancel={handleEditShoppingListClose}
+            open
+          />
+        )}
+
+        {showChartModal && (
+          <ChartModal
+            header={lsi.Task.chartHeader}
+            data={prepareChartData()}
+            onClose={handleChartModalClose}
             open
           />
         )}
